@@ -14,11 +14,15 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
-        roughAddress: {
+        phoneNumber: {
             type: String,
             required: true,
         },
-        detailAddress: {
+        roughAddr: {
+            type: String,
+            required: true,
+        },
+        detailAddr: {
             type: String,
             required: true,
         },
@@ -28,6 +32,7 @@ const userSchema = new Schema(
         }
     },
     { 
+        collection: "users",
         timestamps: true 
     }
 );
