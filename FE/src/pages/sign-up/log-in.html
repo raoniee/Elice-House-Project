@@ -18,6 +18,8 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
+    <!-- 유효성 검사 -->
+    <script src="./validate.js" type="module"></script>
   </head>
   <body>
     <!-- 최상위 컨테이너 -->
@@ -26,32 +28,35 @@
       <div class="log-in-container">
         <h2 id="log-in-head">로그인</h2>
         <!-- 로그인 폼 -->
-        <form id="log-in-form" class="row g-3">
+        <form id="log-in-form" class="row g-3" onsubmit="validateLogin()">
           <div class="col-12">
-            <label for="inputEmail3" class="col-sm-2 col-form-label"
+            <label for="input-email" class="col-sm-2 col-form-label"
               >이메일</label
             >
             <input
               type="email"
               class="form-control"
-              id="inputEmail3"
+              id="input-email"
               placeholder="이메일을 입력해주세요."
             />
           </div>
           <div class="col-12">
-            <label for="inputPassword3" class="col-sm-2 col-form-label"
+            <label for="input-password" class="col-sm-2 col-form-label"
               >비밀번호</label
             >
             <input
               type="password"
               class="form-control"
-              id="inputPassword3"
+              id="input-password"
               placeholder="비밀번호를 입력해주세요."
+              autocomplete="off"
             />
           </div>
 
           <div id="form-btn-group" class="d-grid gap-3 col-6 mx-auto">
-            <button type="submit" class="btn btn-lg btn-primary">로그인</button>
+            <button id=login-submit" type="submit" class="btn btn-lg btn-primary">
+              로그인
+            </button>
             <button type="submit" class="btn btn-lg btn-primary">취소</button>
           </div>
         </form>
