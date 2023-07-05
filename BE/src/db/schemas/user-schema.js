@@ -14,18 +14,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
-    roughAddr: {
-      type: String,
-      required: true,
-    },
-    detailAddr: {
-      type: String,
-      required: true,
-    },
     isAdmin: {
       type: Boolean,
       default: false,
