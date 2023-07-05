@@ -1,8 +1,3 @@
-import * as data from "./data.js";
-
-// 회원 정보를 저장할 배열
-const users = data.data;
-
 // 회원가입 유효성 검사
 const validateSignUp = () => {
   const USER_NAME = document.getElementById("input-name");
