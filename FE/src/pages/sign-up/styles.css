@@ -1,0 +1,54 @@
+/*
+'em' 단위 사용을 위해 최상위 요소로 작용할 .container에 font-size를 10px
+따라서 1em = 10px
+*/
+
+/*****************
+공통 적용 스타일
+*****************/
+
+.container {
+  display: flex;
+  justify-content: center;
+  font-size: 10px;
+}
+
+#form-btn-group {
+  margin-top: 5vh;
+}
+
+/*****************
+sign-up 스타일
+*****************/
+
+.sign-up-container {
+  width: 40vh;
+  margin-top: 20vh;
+}
+
+#sign-up-head {
+  margin-bottom: 3.5vh;
+  text-align: center;
+}
+
+#sign-up-form {
+  margin: 0;
+}
+
+/*****************
+log-in 스타일
+*****************/
+
+.log-in-container {
+  width: 37vh;
+  margin-top: 27vh;
+}
+
+#log-in-head {
+  margin-bottom: 6vh;
+  text-align: center;
+}
+
+#log-in-form {
+  margin: 0;
+}
