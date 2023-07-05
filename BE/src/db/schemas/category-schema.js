@@ -1,5 +1,4 @@
 import { Schema } from "mongoose";
-import { categorySchema } from "orderitem-schema";
 
 const categorySchema = new Schema(
   {
