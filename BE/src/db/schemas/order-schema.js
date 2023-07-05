@@ -20,7 +20,24 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
+    phoneNumber: {
+        type: String,
+        required: true,
+    },
+    roughAddr: {
+        type: String,
+        required: true,
+    },
+    detailAddr: {
+        type: String,
+        required: true,
+    },
     orderItem: [orderItemSchema],
+    state: {
+        type: String,
+        required: true,
+        default: "배송준비중",
+    },
   },
   {
     collection: "orders",

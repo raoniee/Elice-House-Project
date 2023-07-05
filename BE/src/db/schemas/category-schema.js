@@ -6,15 +6,8 @@ const categorySchema = new Schema(
       type: String,
       required: true,
     },
-    description: {
-      type: String,
-      required: true,
-    },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
   },
+  // depth ...
   {
     collection: "categories",
     timestamp: true,

@@ -11,6 +11,7 @@ const productSchema = new Schema(
       type: Number,
       required: true,
     },
+    // depth 생길 시 카테고리 아이디 정의 방법 궁금 
     categoryId: {
       type: Schema.types.objectID,
       ref: "categorySchema",
