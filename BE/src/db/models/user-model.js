@@ -3,4 +3,11 @@ import { userSchema } from "../schemas/user-schema";
 
 const User = model("users", userSchema);
 
-export { User };
+class UserModel {
+    async findByEmail({email}) {
+        const email = User.findOne({ email });
+        return email;
+    } 
+}
+
+export { UserModel };
