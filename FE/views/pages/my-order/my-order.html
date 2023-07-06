@@ -11,7 +11,7 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <script src="./order.js" type="module" defer></script>
+    <script src="my-order.js" type="module" defer></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
@@ -31,27 +31,13 @@
       </div>
       <div class="col-9">
         <h2 class="fs-4 mb-4">주문/배송 조회</h3>
-        <!-- <ul class="mb-4 bg-light list-unstyled p-4 text-center row">
-          <li class="col">
-            <h3>0</h3>
-            배송준비
-          </li>
-          <li class="col">
-            <h3>0</h3>
-            배송중
-          </li>
-          <li class="col">
-            <h3>0</h3>
-            배송완료
-          </li>
-        </ul> -->
         <table class="table table-bordered text-center">
           <thead class="table-light">
             <tr>
               <th class="col-2">주문일자</th>
               <th class="col-4">상품</th>
               <th class="col-1">수량</th>
-              <th>주문금액</th>
+              <th>총 주문금액</th>
               <th>배송상태</th>
               <th>주문변경</th>
             </tr>
@@ -63,8 +49,26 @@
       </div>
     </section>
 
-    <!-- 주문 변경 모달 -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- 주문 수정 모달 -->
+    <div class="modal fade" id="changeOrderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">주문 수정</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- 연락처,배송지,배송요청사항 수정 -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary order-cancel-btn" data-bs-dismiss="modal">취소</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    주문 취소 모달
+    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">

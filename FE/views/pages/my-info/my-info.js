@@ -1,12 +1,11 @@
 import * as mockdata from "./mockdata.js";
 
 const orderContents = document.querySelector("#order-contents");
-const orderCancelBtn = document.querySelector(".order-cancel-btn");
 
 window.onload = function getOrders() {
   const data = mockdata.data;
 
-  for (let i = data.length-1; i >= 0; i--) {
+  for (let i = data.length - 1; i >= 0; i--) {
     const orderBox = document.createElement("tr");
     const orderDate = data[i].orderDate;
     const orderDeliverState = data[i].deliverState;
@@ -31,10 +30,10 @@ window.onload = function getOrders() {
       </td>
     `;
 
-    if(data[i].deliverState === '배송준비'){
+    if (data[i].deliverState === "배송준비") {
       orderBox.lastElementChild.innerHTML = `
-        <button type="button" class="btn btn-outline-primary btn-sm">주문 수정</button>
-        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">주문 취소</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="cancleOrderConfirm()">주문 취소</button>
       `;
     } else {
       orderBox.lastElementChild.innerHTML = `
@@ -44,10 +43,12 @@ window.onload = function getOrders() {
 
     orderContents.appendChild(orderBox);
   }
-}
+};
 
-function cancelOrder(){
-  
+function cancleOrderConfirm() {
+  if (confirm("주문 취소 시 복구할 수 없습니다. 취소하시겠습니까?")) {
+    alert("정상적으로 취소되었습니다.");
+  } else {
+    alert("오류가 발생했습니다");
+  }
 }
-
-orderCancelBtn.addEventListener("click", cancelOrder);
