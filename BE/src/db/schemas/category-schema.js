@@ -10,19 +10,18 @@ const categorySchema = new Schema(
       type: [String],
       required: false,
     },
-    childCategoryName: {
-      type: new Schema({
-        name: String,
-        name: {
-          type: String,
-          required: true,
-        },
-      }),
-      required: false,
-    },
+    // childCategoryName: {
+    //   type: new Schema({
+    //     name: String,
+    //     name: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //   }),
+    //   required: false,
+    // },
     // 코치님께서 다시 답을 주신다고 하심!
   },
-  // depth ...
   {
     collection: "categories",
     timestamp: true,

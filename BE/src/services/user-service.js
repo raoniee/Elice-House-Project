@@ -1,5 +1,6 @@
 import { userModel } from "../db/models/user-model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 class UserService {
@@ -26,7 +27,7 @@ class UserService {
     const email = userIdPass.email;
     const password = userIdPass.password;
 
-    const user = await userModel.findByEmail({ email });
+    const user = await userModel.findByEmail(email);
 
     if (!user) {
       throw new Error("아이디 확인 필요");
@@ -40,8 +41,7 @@ class UserService {
     }
 
     const key = process.env.KEY;
-    const token = "asbd";
-    // jwt.sign({ email, userId: user._id }, key);
+    const token = jwt.sign({ email, userId: user._id }, key);
 
     return { token, isAdmin: user.isAdmin };
   }

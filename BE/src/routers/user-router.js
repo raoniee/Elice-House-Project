@@ -8,9 +8,6 @@ userRouter.post("/register", UserController.createUser);
 // 로그인
 userRouter.post("/login", UserController.login);
 
-// 로그아웃
-// userRouter.post("/logout", async (req, res, next) => {});
-
 // 사용자 정보 조회
 userRouter.get("/users/:userid", async (req, res, next) => {});
 // 사용자 정보 수정
