@@ -3,10 +3,6 @@
 따라서 1em = 10px
 */
 
-/*****************
-공통 적용 스타일
-*****************/
-
 .container {
   display: flex;
   justify-content: center;
@@ -21,10 +17,6 @@
   font-size: 1.5em;
 }
 
-/*****************
-sign-up 스타일
-*****************/
-
 .sign-up-container {
   width: 40vh;
   margin-top: 20vh;
@@ -36,23 +28,5 @@ sign-up 스타일
 }
 
 #sign-up-form {
-  margin: 0;
-}
-
-/*****************
-log-in 스타일
-*****************/
-
-.log-in-container {
-  width: 37vh;
-  margin-top: 27vh;
-}
-
-#log-in-head {
-  margin-bottom: 4.8vh;
-  text-align: center;
-}
-
-#log-in-form {
   margin: 0;
 }
