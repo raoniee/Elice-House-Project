@@ -17,12 +17,8 @@ const orderSchema = new Schema(
       required: true,
     },
     userPhoneNumber: {
-      type: Number,
+      type: String,
       required: true,
-    },
-    phoneNumber: {
-        type: String,
-        required: true,
     },
     roughAddr: {
         type: String,
