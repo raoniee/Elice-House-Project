@@ -2,6 +2,11 @@ const productBtn = document.querySelector("#product-btn");
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
 
+//제목 누르면 홈 화면
+adminTitle.addEventListener("click", function () {
+  location.reload();
+});
+
 // 화면 초기화 함수
 function initProductPage() {
   listContainer.innerHTML = "";
