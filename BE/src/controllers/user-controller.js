@@ -22,7 +22,7 @@ const UserController = {
       const email = req.body.email;
       const password = req.body.password;
 
-      console.log(req.body);
+      console.log(email, password);
 
       // 이메일 패스워드 일치 여부 확인 및 JWT 토큰 생성
       const checkUser = await userService.giveToken({ email, password });
