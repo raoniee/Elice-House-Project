@@ -4,19 +4,13 @@ const orderBtn = document.querySelector("#order-btn");
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
 
+// 메인 페이지 이동
 adminTitle.addEventListener("click", function () {
-  location.reload();
+  location.href = "../admin-main/admin-main.html";
 });
-
-// 화면 초기화 함수 >> makeOrderBox 함수가 계속 list 생성하는 것 방지
-function initOrderPage() {
-  listContainer.innerHTML = "";
-}
 
 // 주문 정보 리스트 박스 생성 함수
 function makeOrderBox() {
-  initOrderPage();
-
   let data = mockdata.data;
 
   for (let i = 0; i < data.length; i++) {
@@ -98,4 +92,4 @@ function changeDeliverState() {
   // 백 데이터에 상태변경 정보 반영
 }
 
-orderBtn.addEventListener("click", makeOrderBox);
+window.onload = makeOrderBox();
