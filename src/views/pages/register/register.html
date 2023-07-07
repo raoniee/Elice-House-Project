@@ -25,10 +25,10 @@
     <!-- 최상위 컨테이너 -->
     <div class="container">
       <!-- 회원가입 컨텐츠 컨테이너 -->
-      <div class="sign-up-container">
-        <h2 id="sign-up-head">회원가입</h2>
+      <div class="register-container">
+        <h2 id="registerp-head">회원가입</h2>
         <!-- 회원가입 폼 -->
-        <form id="sign-up-form" class="row g-3" onsubmit="validateSignUp()">
+        <form id="register-form" class="row g-3" onsubmit="validateSignUp()">
           <div class="col-12">
             <label for="input-name" class="form-label">이름</label>
             <input
@@ -71,11 +71,17 @@
             <button
               type="submit"
               class="btn btn-lg btn-primary"
-              id="sign-up-submit"
+              id="register-submit"
             >
-              회원가입
+              <a href="#">회원가입</a>
             </button>
-            <button type="submit" class="btn btn-lg btn-primary">취소</button>
+            <button
+              type="submit"
+              id="register-cancel"
+              class="btn btn-lg btn-primary"
+            >
+              <a href="../main/main.html">취소</a>
+            </button>
           </div>
         </form>
       </div>
