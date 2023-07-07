@@ -5,7 +5,6 @@ import bodyParser from "body-parser";
 
 import { userRouter } from "./src/routers/user-router.js";
 
-
 // dotenv.config();
 
 const app = express();
@@ -22,6 +21,5 @@ app.get("/", (req, res) => {
 // app.use(viewsRouter);
 
 app.use("/api", userRouter);
-
 
 export { app };
