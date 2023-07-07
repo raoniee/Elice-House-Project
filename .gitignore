@@ -5,5 +5,4 @@ package-lock.json
 
 # Environment variables
 .env
-
 .DS_Store
