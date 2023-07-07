@@ -19,7 +19,7 @@
 
 .log-in-container {
   width: 37vh;
-  margin-top: 27vh;
+  margin-top: 22vh;
 }
 
 #log-in-head {
@@ -29,4 +29,20 @@
 
 #log-in-form {
   margin: 0;
+}
+
+#move-to-register-container {
+  margin-top: 3.5em;
+}
+
+#move-to-register-container > p {
+  margin: 0;
+  margin-bottom: 1em;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+#move-register > a {
+  text-decoration: none;
+  color: #fff;
 }
