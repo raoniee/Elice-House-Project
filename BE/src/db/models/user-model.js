@@ -30,6 +30,24 @@ class UserModel {
     return allUser;
   }
 
+  // name 수정 
+  async updateName(updateInfo) {
+    const userId = updateInfo.userId;
+    const name = updateInfo.name;
+    const checkUpdateName = await User.findByIdAndUpdate(userId, { name });
+    return checkUpdateName;
+  }
+
+  // password 수정 
+  async updatePassword(updateInfo) {
+    const userId = updateInfo.userId;
+    const password = updateInfo.hashedPassword;
+    const checkUpdatePassword = await User.findByIdAndUpdate(userId, {
+      password,
+    });
+    return checkUpdatePassword;
+  }
+
 }
 
 const userModel = new UserModel();

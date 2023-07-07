@@ -66,6 +66,26 @@ const UserController = {
     }
   },
 
+  // 사용자 정보 수정
+  async updateUser(req, res, next) {
+    try {
+      const userId = req.params._id;
+      const name = req.body.name;
+      const password = req.body.password;
+
+      // userId로 해당 유저로 접근하여 name이나 password 수정
+      const checkUpdate = await userService.updateInfo({
+        userId,
+        name,
+        password,
+      });
+
+      res.status(201).json(checkUpdate);
+    } catch (error) {
+      next(error);
+    }
+  },
+  
   //관리자 모드 
   //회원정보 조회
   async getAllUser(req, res, next) {
