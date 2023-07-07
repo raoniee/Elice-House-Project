@@ -19,7 +19,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- 유효성 검사 -->
-    <script src="./validate.js"></script>
+    <script src="./login.js"></script>
   </head>
   <body>
     <!-- 최상위 컨테이너 -->
@@ -54,12 +54,15 @@
           </div>
 
           <div id="form-btn-group" class="d-grid gap-3 col-6 mx-auto">
-            <button id=login-submit" type="submit" class="btn btn-lg btn-primary">
-              로그인
-            </button>
+            <button id=login-submit" type="submit" class="btn btn-lg btn-primary">로그인</button>
             <button type="submit" class="btn btn-lg btn-primary">취소</button>
           </div>
         </form>
+
+        <div id="move-to-register-container" class="row">
+          <p>아직 회원이 아니신가요?</p>
+          <button id="move-register" class="btn btn-lg btn-primary col-5 mx-auto"><a href="../register/register.html" target="_self">회원가입</a></button>
+        </div>
       </div>
     </div>
   </body>
