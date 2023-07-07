@@ -10,7 +10,7 @@ class UserService {
     const password = userRegist.password;
 
     // 이메일 중복 확인
-    const user = await userModel.findByEmail(email);
+    const user = await userModel.findByEmail({ email });
     if (user) {
       throw new Error("이미 존재된 아이디입니다.");
     }
@@ -23,11 +23,12 @@ class UserService {
     return addNewUser;
   }
 
+  // 로그인 아이디 비밀번호 확인 및 jwt 토큰 생성
   async giveToken(userIdPass) {
     const email = userIdPass.email;
     const password = userIdPass.password;
 
-    const user = await userModel.findByEmail(email);
+    const user = await userModel.findByEmail({ email });
 
     if (!user) {
       throw new Error("아이디 확인 필요");

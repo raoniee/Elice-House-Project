@@ -2,10 +2,7 @@ import { mongoose } from "mongoose";
 import "dotenv/config";
 import { app } from "../../app.js";
 
-const { PORT, MONGO_USER, MONGO_PASS } = process.env;
-
-const DB_URL = `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.sbibyre.mongodb.net/`;
-// const DB_URL = `mongodb+srv://seongkwan:123@simple-board-cluster.2uuyh4s.mongodb.net/`;
+const { PORT, DB_URL } = process.env;
 
 mongoose.connect(DB_URL, {
   useNewUrlParser: true,
