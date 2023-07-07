@@ -9,12 +9,17 @@ userRouter.post("/register", UserController.createUser);
 userRouter.post("/login", UserController.login);
 
 // 사용자 정보 조회
-userRouter.get("/users/:userid", async (req, res, next) => {});
+userRouter.get("/users/:userId", async (req, res, next) => {});
 // 사용자 정보 수정
-userRouter.patch("/users/:userid", async (req, res, next) => {});
+userRouter.patch("/users/:userId", async (req, res, next) => {});
 // 사용자 정보 추가
-userRouter.post("/users", async (req, res, next) => {});
+// userRouter.post("/users", async (req, res, next) => {});
 // 사용자 정보 삭제(회원 탈퇴)
-userRouter.delete("/users/:userid", async (req, res, next) => {});
+userRouter.delete("/users/:userId", UserController.deleteUser);
+
+//관리자 모드
+//모든 회원정보 조회
+userRouter.get("/admin/users", UserController.getAllUser);
+
 
 export { userRouter };

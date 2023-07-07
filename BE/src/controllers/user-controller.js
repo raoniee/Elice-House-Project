@@ -34,6 +34,34 @@ const UserController = {
       next(error);
     }
   },
+  
+  //회원 삭제 
+  async deleteUser(req, res, next) {
+    try {
+      const userId = req.params.userId;
+      console.log(`유저 아이디 ${userId}`);
+
+      const deleteUserInfo = await userService.deleteById({ _id: userId });
+
+      res.status(200).json(deleteUserInfo);
+    } catch(error) {
+      next(error);
+    }
+  },
+
+  //관리자 모드 
+  //회원정보 조회
+  async getAllUser(req, res, next) {
+    try{
+      const getAllUserInfo = await userService.getAllUserInfo();
+
+      res.status(200).json(getAllUserInfo);
+    }catch(error) {
+      next(error);
+    }
+  }
+
+
 };
 
 export { UserController };
