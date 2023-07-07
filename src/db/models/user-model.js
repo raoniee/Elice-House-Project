@@ -4,7 +4,7 @@ import { userSchema } from "../schemas/user-schema.js";
 const User = model("users", userSchema);
 
 class UserModel {
-  // 이메일로 유저 찾기 
+  // 이메일로 유저 찾기
   async findByEmail(email) {
     const user = await User.findOne(email);
     return user;
@@ -30,24 +30,15 @@ class UserModel {
     return allUser;
   }
 
-  // name 수정 
-  async updateName(updateInfo) {
-    const userId = updateInfo.userId;
-    const name = updateInfo.name;
-    const checkUpdateName = await User.findByIdAndUpdate(userId, { name });
-    return checkUpdateName;
-  }
+  // name 수정
+  async update(userId, toUpdate) {
+    
 
-  // password 수정 
-  async updatePassword(updateInfo) {
-    const userId = updateInfo.userId;
-    const password = updateInfo.hashedPassword;
-    const checkUpdatePassword = await User.findByIdAndUpdate(userId, {
-      password,
+    const updateInfo = await User.findOneAndUpdate({ userId }, toUpdate, {
+      returnOriginal: false,
     });
-    return checkUpdatePassword;
+    return updateInfo;
   }
-
 }
 
 const userModel = new UserModel();

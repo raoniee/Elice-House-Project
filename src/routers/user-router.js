@@ -21,5 +21,4 @@ userRouter.delete("/users/:userId", UserController.deleteUser);
 //모든 회원정보 조회
 userRouter.get("/admin/users", UserController.getAllUser);
 
-
 export { userRouter };
