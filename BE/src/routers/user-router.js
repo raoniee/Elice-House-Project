@@ -9,7 +9,7 @@ userRouter.post("/register", UserController.createUser);
 userRouter.post("/login", UserController.login);
 
 // 사용자 정보 조회
-userRouter.get("/users/:userId", async (req, res, next) => {});
+userRouter.get("/users/:userId", UserController.getInfo);
 // 사용자 정보 수정
 userRouter.patch("/users/:userId", async (req, res, next) => {});
 // 사용자 정보 추가

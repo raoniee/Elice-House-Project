@@ -61,11 +61,17 @@ class UserService {
 
     return { result: "Deleted Data" }
   }
-
-  async getAllUserInfo() {
-    const allUserInfo = await userModel.findAll();
+  // 사용자가 User 정보 조회
+  async getAllUserInfo(userId) {
+    const allUserInfo = await userModel.findByUserId(userId);
 
     return allUserInfo;
+  }
+
+  async findByUserId(userId) {
+    const userInfo = await userModel.findByUserId(userId);
+    
+    return userInfo;
   }
 }
 

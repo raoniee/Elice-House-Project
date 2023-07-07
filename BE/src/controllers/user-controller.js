@@ -34,7 +34,24 @@ const UserController = {
       next(error);
     }
   },
-  
+
+  // 사용자가 User 정보 조회
+  async getInfo(req, res, next) {
+    try{
+      const userId = req.params.userId;
+      console.log(`유저 아이디 ${userId}`);
+
+      const findUserOne = await userService.findByUserId({_id: userId});
+
+      const { name, email } = findUserOne;
+
+      res.json({ name, email })
+
+    }catch(error) {
+      next(error);
+    }
+  },
+
   //회원 삭제 
   async deleteUser(req, res, next) {
     try {
