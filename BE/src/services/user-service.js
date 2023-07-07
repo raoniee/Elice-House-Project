@@ -61,6 +61,30 @@ class UserService {
 
     return { result: "Deleted Data" }
   }
+
+  // 사용자 정보 수정 
+  async updateInfo(userInfo) {
+    const userId = userInfo.userId;
+    const name = userInfo.name;
+    const password = userInfo.password;
+
+    const toUpdate = {};
+
+    if (name) {
+      toUpdate.name = name;
+    }
+
+    const updateName = await userModel.updateName({ userId, name });
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const updatePassword = await userModel.updatePassword({
+      userId,
+      hashedPassword,
+    });
+
+    return { name: updateName, password: updatePassword };
+  }
+
   // 사용자가 User 정보 조회
   async getAllUserInfo(userId) {
     const allUserInfo = await userModel.findByUserId(userId);
