@@ -1,1 +1,0 @@
-components tmp 파일입니다.

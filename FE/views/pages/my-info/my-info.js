@@ -1,54 +1,54 @@
-import * as mockdata from "./mockdata.js";
+import { drawHeader } from "../../components/header/header.js";
+import { drawFooter } from "../../components/footer/footer.js";
+import { drawMyNav } from "../../components/my-nav/my-nav.js";
 
-const orderContents = document.querySelector("#order-contents");
+// Header, Footer 템플릿 삽입
+drawHeader();
+drawFooter();
 
-window.onload = function getOrders() {
-  const data = mockdata.data;
+// 마이페이지 사이드메뉴 템플릿 삽입
+drawMyNav();
 
-  for (let i = data.length - 1; i >= 0; i--) {
-    const orderBox = document.createElement("tr");
-    const orderDate = data[i].orderDate;
-    const orderDeliverState = data[i].deliverState;
+// 내 정보 유효성 검사
+const changeMyInfo = (e) => {
+  // 이벤트 기본값(효과) 제거
+  e.preventDefault();
 
-    orderBox.innerHTML = `
-      <td class="py-3 col-2 align-middle">
-        ${orderDate.slice(0, 10)}
-      </td>
-      <td class="py-3 col-4 align-middle">
-        상품명
-      </td>
-      <td class="py-3 col-1 align-middle">
-        1
-      </td>
-      <td class="py-3 align-middle">
-        100,000원
-      </td>
-      <td class="py-3 align-middle">
-        ${data[i].deliverState}
-      </td>
-      <td class="py-3 align-middle">
-      </td>
-    `;
+  const USER_NAME = document.getElementById("input-name");
+  const USER_PW1 = document.getElementById("password1");
+  const USER_PW2 = document.getElementById("password2");
+  const USER_EMAIL = document.getElementById("input-email");
+  const SIGN_UP_SUBMIT = document.getElementById("change-my-info-confirm");
 
-    if (data[i].deliverState === "배송준비") {
-      orderBox.lastElementChild.innerHTML = `
-        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
-        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal" onclick="cancleOrderConfirm()">주문 취소</button>
-      `;
-    } else {
-      orderBox.lastElementChild.innerHTML = `
-        변경 불가
-      `;
-    }
+  // 사용자 이름 유효성 검사: 빈 칸 불가
+  if (USER_NAME.value == "") {
+    alert("이름을 입력해주세요.");
+    USER_NAME.focus();
+    return;
+  }
 
-    orderContents.appendChild(orderBox);
+  // 비밀번호 유효성 검사: 빈칸 불가, 비밀번호 === 비밀번호 재확인
+  if (USER_PW1.value == "") {
+    alert("비밀번호를 입력해주세요.");
+    USER_PW1.focus();
+    return;
+  }
+  if (USER_PW2.value == "") {
+    alert("비밀번호 재확인을 입력해주세요.");
+    USER_PW2.focus();
+    return;
+  }
+
+  if (USER_PW1.value !== USER_PW2.value) {
+    alert("비밀번호와 비밀번호 재확인이 동일하지 않습니다!");
+    USER_PW1.focus();
+    return;
+  }
+
+  // 이메일 유효성 검사: 빈 칸 불가
+  if (USER_EMAIL.value == "") {
+    alert("이메일을 입력해주세요.");
+    USER_EMAIL.focus();
+    return;
   }
 };
-
-function cancleOrderConfirm() {
-  if (confirm("주문 취소 시 복구할 수 없습니다. 취소하시겠습니까?")) {
-    alert("정상적으로 취소되었습니다.");
-  } else {
-    alert("오류가 발생했습니다");
-  }
-}
