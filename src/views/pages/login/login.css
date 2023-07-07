@@ -17,17 +17,17 @@
   font-size: 1.5em;
 }
 
-.log-in-container {
+.login-container {
   width: 37vh;
   margin-top: 22vh;
 }
 
-#log-in-head {
+#login-head {
   margin-bottom: 4.8vh;
   text-align: center;
 }
 
-#log-in-form {
+#login-form {
   margin: 0;
 }
 
@@ -42,7 +42,8 @@
   text-align: center;
 }
 
-#move-register > a {
+#form-btn-group a,
+#move-register a {
   text-decoration: none;
   color: #fff;
 }

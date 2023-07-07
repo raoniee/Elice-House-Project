@@ -14,7 +14,7 @@ export const data = [
   {
     orderDate: "2023-07-05 02:48:32",
     orderNumber: "fnt-131313",
-    deliverState: "배송준비",
+    deliverState: "배송준비중",
     deliverRequest: "부재시 경비실에 맡겨주세요",
     userName: "하우스",
     userEmail: "eliceHouse@gmail.com",

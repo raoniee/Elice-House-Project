@@ -46,7 +46,7 @@ window.onload = function getOrders() {
       </td>
     `;
 
-    if (data[i].deliverState === "배송준비") {
+    if (data[i].deliverState === "배송준비중") {
       orderBox.lastElementChild.innerHTML = `
         <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
         <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">주문 취소</button>
