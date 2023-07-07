@@ -29,11 +29,19 @@ const orderSchema = new Schema(
         required: true,
     },
     orderItem: [orderItemSchema],
+    //배송 상태
     state: {
         type: String,
         required: true,
         default: "배송준비중",
     },
+    //배송 요청사항
+    deliReq: {
+      type: String,
+      required: true,
+      default: "선택 없음",
+    }
+
   },
   {
     collection: "orders",
