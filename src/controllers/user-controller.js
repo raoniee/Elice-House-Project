@@ -52,7 +52,7 @@ const UserController = {
     }
   },
 
-  //회원 삭제 
+  //회원 삭제
   async deleteUser(req, res, next) {
     try {
       const userId = req.params.userId;
@@ -73,32 +73,30 @@ const UserController = {
       const name = req.body.name;
       const password = req.body.password;
 
-      // userId로 해당 유저로 접근하여 name이나 password 수정
-      const checkUpdate = await userService.updateInfo({
-        userId,
-        name,
-        password,
-      });
+      const toUpdate = {
+        ...(name && { name }),
+        ...(password && { password }),
+      };
+
+      const checkUpdate = await userService.updateInfo(userId, toUpdate);
 
       res.status(201).json(checkUpdate);
     } catch (error) {
       next(error);
     }
   },
-  
-  //관리자 모드 
+
+  //관리자 모드
   //회원정보 조회
   async getAllUser(req, res, next) {
-    try{
+    try {
       const getAllUserInfo = await userService.getAllUserInfo();
 
       res.status(200).json(getAllUserInfo);
-    }catch(error) {
+    } catch (error) {
       next(error);
     }
-  }
-
-
+  },
 };
 
 export { UserController };
