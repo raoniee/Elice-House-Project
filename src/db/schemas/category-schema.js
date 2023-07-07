@@ -2,25 +2,16 @@ import { Schema } from "mongoose";
 
 const categorySchema = new Schema(
   {
+    // 부모 카테고리 이름 
     categoryName: {
       type: String,
       required: true,
     },
-    childCategoryName: {
-      type: [String],
-      required: false,
-    },
-    // childCategoryName: {
-    //   type: new Schema({
-    //     name: String,
-    //     name: {
-    //       type: String,
-    //       required: true,
-    //     },
-    //   }),
-    //   required: false,
-    // },
-    // 코치님께서 다시 답을 주신다고 하심!
+    // 자식 카테고리 참조 
+    subcategory : [{
+      type : Schema.Types.ObjectId,
+      ref : 'Subcategory'
+     }]
   },
   {
     collection: "categories",
