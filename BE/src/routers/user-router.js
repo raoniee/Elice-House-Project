@@ -11,7 +11,7 @@ userRouter.post("/login", UserController.login);
 // 사용자 정보 조회
 userRouter.get("/users/:userId", UserController.getInfo);
 // 사용자 정보 수정
-userRouter.patch("/users/:userId", async (req, res, next) => {});
+userRouter.patch("/users/:userId", UserController.updateUser);
 // 사용자 정보 추가
 // userRouter.post("/users", async (req, res, next) => {});
 // 사용자 정보 삭제(회원 탈퇴)
