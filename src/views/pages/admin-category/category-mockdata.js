@@ -1,12 +1,18 @@
+// 백엔드 팀원들과 상의 후 수정예정
 export const data = [
   {
-    categoryName: "침대",
-    productNumber: "fnt-1313",
+    categoryName: "침실가구",
+    productNumber: "침대",
     inventory: "5",
   },
   {
-    categoryName: "식탁",
-    productNumber: "fnt-131313",
-    inventory: "2",
+    categoryName: "주방가구",
+    productNumber: "식탁",
+    inventory: "7",
+  },
+  {
+    categoryName: "거실가구",
+    productNumber: "소파",
+    inventory: "11",
   },
 ];

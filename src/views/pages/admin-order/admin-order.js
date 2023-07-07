@@ -1,4 +1,4 @@
-import * as mockdata from "./mockdata.js";
+import * as mockdata from "./order-mockdata.js";
 
 const orderBtn = document.querySelector("#order-btn");
 const listContainer = document.querySelector("#list-container");
@@ -24,7 +24,7 @@ function makeOrderBox() {
   <p><b>주문 일자</b>: ${orderDate.slice(0, 10)}</p>
   <p><b>주문 시간</b>: ${orderDate.slice(11, 19)}</p>
   <p><b>주문 번호</b>: ${data[i].orderNumber}</p>
-  <p><b>요청 사항</b>: ${data[i].deliverRequest}</p>`;
+  <p><b>요청 사항</b>: ${data[i].deliReq}</p>`;
 
     // 주문 고객 정보 (이름, 전화번호, 이메일, 주소)
     const orderUserInfo = document.createElement("div");
