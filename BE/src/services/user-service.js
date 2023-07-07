@@ -2,6 +2,7 @@ import { userModel } from "../db/models/user-model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { error } from "console";
 
 class UserService {
   async addUser(userRegist) {
@@ -45,6 +46,26 @@ class UserService {
     const token = jwt.sign({ email, userId: user._id }, key);
 
     return { token, isAdmin: user.isAdmin };
+  }
+
+  // UserId를 통해 DB에서 user객체를 찾고 삭제
+  async deleteById(userId) {
+    const deleteData = await userModel.deleteByUserId(userId);
+
+    console.log(userId);
+
+    const deleteCount = deleteData.deletedCount;
+    if (deleteCount === 0) {
+      throw new Error('userId에 해당하는 User정보가 없습니다.');
+    }
+
+    return { result: "Deleted Data" }
+  }
+
+  async getAllUserInfo() {
+    const allUserInfo = await userModel.findAll();
+
+    return allUserInfo;
   }
 }
 

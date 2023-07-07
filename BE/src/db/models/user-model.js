@@ -19,6 +19,16 @@ class UserModel {
     const user = await User.findById(userId);
     return user;
   }
+  //userID로 유저 삭제
+  async deleteByUserId(userId) {
+    const deleteUser = await User.deleteOne(userId);
+    return deleteUser;
+  }
+  //모든 User 정보 가져오기
+  async findAll() {
+    const allUser = await User.find({});
+    return allUser;
+  }
 
 }
 
