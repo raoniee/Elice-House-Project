@@ -44,9 +44,8 @@
             <input type="text" class="form-control" id="phone-number" />
           </div>
           <div class="mb-3">
-            <label for="search-address-btn" class="form-label">주소</label
-            ><br />
-            <input
+            <label class="form-label">주소</label><br />
+            <!-- <input
               type="text"
               id="postcode"
               class="form-control mb-1 w-50 d-inline-block"
@@ -69,6 +68,43 @@
               id="detailAddress"
               class="form-control mb-1"
               placeholder="상세주소"
+            /> -->
+            <input
+              type="text"
+              id="postcode"
+              class="form-control mb-1 w-50 d-inline-block"
+              placeholder="우편번호"
+            />
+            <input
+              type="button"
+              id="search-address-btn"
+              class="btn btn-secondary w-25"
+              value="주소 찾기"
+            /><br />
+            <input
+              type="text"
+              id="roadAddress"
+              class="form-control mb-1"
+              placeholder="도로명주소"
+            />
+            <input
+              type="text"
+              id="jibunAddress"
+              class="form-control mb-1"
+              placeholder="지번주소"
+            />
+            <span id="guide" style="color: #999; display: none"></span>
+            <input
+              type="text"
+              id="detailAddress"
+              class="form-control mb-1 w-50 d-inline-block"
+              placeholder="상세주소"
+            />
+            <input
+              type="text"
+              id="extraAddress"
+              class="form-control mb-1 w-25 d-inline-block"
+              placeholder="참고항목"
             />
           </div>
           <div>
