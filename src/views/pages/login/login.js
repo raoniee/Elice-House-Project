@@ -31,7 +31,7 @@ async function submitLogin(e) {
   e.preventDefault();
 
   const data = { email, password };
-  const result = await API.post("/api/login", data);
+  const result = await API.post("/login", data);
   const { token, isAdmin } = result;
 
   // 이메일 유효성 검사: 빈 칸 불가
@@ -52,7 +52,7 @@ async function submitLogin(e) {
   try {
     const data = { email, password };
 
-    const result = await API.post("/api/login", data);
+    const result = await API.post("/login", data);
     // const { token, isAdmin } = result;
 
     // 로그인 성공. 토큰을 로컬스토리지에 저장

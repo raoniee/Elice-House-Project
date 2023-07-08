@@ -44,7 +44,7 @@ async function submitRegister(e) {
   // 회원가입 api 요청
   try {
     const data = { name, email, password };
-    await API.post("/api/register", data);
+    await API.post("/register", data);
     alert("회원가입이 완료되었습니다!");
 
     // 로그인 페이지로 이동
