@@ -24,6 +24,22 @@ class SubcategoryModel {
     const subcategory = await Subcategory.findById(id);
     return subcategory;
   }
+    async create(subcategoryName) {
+        const createSubcat = await Subcategory.create({subcategoryName});
+        return createSubcat;
+    }
+
+    async findById(_id) {
+        const subcategory = await Subcategory.findById({ _id });
+        return subcategory;
+      }
+
+    async findAll() {
+        const allsubcat = await Subcategory.find({});
+
+        return allsubcat;
+    }
+
 }
 
 const subcategoryModel = new SubcategoryModel();
