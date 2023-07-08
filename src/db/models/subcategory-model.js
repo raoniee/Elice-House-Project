@@ -20,6 +20,10 @@ class SubcategoryModel {
         return allsubcat;
     }
 
+  async findById(id) {
+    const subcategory = await Subcategory.findById(id);
+    return subcategory;
+  }
 }
 
 const subcategoryModel = new SubcategoryModel();
