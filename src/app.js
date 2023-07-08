@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import { userRouter } from "./routers/user-router.js";
 import { categoryRouter } from "./routers/category-router.js";
 import { productRouter } from "./routers/product-router.js";
-import { categoryRouter } from "./routers/category-router.js";
+
 
 // dotenv.config();
 
