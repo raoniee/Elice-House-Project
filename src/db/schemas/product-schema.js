@@ -1,9 +1,8 @@
 import { Schema } from "mongoose";
-import { productSchema } from "./category-schema";
 
 const productSchema = new Schema(
   {
-    // 상품 이름 
+    // 상품 이름
     name: {
       type: String,
       required: true,
@@ -18,10 +17,10 @@ const productSchema = new Schema(
       type: Number,
       required: true,
     },
-    // 상품이 포함된 자식 카테고리id 
+    // 상품이 포함된 자식 카테고리id
     subcategoryId: {
-      type: Schema.types.objectID,
-      ref: "subcategorySchema",
+      type: Schema.Types.ObjectId,
+      ref: "subcategories",
       required: true,
     },
     // 상품 이미지Url
@@ -38,8 +37,8 @@ const productSchema = new Schema(
     soldQuantity: {
       type: Number,
       required: false,
-    }
-
+      default: 0,
+    },
   },
   {
     collection: "products",
