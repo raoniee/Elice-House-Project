@@ -1,26 +1,26 @@
 export const drawItemCard = () => {
   let itemcardTemplate = `<img
-            class="w-50 border border-2 rounded-3"
-            src="../../../public/assets/imgs/item-list-card.webp"
+            class="item_detail_img w-50 border border-2 rounded-3"
+            src=""
             alt="가구"
           />
           <div
             class="item_detail_content d-flex flex-column justify-content-center w-50 ps-5"
           >
-            <span class="item_detail_name fs-1">밀튼 침대 Q (매트제외)</span>
-            <p class="item_detail_brand text-muted">까사미아</p>
-            <p class="item_detail_price fs-3">437,400원</p>
-            <p class="item_detail_desc text-muted">
-              어디에나 잘 어울리는 클래식한 디자인
-            </p>
+            <span class="item_detail_name fs-1"></span>
+            <p class="item_detail_brand text-muted"></p>
+            <p class="item_detail_price fs-3"></p>
+            <p class="item_detail_desc text-muted"></p>
             <div class="item_detail_quantity mb-3">
               <p>수량옵션</p>
               <button id="minus">-</button>
-              <input type="number" />
+              <input type="number" value="1" readonly/>
               <button id="plus">+</button>
             </div>
+            <p>총 결제 금액</p>
+            <p class="item_detail_totalprice fs-3"></p>
             <div class="item_detail_option">
-              <button class="basket">장바구니 추가하기</button>
+              <button class="cart">장바구니 추가하기</button>
               <button class="purchase">바로 구매하기</button>
             </div>
           </div>`;

@@ -18,8 +18,11 @@ function makeProductList() {
     <thead>
       <tr>
         <th scope="col">카테고리</th>
+        <th scope="col">세부카테고리</th>
         <th scope="col">상품명</th>
+        <th scope="col">브랜드</th>
         <th scope="col">가격</th>
+        <th scope="col">이미지</th>
         <th scope="col">생성일</th>
         <th scope="col">누적판매량</th>
         <th scope="col">판매상태</th>
@@ -43,8 +46,11 @@ function makeProductList() {
     // tr에 데이터 받아서 추가 >> tbody에 추가
     productTableBody.innerHTML = `
         <td>${data[i].categoryName}</td>
-        <td>${data[i].productName}</td></td>
+        <td>${data[i].subCategoryName}</td>
+        <td>${data[i].productName}</td>
+        <td>${data[i].brandName}</td>
         <td>${data[i].price}</td>
+        <td>${data[i].productImage}</td>
         <td>${data[i].createDate}</td>
         <td>${data[i].salesVolume}</td>
         <td>${data[i].saleState}</td>

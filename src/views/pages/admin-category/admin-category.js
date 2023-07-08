@@ -20,7 +20,7 @@ function makeCategoryList() {
       <thead>
         <tr>
           <th scope="col">카테고리</th>
-          <th scope="col">제품번호</th>
+          <th scope="col">서브카테고리</th>
           <th scope="col">상품개수</th>
           <th scope="col">수정/삭제</th>
         </tr>

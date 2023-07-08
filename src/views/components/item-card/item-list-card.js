@@ -8,12 +8,12 @@ export const drawItemList = () => {
               >
                 <img
                   class="item_list_img mb-2 border border-2 rounded-3"
-                  src="../../../public/assets/imgs/item-list-card.webp"
+                  src=""
                   alt="가구"
                 />
-                <span class="item_list_name mb-1">밀튼 침대 Q (매트제외)</span>
-                <p class="item_list_brand mb-1 text-muted">까사미아</p>
-                <p class="item_list_price mb-3 fw-bold">437,400원</p>
+                <span class="item_list_name mb-1"></span>
+                <p class="item_list_brand mb-1 text-muted"></p>
+                <p class="item_list_price mb-3 fw-bold"></p>
               </div>
             </div>
           </div>
