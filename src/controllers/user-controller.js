@@ -1,6 +1,7 @@
 import { userService } from "../services/user-service.js";
 
 const UserController = {
+  // user 정보 추가
   async createUser(req, res, next) {
     try {
       const { name, email, password } = req.body;

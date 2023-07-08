@@ -15,3 +15,5 @@ const subcategorySchema = new Schema(
 );
 
 export { subcategorySchema };
+
+// 삭제하면됨(코치님)

@@ -36,9 +36,9 @@ const productSchema = new Schema(
     // 누적판매량
     soldQuantity: {
       type: Number,
-      required: false,
+      required: true,
       default: 0,
-    },
+    }
   },
   {
     collection: "products",
