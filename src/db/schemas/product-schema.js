@@ -19,7 +19,7 @@ const productSchema = new Schema(
     },
     // 상품이 포함된 자식 카테고리id
     subcategoryId: {
-      type: Schema.types.objectId,
+      type: Schema.Types.ObjectId,
       ref: "subcategories",
       required: true,
     },
