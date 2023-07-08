@@ -1,6 +1,6 @@
 import { Schema } from "mongoose";
 
-const subCategorySchema = new Schema(
+const subcategorySchema = new Schema(
   {
     // 자식 카테고리 이름 
     subcategoryName: {
@@ -14,6 +14,6 @@ const subCategorySchema = new Schema(
   }
 );
 
-export { subCategorySchema };
+export { subcategorySchema };
 
 // 삭제하면됨(코치님)

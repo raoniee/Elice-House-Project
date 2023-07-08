@@ -13,7 +13,7 @@ class UserService {
     // 이메일 중복 확인
     const user = await userModel.findByEmail({ email });
     if (user) {
-      throw new Error("이미 존재된 아이디입니다.");
+      throw new Error("이미 존재하는 아이디입니다.");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -77,7 +77,7 @@ class UserService {
 
   // 사용자가 User 정보 조회
   async getAllUserInfo(userId) {
-    const allUserInfo = await userModel.findByUserId(userId);
+    const allUserInfo = await userModel.findAll();
 
     return allUserInfo;
   }

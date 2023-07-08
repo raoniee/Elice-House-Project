@@ -20,8 +20,8 @@ const productSchema = new Schema(
     },
     // 상품이 포함된 자식 카테고리id 
     subcategoryId: {
-      type: Schema.types.objectID,
-      ref: "subcategorySchema",
+      type: Schema.types.objectId,
+      ref: "subcategories",
       required: true,
     },
     // 상품 이미지Url
@@ -37,7 +37,8 @@ const productSchema = new Schema(
     // 누적판매량
     soldQuantity: {
       type: Number,
-      required: false,
+      required: true,
+      default: 0,
     }
 
   },

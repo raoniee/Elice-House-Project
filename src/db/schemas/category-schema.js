@@ -10,7 +10,7 @@ const categorySchema = new Schema(
     // 자식 카테고리 참조 
     subcategory : [{
       type : Schema.Types.ObjectId,
-      ref : 'Subcategory'
+      ref : 'subcategories'
      }]
   },
   {
