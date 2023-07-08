@@ -3,8 +3,10 @@ import express from "express";
 // import dotenv from "dotenv";
 import bodyParser from "body-parser";
 
-import { userRouter } from "./src/routers/user-router.js";
-
+import { userRouter } from "./routers/user-router.js";
+import { categoryRouter } from "./routers/category-router.js";
+import { productRouter } from "./routers/product-router.js";
+import { categoryRouter } from "./routers/category-router.js";
 
 // dotenv.config();
 
@@ -22,6 +24,8 @@ app.get("/", (req, res) => {
 // app.use(viewsRouter);
 
 app.use("/api", userRouter);
-
+app.use("/api", categoryRouter);
+app.use("/api", productRouter);
+app.use("/api", categoryRouter);
 
 export { app };

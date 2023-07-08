@@ -1,19 +1,19 @@
 import { Schema } from "mongoose";
 
-const subCategorySchema = new Schema(
+const subcategorySchema = new Schema(
   {
+    // 자식 카테고리 이름
     subcategoryName: {
       type: String,
       required: true,
     },
   },
-  // depth ...
   {
     collection: "subcategories",
     timestamp: true,
   }
 );
 
-export { subCategorySchema };
+export { subcategorySchema };
 
-// 삭제하면 됨(코치님)
+// 삭제하면됨(코치님)

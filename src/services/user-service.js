@@ -13,7 +13,7 @@ class UserService {
     // 이메일 중복 확인
     const user = await userModel.findByEmail({ email });
     if (user) {
-      throw new Error("이미 존재된 아이디입니다.");
+      throw new Error("이미 존재하는 아이디입니다.");
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -56,45 +56,35 @@ class UserService {
 
     const deleteCount = deleteData.deletedCount;
     if (deleteCount === 0) {
-      throw new Error('userId에 해당하는 User정보가 없습니다.');
+      throw new Error("userId에 해당하는 User정보가 없습니다.");
     }
 
-    return { result: "Deleted Data" }
+    return { result: "Deleted Data" };
   }
 
-  // 사용자 정보 수정 
-  async updateInfo(userInfo) {
-    const userId = userInfo.userId;
-    const name = userInfo.name;
-    const password = userInfo.password;
-
-    const toUpdate = {};
-
-    if (name) {
-      toUpdate.name = name;
+  // 사용자 정보 수정
+  async updateInfo(userId, toUpdate) {
+    const password = toUpdate.password;
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      toUpdate.passowrd = hashedPassword;
     }
 
-    const updateName = await userModel.updateName({ userId, name });
+    const checkUpdate = await userModel.update(userId, toUpdate);
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const updatePassword = await userModel.updatePassword({
-      userId,
-      hashedPassword,
-    });
-
-    return { name: updateName, password: updatePassword };
+    return checkUpdate;
   }
 
   // 사용자가 User 정보 조회
   async getAllUserInfo(userId) {
-    const allUserInfo = await userModel.findByUserId(userId);
+    const allUserInfo = await userModel.findAll();
 
     return allUserInfo;
   }
 
   async findByUserId(userId) {
     const userInfo = await userModel.findByUserId(userId);
-    
+
     return userInfo;
   }
 }
