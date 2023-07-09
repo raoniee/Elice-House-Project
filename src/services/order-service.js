@@ -6,31 +6,66 @@ import { orderModel } from "../db/models/order-model.js";
 class OrderService {
     async addOrder(newOrder, newOrderitem) {
         const createOrder = await orderModel.create(newOrder);
+        let createOrderitems = [];
+        let createOrderitemsId = [];
         let createOrderitem= {};
+        let orderItem = {};
         if (createOrder) {
+            
             const orderId = createOrder._id;
-            const productId = newOrderitem.productId;
+            const productIds = newOrderitem.productIds;
+            for (const productId of productIds) {
+                const orderProduct  = await productModel.getProdInfo(productId);
+                const productName = orderProduct.name;
+                const productImg = orderProduct.imageUrl;
+                
+                createOrderitem = await orderitemModel.create({
+                    orderId,
+                    productId,
+                    productName,
+                    productImg,
+                    quantity: 0,
+                });
+                createOrderitems.push(createOrderitem);
+                createOrderitemsId.push(createOrderitem._id);
+            }
             
-            const orderProduct  = await productModel.getProdInfo(productId);
-            const productName = orderProduct.name;
-            const productImg = orderProduct.imageUrl;
-            
-            const quantity = newOrderitem.quantity;
+            const quantitys = newOrderitem.quantitys;
+            let cnt = 0;
 
-            createOrderitem = await orderitemModel.create({
-                orderId,
-                productId,
-                productName,
-                productImg,
-                quantity,
-            });
+            for (const quantity of quantitys) {
+                createOrderitems[cnt].quantity = quantity;
+                const createOrderitemId = createOrderitemsId[cnt];
+                orderItem = await orderitemModel.findOneAndUpdate(createOrderitemId, quantity);
+                cnt++;
+                
+            }
+
         }
         const order = {
             createOrder : createOrder,
-            createOrderitem: createOrderitem
+            createOrderitems: createOrderitems
         }
         
         return order;
+    }
+
+    async getOrder(userId) {
+        const orders = await orderModel.getOrder(userId);
+        const orderitems = await orderitemModel.getOrderItem(userId);
+        let orderInfo = [];
+
+        for (const order of orders) {
+            const orderId = order._id;
+            if (orderId) {
+                const orderItem = await orderitemModel.getOrderOne(orderId);
+                orderInfo.push(orderOneInfo);    
+                orderInfo.push(orderItem);         
+
+            }
+        }
+
+        return orderInfo;
     }
 
     

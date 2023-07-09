@@ -8,6 +8,11 @@ class OrderModel {
         const createOrder = await Order.create(newOrder);
         return createOrder;
     }
+
+    async getOrder(userId) {
+        const orderInfo = await Order.find({ userId });
+        return orderInfo;
+    }
 }
 
 const orderModel = new OrderModel();
