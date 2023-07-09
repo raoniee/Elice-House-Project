@@ -53,12 +53,11 @@ class ProductService {
 
     const addNewProduct = await productModel.create(ProductInfo);
 
-    // 서브카테고리 내 상품 개수 업데이트
     if (addNewProduct) {
       const subcatId = ProductInfo.subcategoryId;
       const subcatProds = await productModel.getSubcatProds(subcatId);
       const subcatProdsNum = subcatProds.length;
-      await subcategoryModel.update(subcatId, {
+      const updateSubcatQnt = await subcategoryModel.update(subcatId, {
         productQuantity: subcatProdsNum,
       });
     }

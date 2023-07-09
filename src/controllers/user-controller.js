@@ -46,8 +46,9 @@ const UserController = {
 
       const { name, email } = findUserOne;
 
-      res.json({ name, email });
-    } catch (error) {
+      res.status(200).json({ name, email })
+
+    }catch(error) {
       next(error);
     }
   },
@@ -60,8 +61,8 @@ const UserController = {
 
       const deleteUserInfo = await userService.deleteById({ _id: userId });
 
-      res.status(200).json(deleteUserInfo);
-    } catch (error) {
+      res.status(204).json(deleteUserInfo);
+    } catch(error) {
       next(error);
     }
   },
