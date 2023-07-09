@@ -26,17 +26,18 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   try {
-    // 이메일 유효성 검사: 빈 칸 불가
-    if (INPUT_EMAIL.value == "") {
-      alert("이메일을 입력해주세요.");
-      INPUT_EMAIL.focus();
-      return;
-    }
-
-    // 비밀번호 유효성 검사: 빈칸 불가
-    if (INPUT_PW.value == "") {
-      alert("비밀번호를 입력해주세요.");
-      INPUT_PW.focus();
+    // 코드리뷰 반영 -- 유효성 체크 필드가 늘어나는 경우 생각하기
+    const validateList = [
+      { elem: INPUT_EMAIL, label: "이메일" },
+      { elem: INPUT_PW, label: "비밀번호" },
+    ];
+    // 유효성 검사 - 빈칸 불가
+    const notValidFieldIndex = validateList.findIndex(
+      (field) => !field.elem.value.trim()
+    );
+    if (notValidFieldIndex !== -1) {
+      alert(`${validateList[notValidFieldIndex].label}를 입력해주세요.`);
+      validateList[notValidFieldIndex].elem.focus();
       return;
     }
 
