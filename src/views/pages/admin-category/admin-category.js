@@ -1,14 +1,11 @@
 import * as categoryData from "./category-mockdata.js";
 
-const cateygoryBtn = document.querySelector("#category-btn");
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
-// 모달창
-const categoryModalBox = document.querySelector("#modal-container");
 
 // 제목 누르면 홈 화면
 adminTitle.addEventListener("click", function () {
-  location.href = "../admin-main/admin-main.html";
+  location.href = "/admin/main";
 });
 
 // 카테고리 관리창 생성 함수
@@ -46,13 +43,16 @@ function makeCategoryList() {
     <td>${data[i].productQuantity}</td>
     <td>
       <button type="button" class="btn btn-dark btn-sm">수정</button>
-      <button type="button" class="btn btn-dark btn-sm">삭제</button>
+      <button type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
     </td>
     `;
 
     const temp = document.querySelector("#tBody");
     temp.appendChild(categoryTableBody);
   }
+
+  //삭제 버튼 누르면 실행되는 함수
+  deleteCategory();
 }
 
 // 추가 버튼 함수
@@ -61,9 +61,39 @@ function addCategory() {
 }
 
 // 삭제 버튼 함수
-function deleteCategory() {}
+function deleteCategory() {
+  const delCategoryBtn = document.querySelectorAll(".del-category-btn");
+  if (delCategoryBtn && Array.from(delCategoryBtn).length) {
+    delCategoryBtn.forEach((btn) =>
+      btn.addEventListener("click", () => confirm("정말로 삭제하시겠습니까?"))
+    );
+    // confirm >> true/false 받아서 작업필요
+    // 추후 데이터 삭제 관련 로직 필요
+  }
+}
 
 // 수정 버튼 함수
 function modifyCategory() {}
+
+// navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
+function clickNavbar() {
+  const orderBtn = document.querySelector("#order-btn");
+  const productBtn = document.querySelector("#product-btn");
+  const categoryBtn = document.querySelector("#category-btn");
+
+  orderBtn.addEventListener("click", function () {
+    location.href = "/admin/order";
+  });
+
+  productBtn.addEventListener("click", function () {
+    location.href = "/admin/product";
+  });
+
+  categoryBtn.addEventListener("click", function () {
+    location.href = "/admin/category";
+  });
+}
+// navbar 함수 실행
+clickNavbar();
 
 window.onload = makeCategoryList();

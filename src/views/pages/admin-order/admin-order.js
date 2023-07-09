@@ -1,13 +1,11 @@
 import * as mockdata from "./order-mockdata.js";
-import * as Api from "../../api.js";
 
-const orderBtn = document.querySelector("#order-btn");
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
 
 // 메인 페이지 이동
 adminTitle.addEventListener("click", function () {
-  location.href = "../admin-main/admin-main.html";
+  location.href = "/admin/main";
 });
 
 // 주문 정보 리스트 박스 생성 함수
@@ -72,8 +70,6 @@ function makeOrderBox() {
   deleteOrder();
   // 배송 상태 변경시 작동
   changeDeliverState();
-
-  // dataTest();
 }
 
 // 주문 삭제 버튼에 적용할 함수
@@ -104,8 +100,25 @@ function changeDeliverState() {
   // 백 데이터에 상태변경 정보 반영
 }
 
-async function dataTest() {
-  const testData = await Api.get(`/api/admin/products`);
-  console.log(testData);
+// navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
+function clickNavbar() {
+  const orderBtn = document.querySelector("#order-btn");
+  const productBtn = document.querySelector("#product-btn");
+  const categoryBtn = document.querySelector("#category-btn");
+
+  orderBtn.addEventListener("click", function () {
+    location.href = "/admin/order";
+  });
+
+  productBtn.addEventListener("click", function () {
+    location.href = "/admin/product";
+  });
+
+  categoryBtn.addEventListener("click", function () {
+    location.href = "/admin/category";
+  });
 }
+// navbar 함수 실행
+clickNavbar();
+
 window.onload = makeOrderBox();
