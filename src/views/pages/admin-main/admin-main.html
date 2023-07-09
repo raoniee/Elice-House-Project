@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>관리자 페이지</title>
 
-    <link rel="stylesheet" href="admin-main.css" />
-
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -20,38 +18,20 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+
+    <link rel="stylesheet" href="admin-main.css" />
+    <script src="admin-main.js" type="module" defer></script>
   </head>
   <body>
     <main>
       <div id="admin-title">관리자 페이지</div>
 
       <div id="main-container">
-        <nav id="side-bar" class="nav flex-column">
-          <a
-            id="order-btn"
-            class="nav-link active"
-            aria-current="page"
-            href="../admin-order/admin-order.html"
-            >주문 관리</a
-          >
-          <a
-            id="product-btn"
-            class="nav-link"
-            href="../admin-product/admin-product.html"
-            >상품 관리</a
-          >
-          <a
-            id="category-btn"
-            class="nav-link"
-            href="../admin-category/admin-category.html"
-            >카테고리 관리</a
-          >
-          <a id="user-btn" class="nav-link" href="#">회원 관리</a>
-        </nav>
-
-        <!-- nav에서 선택한 내용 나오는 부분 -->
-
+        <div id="nav-container">
+          <!-- navbar 나오는 위치 -->
+        </div>
         <div id="list-container">
+          <!-- nav에서 선택한 내용 나오는 부분 -->
           <div id="list-container-intro">
             <div>관리자 페이지 입니다.</div>
             <div>좌측 메뉴를 통해 관리도구를 활용할 수 있습니다.</div>
@@ -59,7 +39,5 @@
         </div>
       </div>
     </main>
-
-    <!-- footer 넣기 -->
   </body>
 </html>
