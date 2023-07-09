@@ -25,8 +25,8 @@ const CategoryController = {
         } catch(error) {
             next(error);
         }
-    }
-  },
+    },
+  
   // 카테고리 생성
   async createCat(req, res, next) {
     try {
@@ -41,7 +41,8 @@ const CategoryController = {
     } catch (error) {
       next(error);
     }
-  },
+  }
+
 };
 
 export { CategoryController };

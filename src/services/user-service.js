@@ -89,6 +89,19 @@ class UserService {
 
     return userInfo;
   }
+
+  async checkPassword(email, passowrd) {
+    const userInfo = await userModel.findByEmail({email});
+
+    const hashedPassword = userInfo.password;
+    const checkPassword = await bcrypt.compare(passowrd, hashedPassword);
+
+    if (!checkPassword) {
+      throw new Error("비밀번호 확인 필요");
+    }
+
+    return true;
+  }
 }
 
 const userService = new UserService();

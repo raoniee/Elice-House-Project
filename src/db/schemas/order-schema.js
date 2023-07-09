@@ -1,15 +1,9 @@
 import { Schema } from "mongoose";
-import { orderItemSchema } from "orderitem-schema";
 
 const orderSchema = new Schema(
   {
-    // 주문 번호
-    orderID: {
-      type: String,
-      required: true,
-    },
     // 유저 아이디 or 비회원 아이디
-    userID: {
+    userId: {
       type: String,
       required: true,
     },
@@ -38,8 +32,6 @@ const orderSchema = new Schema(
         type: String,
         required: true,
     },
-    // 주문한 아이템을 배열로 받는다
-    orderItem: [orderItemSchema],
     //배송 상태
     state: {
         type: String,
