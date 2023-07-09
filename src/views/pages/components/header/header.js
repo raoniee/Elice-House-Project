@@ -1,4 +1,4 @@
-export const drawHeader = () => {
+const drawHeader = () => {
   let headerTemplate = `
   <div class="py-3 border-bottom">
       <div class="container d-flex flex-wrap justify-content-center">
@@ -114,3 +114,5 @@ export const drawHeader = () => {
   const headerTag = document.querySelector(".header");
   headerTag.innerHTML = headerTemplate;
 };
+
+export {drawHeader};
