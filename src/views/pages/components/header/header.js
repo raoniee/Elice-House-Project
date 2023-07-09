@@ -1,4 +1,4 @@
-const drawHeader = () => {
+export const drawHeader = () => {
   let headerTemplate = `
   <div class="py-3 border-bottom">
       <div class="container d-flex flex-wrap justify-content-center">
@@ -26,86 +26,7 @@ const drawHeader = () => {
     </div>
     <nav class="py-2 bg-light border-bottom">
       <div class="container">
-        <ul class="nav justify-content-center nav-pills">
-          <li class="nav-item">
-            <div class="dropdown text-end">
-              <a
-                href="#"
-                class="d-block link-dark text-decoration-none nav-link"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >침실가구
-              </a>
-              <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="#">침대</a></li>
-                <li><a class="dropdown-item" href="#">매트리스/토퍼</a></li>
-                <li><a class="dropdown-item" href="#">화장대/콘솔/거울</a></li>
-                <li><a class="dropdown-item" href="#">서랍장/협탁</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="dropdown text-end">
-              <a
-                href="#"
-                class="d-block link-dark text-decoration-none nav-link"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >옷장/수납장
-              </a>
-              <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="#">옷장/붙박이장</a></li>
-                <li><a class="dropdown-item" href="#">드레스룸/행거</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="dropdown text-end">
-              <a
-                href="#"
-                class="d-block link-dark text-decoration-none nav-link"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >거실가구
-              </a>
-              <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="#">소파</a></li>
-                <li><a class="dropdown-item" href="#">거실테이블</a></li>
-                <li><a class="dropdown-item" href="#">거실장</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="dropdown text-end">
-              <a
-                href="#"
-                class="d-block link-dark text-decoration-none nav-link"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >주방가구
-              </a>
-              <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="#">식탁/테이블</a></li>
-                <li><a class="dropdown-item" href="#">홈바/아일랜드식탁</a></li>
-                <li><a class="dropdown-item" href="#">식탁세트</a></li>
-              </ul>
-            </div>
-          </li>
-          <li class="nav-item">
-            <div class="dropdown text-end">
-              <a
-                href="#"
-                class="d-block link-dark text-decoration-none nav-link"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                >서재가구
-              </a>
-              <ul class="dropdown-menu text-small">
-                <li><a class="dropdown-item" href="#">책상/책장/ACC</a></li>
-                <li><a class="dropdown-item" href="#">서재의자</a></li>
-              </ul>
-            </div>
-          </li>
+        <ul class="nav-bottom justify-content-center nav-pills">
         </ul>
       </div>
     </nav>
@@ -115,4 +36,129 @@ const drawHeader = () => {
   headerTag.innerHTML = headerTemplate;
 };
 
-export {drawHeader};
+/* <li class="nav-item">
+  <div class="dropdown text-end">
+    <a
+      href="#"
+      class="d-block link-dark text-decoration-none nav-link"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+      >
+    </a>
+    <ul class="dropdown-menu text-small">
+      <li><a class="dropdown-item" href="#"></a></li>
+      <li><a class="dropdown-item" href="#"></a></li>
+      <li><a class="dropdown-item" href="#"></a></li>
+      <li><a class="dropdown-item" href="#"></a></li>
+    </ul>
+  </div>
+</li> */
+
+export const insertHeaderData = () => {
+  const ul = document.querySelector(".nav-bottom");
+  const Nav = [
+    {
+      categoryName: "침실가구",
+      subcategoryName: "침대1",
+    },
+    {
+      categoryName: "침실가구",
+      subcategoryName: "침대2",
+    },
+    {
+      categoryName: "침실가구",
+      subcategoryName: "침대3",
+    },
+    {
+      categoryName: "침실가구",
+      subcategoryName: "침대4",
+    },
+    {
+      categoryName: "옷장/수납장",
+      subcategoryName: "옷장1",
+    },
+    {
+      categoryName: "옷장/수납장",
+      subcategoryName: "옷장2",
+    },
+    {
+      categoryName: "옷장/수납장",
+      subcategoryName: "옷장3",
+    },
+    {
+      categoryName: "옷장/수납장",
+      subcategoryName: "옷장4",
+    },
+    {
+      categoryName: "거실가구",
+      subcategoryName: "쇼파1",
+    },
+    {
+      categoryName: "거실가구",
+      subcategoryName: "쇼파2",
+    },
+    {
+      categoryName: "거실가구",
+      subcategoryName: "쇼파3",
+    },
+    {
+      categoryName: "거실가구",
+      subcategoryName: "쇼파4",
+    },
+    {
+      categoryName: "주방가구",
+      subcategoryName: "싱크대1",
+    },
+    {
+      categoryName: "주방가구",
+      subcategoryName: "싱크대2",
+    },
+    {
+      categoryName: "주방가구",
+      subcategoryName: "싱크대3",
+    },
+    {
+      categoryName: "주방가구",
+      subcategoryName: "싱크대4",
+    },
+    {
+      categoryName: "서재가구",
+      subcategoryName: "책장1",
+    },
+    {
+      categoryName: "서재가구",
+      subcategoryName: "책장2",
+    },
+    {
+      categoryName: "서재가구",
+      subcategoryName: "책장3",
+    },
+    {
+      categoryName: "서재가구",
+      subcategoryName: "책장4",
+    },
+  ];
+  const { categoryName, subcategoryName } = Nav;
+
+  for (let i = 0; i < Nav.length; i++) {
+    const Category = `<li class="nav-item">
+    <div class="dropdown text-end">
+      <a
+        href="#"
+        class="d-block link-dark text-decoration-none nav-bottom-link"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+        >
+      </a>
+      <ul class="dropdown-menu text-small"></ul>
+    </div>
+  </li>`;
+    ul.innerHTML = Category;
+    const a = document.querySelector(".nav-bottom-link");
+    a.innerText = Nav[i].categoryName;
+  }
+
+  for (let i = 0; i < Nav.length; i++) {
+    console.log(Nav[i].categoryName);
+  }
+};
