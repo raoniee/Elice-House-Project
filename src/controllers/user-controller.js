@@ -46,7 +46,7 @@ const UserController = {
 
       const { name, email } = findUserOne;
 
-      res.json({ name, email })
+      res.status(200).json({ name, email })
 
     }catch(error) {
       next(error);
@@ -61,7 +61,7 @@ const UserController = {
 
       const deleteUserInfo = await userService.deleteById({ _id: userId });
 
-      res.status(200).json(deleteUserInfo);
+      res.status(204).json(deleteUserInfo);
     } catch(error) {
       next(error);
     }

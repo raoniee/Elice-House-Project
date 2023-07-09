@@ -51,6 +51,15 @@ class ProductService {
 
     const addNewProduct = await productModel.create(ProductInfo);
 
+    if (addNewProduct) {
+      const subcatId = ProductInfo.subcategoryId;
+      const subcatProds = await productModel.getSubcatProds(subcatId);
+      const subcatProdsNum = subcatProds.length;
+      const updateSubcatQnt = await subcategoryModel.update(subcatId, {
+        productQuantity: subcatProdsNum,
+      });
+    }
+
     return addNewProduct;
   }
 }

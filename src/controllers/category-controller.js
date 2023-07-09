@@ -21,7 +21,7 @@ const CategoryController = {
                 subcategoryName
             });
 
-            res.status(200).json(newCat);
+            res.status(201).json(newCat);
         } catch(error) {
             next(error);
         }
