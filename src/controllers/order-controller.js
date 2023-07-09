@@ -47,7 +47,6 @@ const OrderController = {
             next(error);
         }
     }
-
 };
 
 export { OrderController };

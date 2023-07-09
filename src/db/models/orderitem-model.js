@@ -16,15 +16,7 @@ class OrderitemModel {
 
     async getOrderOne(orderId) {
         const orderOneInfo = await OrderItem.findOne({ orderId });
-    }
-
-    async findOneAndUpdate(_id, change) {
-        const result = await OrderItem.findOneAndUpdate(
-            { _id: _id },
-            {...(change === 0 && { change })},
-            { new: true }
-          );
-
+        return orderOneInfo;
     }
 }
 
