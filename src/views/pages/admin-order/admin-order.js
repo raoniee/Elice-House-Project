@@ -1,4 +1,5 @@
 import * as mockdata from "./order-mockdata.js";
+import * as Api from "../../api.js";
 
 const orderBtn = document.querySelector("#order-btn");
 const listContainer = document.querySelector("#list-container");
@@ -11,7 +12,7 @@ adminTitle.addEventListener("click", function () {
 
 // 주문 정보 리스트 박스 생성 함수
 function makeOrderBox() {
-  let data = mockdata.data;
+  const data = mockdata.data;
 
   for (let i = 0; i < data.length; i++) {
     const orderBox = document.createElement("div");
@@ -51,7 +52,7 @@ function makeOrderBox() {
     // del-order-btn 클래스 >>> 추후 삭제 eventlistner 적용
 
     // 정보 병합
-    // orderBox = orderInfo + orderUserInfo + deliverState + deliverRequest
+    // orderBox = orderInfo + orderUserInfo + orderStateModify
     orderBox.appendChild(orderInfo);
     orderBox.appendChild(orderUserInfo);
     orderBox.appendChild(orderStateModify);
@@ -62,13 +63,15 @@ function makeOrderBox() {
   deleteOrder();
   // 배송 상태 변경시 작동
   changeDeliverState();
+
+  dataTest();
 }
 
 // 주문 삭제 버튼에 적용할 함수
 function deleteOrder() {
   // 버튼을 누르면 데이터 삭제 >> orderBox 사라짐
   const deleteOrderBtns = document.querySelectorAll(".del-order-btn");
-  if (deleteOrderBtns) {
+  if (deleteOrderBtns && Array.from(deleteOrderBtns).length) {
     deleteOrderBtns.forEach((btn) =>
       btn.addEventListener("click", () => confirm("정말로 삭제하시겠습니까?"))
     );
@@ -92,4 +95,8 @@ function changeDeliverState() {
   // 백 데이터에 상태변경 정보 반영
 }
 
+async function dataTest() {
+  const testData = await Api.get(`/api/admin/products`);
+  console.log(testData);
+}
 window.onload = makeOrderBox();
