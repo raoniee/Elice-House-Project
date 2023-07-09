@@ -1,7 +1,6 @@
 import { categoryModel } from "../db/models/category-model.js";
 import { subcategoryModel } from "../db/models/subcategory-model.js";
 
-
 class CategoryService {
     // 카테고리 생성
     async addCat(newCat) {
@@ -14,16 +13,16 @@ class CategoryService {
             // 서브 카테고리 생성
             const subCatinCats = category.subcategory;
             
-            subCatinCats.forEach((subcatId) => {
-                const subcat = subcategoryModel.findById(subcatId);
+            for(const subcatId of subCatinCats){
+                const subcat = await subcategoryModel.findById(subcatId);
                 const name = subcat.subcategoryName;
 
                 if (subcategoryName == name) {
                     throw new Error("이미 존재하는 서브 카테고리입니다.");
+                    return;
                 }
-            })
+            }
            
-
             const addSubcat =  await subcategoryModel.create(subcategoryName);
             console.log("add -> ", addSubcat);
             if (!addSubcat) {
@@ -57,22 +56,33 @@ class CategoryService {
     // 전체 카테고리 정보 조회
     async getAllCatService() {
         const allCatInfo = await categoryModel.findAll();
-        const allSubcatInfo = await subcategoryModel.findAll();
-        const AllCategory = {};
+        // const allSubcatInfo = await subcategoryModel.findAll();
+        const AllCategory = [];
 
-        allCatInfo.forEach((cat) => {
-            const subIds = cat.subcategory;
-            const subCatNames = [];
-            subIds.forEach((id) => {
-                const subCatName = subcategoryModel.findById(id);
-                subCatNames.push([cat.categoryName , subCatName.subcategoryName]);
-            })
-        })
+        // allCatInfo.forEach( (catInfo) =>
+        for(const catInfo of allCatInfo) {
+            const catIds = catInfo.subcategory;
 
+            // catIds.forEach( async (subcatId) =>            
+            for (const subcatId of catIds) {
 
+                const subcatInCat = await subcategoryModel.findById(subcatId);
+                if (subcatInCat) {
+                    const res = {};
+                    const subcatName = subcatInCat.subcategoryName;
+                    const subcatProductQauntity = subcatInCat.productQuantity;
+
+                    // response로 보내줄 객체 생성!!
+                    res.categoryName = catInfo.categoryName;
+                    res.subcategoryName = subcatName;
+                    res.productQauntity = subcatProductQauntity;
+
+                    AllCategory.push(res);
+                }
+            }
+        }       
         return { AllCategory };
     }
-
 }
 
 const categoryService = new CategoryService();
