@@ -10,5 +10,4 @@ categoryRouter.post("/admin/categories", CategoryController.createCat);
 // 전체 카테고리 조회
 categoryRouter.get("/admin/categories", CategoryController.getAllCat);
 
-
 export { categoryRouter };

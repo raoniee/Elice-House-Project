@@ -1,6 +1,15 @@
 import { model } from "mongoose";
-import { orderItemSchema } from "../schemas/orderitem-schema";
+import { orderItemSchema } from "../schemas/orderitem-schema.js";
 
 const Orderitem = model("orderItems", orderItemSchema);
 
-export { Orderitem };
+class OrderitemModel {
+    async create(newOrderitem) {
+        const createOrderitem = await Orderitem.create(newOrderitem);
+        return createOrderitem;
+    }
+}
+
+const orderitemModel = new OrderitemModel();
+
+export { orderitemModel };

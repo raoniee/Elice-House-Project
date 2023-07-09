@@ -5,9 +5,9 @@ const ProductController = {
   async getAllProducts(req, res, next) {
     // response: name, brand, price, subcategoryId, imageUrl, description, soldQuantity
     try {
-      const getAllProductInfo = await productService.getAllProductInfo();
+      const AllProductInfo = await productService.getAllProductInfo();
 
-      res.status(200).json(getAllProductInfo);
+      res.status(200).json(AllProductInfo);
     } catch (error) {
       next(error);
     }
@@ -17,13 +17,15 @@ const ProductController = {
   async createProduct(req, res, next) {
     // categoryName, subcategoryName, name, price, imageUrl ,brand, description
     try {
-      const categoryName = req.body.categoryName;
-      const subcategoryName = req.body.subcategoryName;
-      const name = req.body.name;
-      const price = req.body.price;
-      const imageUrl = req.body.imageUrl;
-      const brand = req.body.brand;
-      const description = req.body.description;
+      const {
+        categoryName,
+        subcategoryName,
+        name,
+        price,
+        imageUrl,
+        brand,
+        description,
+      } = req.body;
 
       const newProduct = await productService.addProduct({
         categoryName,
@@ -45,6 +47,11 @@ const ProductController = {
   async deleteProduct(req, res, next) {
     // productId
     try {
+      const productId = req.params.productId;
+
+      const deleteProductInfo = await productService.deleteById(productId);
+
+      res.status(200).json(deleteProductInfo);
     } catch (error) {
       next(error);
     }
@@ -54,15 +61,22 @@ const ProductController = {
   async getProductsByCat(req, res, next) {
     // subcategoryId
     try {
+      const subcatId = req.params.subcatId;
+      const subcatProducts = await productService.getSubcatProdsById(subcatId);
+      res.status(200).json(subcatProducts);
     } catch (error) {
       next(error);
     }
   },
 
   // 상품 정보 상세 조회(user)
-  async getProductsById(req, res, next) {
+  async getProdById(req, res, next) {
+    // request : productId
     // response: productId, name, brand, price, subcategoryId, imageUrl, description, soldQuantity
     try {
+      const productId = req.params.productId;
+      const productInfo = await productService.getProdById(productId);
+      res.status(200).json(productInfo);
     } catch (error) {
       next(error);
     }

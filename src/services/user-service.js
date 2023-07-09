@@ -26,8 +26,7 @@ class UserService {
 
   // 로그인 아이디 비밀번호 확인 및 jwt 토큰 생성
   async giveToken(userIdPass) {
-    const email = userIdPass.email;
-    const password = userIdPass.password;
+    const { email, password } = userIdPass;
 
     const user = await userModel.findByEmail({ email });
 
@@ -43,9 +42,12 @@ class UserService {
     }
 
     const key = process.env.KEY;
-    const token = jwt.sign({ email, userId: user._id }, key);
+    const token = jwt.sign(
+      { email, userId: user._id, isAdmin: user.isAdmin },
+      key
+    );
 
-    return { token, isAdmin: user.isAdmin };
+    return { token };
   }
 
   // UserId를 통해 DB에서 user객체를 찾고 삭제
@@ -86,6 +88,19 @@ class UserService {
     const userInfo = await userModel.findByUserId(userId);
 
     return userInfo;
+  }
+
+  async checkPassword(email, passowrd) {
+    const userInfo = await userModel.findByEmail({email});
+
+    const hashedPassword = userInfo.password;
+    const checkPassword = await bcrypt.compare(passowrd, hashedPassword);
+
+    if (!checkPassword) {
+      throw new Error("비밀번호 확인 필요");
+    }
+
+    return true;
   }
 }
 
