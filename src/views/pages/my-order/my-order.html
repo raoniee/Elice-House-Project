@@ -34,13 +34,13 @@
             <tr>
               <th class="col-2">주문일자</th>
               <th class="col-4">상품</th>
-              <th class="col-1">수량</th>
-              <th>총 주문금액</th>
-              <th>배송상태</th>
-              <th>주문변경</th>
+              <!-- <th class="col-1">수량</th> -->
+              <th rowspan="2">총 결제금액</th>
+              <th rowspan="2">배송상태</th>
+              <th rowspan="2">주문변경</th>
             </tr>
           </thead>
-          <tbody id="order-contents">
+          <tbody id="order-container">
             <!-- 주문 데이터 불러오기 -->
           </tbody>
         </table>
@@ -73,8 +73,7 @@
                 <input type="text" class="form-control" id="phone-number" />
               </div>
               <div class="mb-3">
-                <label for="search-address-btn" class="form-label">주소</label
-                ><br />
+                <label class="form-label d-block">주소</label>
                 <input
                   type="text"
                   id="postcode"
@@ -84,8 +83,8 @@
                 <input
                   type="button"
                   id="search-address-btn"
-                  class="btn btn-primary w-25"
-                  value="주소찾기"
+                  class="btn btn-secondary w-25"
+                  value="주소 찾기"
                 /><br />
                 <input
                   type="text"
@@ -93,21 +92,36 @@
                   class="form-control mb-1"
                   placeholder="도로명주소"
                 />
+                <!-- <input
+                  type="text"
+                  id="jibunAddress"
+                  class="form-control mb-1"
+                  placeholder="지번주소"
+                /> -->
+                <span id="guide" style="color: #999; display: none"></span>
                 <input
                   type="text"
                   id="detailAddress"
-                  class="form-control mb-1"
+                  class="form-control mb-1 d-inline-block"
                   placeholder="상세주소"
                 />
               </div>
               <div>
-                <label for="phone-number" class="form-label">배송 메시지</label>
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>배송 메시지를 선택하세요</option>
-                  <option value="1">문 앞에 놔주세요</option>
-                  <option value="2">배송 전, 연락 주세요</option>
-                  <option value="3">부재 시, 연락 주세요</option>
-                  <option value="3">선택 안 함</option>
+                <label class="form-label">배송 요청사항</label>
+                <select
+                  class="form-select"
+                  aria-label="Default select example"
+                  id="delivery-request"
+                >
+                  <!-- <option selected>배송 요청사항을 선택하세요</option> -->
+                  <option value="문 앞에 놔주세요">문 앞에 놔주세요</option>
+                  <option value="배송 전, 연락 주세요">
+                    배송 전, 연락 주세요
+                  </option>
+                  <option value="부재 시, 연락 주세요">
+                    부재 시, 연락 주세요
+                  </option>
+                  <option value="선택 안 함">선택 안 함</option>
                 </select>
               </div>
             </form>
@@ -124,13 +138,15 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
+              id="save-order-change-btn"
             >
-              확인
+              저장
             </button>
           </div>
         </div>
       </div>
     </div>
+
     <!-- 주문 취소 모달 -->
     <div
       class="modal fade"
