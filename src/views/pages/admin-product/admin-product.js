@@ -48,13 +48,13 @@ function makeProductList() {
         <td>${data[i].categoryName}</td>
         <td>${data[i].subCategoryName}</td>
         <td>${data[i].productName}</td>
-        <td>${data[i].brandName}</td>
+        <td>${data[i].brand}</td>
         <td>${data[i].price}</td>
-        <td>${data[i].productImage}</td>
+        <td>${data[i].imageUrl}</td>
         <td>${data[i].createDate}</td>
         <td>${data[i].salesVolume}</td>
         <td>${data[i].saleState}</td>
-        <td>${data[i].detail}</td>
+        <td>${data[i].description}</td>
         <td>
           <button type="button" class="btn btn-dark btn-sm">수정</button>
           <button type="button" class="btn btn-dark btn-sm">삭제</button>

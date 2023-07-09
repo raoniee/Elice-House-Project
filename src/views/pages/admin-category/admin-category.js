@@ -42,8 +42,8 @@ function makeCategoryList() {
     // tr에 데이터 받아서 추가
     categoryTableBody.innerHTML = `
     <td>${data[i].categoryName}</td>
-    <td>${data[i].productNumber}</td>
-    <td>${data[i].inventory}</td>
+    <td>${data[i].subcategoryName}</td>
+    <td>${data[i].productQuantity}</td>
     <td>
       <button type="button" class="btn btn-dark btn-sm">수정</button>
       <button type="button" class="btn btn-dark btn-sm">삭제</button>
