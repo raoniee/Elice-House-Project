@@ -7,9 +7,8 @@ class OrderService {
     async addOrder(newOrder, newOrderitem) {
         const createOrder = await orderModel.create(newOrder);
         let createOrderitems = [];
-        let createOrderitemsId = [];
-        let createOrderitem= {};
-        let orderItem = {};
+        let result = [];
+        let createOrderitem= {};  
         if (createOrder) {
             
             const orderId = createOrder._id;
@@ -18,16 +17,14 @@ class OrderService {
                 const orderProduct  = await productModel.getProdInfo(productId);
                 const productName = orderProduct.name;
                 const productImg = orderProduct.imageUrl;
-                
-                createOrderitem = await orderitemModel.create({
-                    orderId,
-                    productId,
-                    productName,
-                    productImg,
-                    quantity: 0,
-                });
+
+                createOrderitem.orderId = orderId;
+                createOrderitem.productId = productId;
+                createOrderitem.productName = productName;
+                createOrderitem.productImg = productImg;
+                createOrderitem.quantity = 0;
+
                 createOrderitems.push(createOrderitem);
-                createOrderitemsId.push(createOrderitem._id);
             }
             
             const quantitys = newOrderitem.quantitys;
@@ -35,16 +32,17 @@ class OrderService {
 
             for (const quantity of quantitys) {
                 createOrderitems[cnt].quantity = quantity;
-                const createOrderitemId = createOrderitemsId[cnt];
-                orderItem = await orderitemModel.findOneAndUpdate(createOrderitemId, quantity);
+                const addOrderIfo = await orderitemModel.create(createOrderitems[cnt]);
+                if (addOrderIfo) {
+                    result.push(addOrderIfo)
+                }
                 cnt++;
-                
             }
 
         }
         const order = {
             createOrder : createOrder,
-            createOrderitems: createOrderitems
+            createOrderitems: result
         }
         
         return order;
@@ -52,23 +50,18 @@ class OrderService {
 
     async getOrder(userId) {
         const orders = await orderModel.getOrder(userId);
-        const orderitems = await orderitemModel.getOrderItem(userId);
         let orderInfo = [];
 
         for (const order of orders) {
             const orderId = order._id;
             if (orderId) {
                 const orderItem = await orderitemModel.getOrderOne(orderId);
-                orderInfo.push(orderOneInfo);    
-                orderInfo.push(orderItem);         
-
+                orderInfo.push(orderItem);
             }
         }
 
         return orderInfo;
     }
-
-    
 }
 
 const orderService = new OrderService();

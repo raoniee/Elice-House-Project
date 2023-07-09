@@ -13,6 +13,8 @@ class OrderModel {
         const orderInfo = await Order.find({ userId });
         return orderInfo;
     }
+
+    
 }
 
 const orderModel = new OrderModel();
