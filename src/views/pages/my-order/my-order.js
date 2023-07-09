@@ -9,83 +9,165 @@ drawFooter();
 // 마이페이지 사이드메뉴 템플릿 삽입
 drawMyNav();
 
-// 임시 데이터
-import * as mockdata from "./mockdata.js";
+// 주문 내역 불러오기
+getOrders();
 
-const orderContents = document.querySelector("#order-contents");
+const orderContainer = document.querySelector("#order-container");
 
+const phoneNumberInput = document.querySelector("#phone-number");
+const postcodeInput = document.querySelector("#postcode");
+const roadAddressInput = document.querySelector("#roadAddress");
+const detailAddressInput = document.querySelector("#detailAddress");
+const deliveryRequestSelect = document.querySelector("#delivery-request");
 const searchAddressBtn = document.querySelector("#search-address-btn");
 
 searchAddressBtn.addEventListener("click", searchAddress);
 
-window.onload = function getOrders() {
-  const data = mockdata.data;
+function getOrders() {
+  fetch("dummy.json")
+    .then((response) => response.json())
+    .then((orders) => {
+      for (const order of orders) {
+        const {
+          orderID,
+          orderDate,
+          userPhoneNumber,
+          addrNum,
+          roughAddr,
+          detailAddr,
+          orderItem,
+          state,
+          deliReq,
+        } = order;
 
-  for (let i = data.length - 1; i >= 0; i--) {
-    const orderBox = document.createElement("tr");
-    const orderDate = data[i].orderDate;
-    const orderDeliverState = data[i].deliverState;
+        // 상품명, 총 결제금액
+        let orderItemList;
+        let orderPrice = 0;
+        if (orderItem.length === 1) {
+          orderItemList = orderItem[0]["productName"];
+          orderPrice = orderItem[0]["price"];
+        } else {
+          orderItemList = `${orderItem[0]["productName"]} 외 ${
+            orderItem.length - 1
+          }건`;
 
-    orderBox.innerHTML = `
-      <td class="py-3 col-2 align-middle">
-        ${orderDate.slice(0, 10)}
-      </td>
-      <td class="py-3 col-4 align-middle">
-        상품명
-      </td>
-      <td class="py-3 col-1 align-middle">
-        1
-      </td>
-      <td class="py-3 align-middle">
-        100,000원
-      </td>
-      <td class="py-3 align-middle">
-        ${data[i].deliverState}
-      </td>
-      <td class="py-3 align-middle">
-      </td>
-    `;
+          for (let i = 0; i < orderItem.length; i++) {
+            orderPrice += orderItem[i]["price"];
+          }
+        }
 
-    if (data[i].deliverState === "배송준비중") {
-      orderBox.lastElementChild.innerHTML = `
-        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
-        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">주문 취소</button>
-      `;
-    } else {
-      orderBox.lastElementChild.innerHTML = `
-        변경 불가
-      `;
-    }
+        // 주문 내역 삽입
+        orderContainer.insertAdjacentHTML(
+          "afterbegin",
+          `
+          <tr>
+            <td class="py-3 col-2 align-middle">
+              ${orderDate.slice(0, 10)}
+            </td>
+            <td class="py-3 col-4 align-middle">
+              ${orderItemList}
+            </td>
+            <td class="py-3 align-middle">
+              ${orderPrice.toLocaleString("ko-KR")}원
+            </td>
+            <td class="py-3 align-middle">
+            ${state}
+            </td>
+            <td class="py-3 align-middle">
+              <div style="display:none" id="changeable-order">
+                <button type="button" id="change-order-btn" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
+                <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">주문 취소</button>
+              </div>
+              <span style="display:none" id="unchangeable-order">변경 불가</span>
+            </td>
+          </tr>
+          `
+        );
 
-    orderContents.appendChild(orderBox);
-  }
-};
+        if (state === "배송준비중") {
+          document.querySelector("#changeable-order").style.display = "block";
+        } else {
+          document.querySelector("#unchangeable-order").style.display = "block";
+        }
 
+        //주문 수정창 : 수정 가능 데이터 삽입
+        const changeOrderBtn = document.querySelector("#change-order-btn");
+        const deliveryRequest = deliveryRequestSelect;
+        changeOrderBtn.addEventListener("click", changeOrder);
+        function changeOrder(e) {
+          e.preventDefault();
+
+          phoneNumberInput.value = userPhoneNumber;
+          postcodeInput.value = addrNum;
+          roadAddressInput.value = roughAddr;
+          detailAddressInput.value = detailAddr;
+          deliveryRequestSelect.value = deliReq;
+
+          //주문 수정 저장
+          const saveOrderChangeBtn = document.querySelector(
+            "#save-order-change-btn"
+          );
+          saveOrderChangeBtn.addEventListener("click", saveOrderChange);
+          async function saveOrderChange(e) {
+            e.preventDefault();
+
+            const changedData = {};
+            const phoneNumber = phoneNumberInput.value;
+            const postcode = postcodeInput.value;
+            const roadAddress = roadAddressInput.value;
+            const detailAddress = detailAddressInput.value;
+            const deliveryRequest = deliveryRequestSelect.value;
+
+            if (phoneNumber !== userPhoneNumber) {
+              changedData.phoneNumber = phoneNumber;
+            }
+
+            if (postcode !== addrNum) {
+              changedData.postcode = postcode;
+            }
+            if (roadAddress !== roughAddr) {
+              changedData.roadAddress = roadAddress;
+            }
+            if (detailAddress !== detailAddr) {
+              changedData.detailAddress = detailAddress;
+            }
+            if (deliveryRequest !== deliReq) {
+              changedData.deliveryRequest = deliveryRequest;
+            }
+
+            if (Object.keys(changedData).length === 0) {
+              return alert("수정된 정보가 없습니다");
+            }
+
+            console.log(changedData);
+
+            // 수정 사항 업데이트
+            // try {
+            //   const { _id } = userData;
+            //   // db에 수정된 정보 저장
+            //   await Api.patch("/api/users", _id, data);
+
+            //   alert("수정 사항이 저장되었습니다.");
+            // } catch (err) {
+            //   alert(`오류가 발생하였습니다: ${err}`);
+            // }
+          }
+        }
+      }
+    });
+}
+
+//주소 찾기
 function searchAddress() {
   new daum.Postcode({
     oncomplete: function (data) {
-      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
       // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-      var roadAddr = data.roadAddress; // 도로명 주소 변수
-      var extraRoadAddr = ""; // 참고 항목 변수
-
-      // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-      // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-      if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-        extraRoadAddr += data.bname;
-      }
-      // 건물명이 있고, 공동주택일 경우 추가한다.
-      if (data.buildingName !== "" && data.apartment === "Y") {
-        extraRoadAddr +=
-          extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
-      }
+      const { roadAddress: roadAddr } = data; // 도로명 주소 변수
 
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
       document.getElementById("postcode").value = data.zonecode;
       document.getElementById("roadAddress").value = roadAddr;
-      document.getElementById("jibunAddress").value = data.jibunAddress;
+      document.querySelector("#detailAddress").value = "";
     },
   }).open();
 }
