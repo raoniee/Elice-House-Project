@@ -32,7 +32,6 @@ class SubcategoryModel {
   }
 
 }
-
 const subcategoryModel = new SubcategoryModel();
 
 export { subcategoryModel };
