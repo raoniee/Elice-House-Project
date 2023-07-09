@@ -7,50 +7,28 @@ const USER_PW2 = document.getElementById("password2");
 const USER_EMAIL = document.getElementById("input-email");
 const REGISTER_SUBMIT = document.getElementById("register-submit");
 const REGISTER_CANCEL = document.getElementById("register-cancel");
+const REGISTER_FORM = document.getElementById("register-form");
 
-addAllEvents();
-
-function addAllEvents() {
-  REGISTER_SUBMIT.addEventListener("click", submitRegister);
-}
-
-// 회원가입
-async function submitRegister(e) {
+REGISTER_FORM.addEventListener("submit", async (event) => {
   // 이벤트 기본값(효과) 제거
-  e.preventDefault();
+  event.preventDefault();
 
-  // 회원가입 간단 유효성 검사
-  // 사용자 이름 유효성 검사: 빈 칸 불가
-  if (USER_NAME.value == "") {
-    USER_NAME.focus();
-    return alert("이름을 입력해주세요.");
-  }
-
-  // 비밀번호 유효성 검사: 빈칸 불가, 비밀번호 === 비밀번호 재확인
-  if (USER_PW1.value == "") {
-    USER_PW1.focus();
-    return alert("비밀번호를 입력해주세요.");
-  }
-  if (USER_PW2.value == "") {
-    USER_PW2.focus();
-    return alert("비밀번호 재확인을 입력해주세요.");
-  }
-
-  if (USER_PW1.value !== USER_PW2.value) {
-    USER_PW1.focus();
-    return alert("비밀번호와 비밀번호 재확인이 동일하지 않습니다!");
-  }
-
-  // 회원가입 api 요청
   try {
-    const data = { name, email, password };
-    await API.post("/register", data);
-    alert("회원가입이 완료되었습니다!");
+    const response = await fetch("/api/users/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
 
-    // 로그인 페이지로 이동
-    window.location.href = "/login";
-  } catch (err) {
-    console.error(err.stack);
-    alert(`${err.message}: 확인 후 다시 시도해 주세요.`);
+    if (response.ok) {
+      const data = await response.json();
+      alert(`회원가입이 완료되었습니다.`);
+    } else {
+      const errorData = await response.json();
+      alert(`회원가입 실패:: ${errorData.error}`);
+    }
+  } catch (error) {
+    console.error(error.stack);
+    alert("회원가입 실패:: 확인 후 다시 한 번 시도해주세요.");
   }
-}
+});
