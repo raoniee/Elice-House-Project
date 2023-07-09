@@ -18,7 +18,14 @@ function checkAdmin(req, res, next) {
     const key = process.env.KEY;
     const jwtInfo = jwt.verify(token, key);
 
-    // const role = jwtInfo.isAdmin;
+    const isAdmin = jwtInfo.isAdmin;
+
+    if (!isAdmin) {
+      res.status(401).json({
+        result: "접근 불가",
+        reason: "관리자가 아닙니다.",
+      });
+    }
   } catch {
     res.status(401).json({
       result: "접근 불가",
