@@ -87,6 +87,20 @@ const UserController = {
     }
   },
 
+  // 비밀번호 확인 
+  async checkPassword(req, res, next) {
+    try{
+      const userId = req.body.email;
+      const password = req.body.password;
+
+      const check = await userService.checkPassword(userId, password);
+
+      res.status(200).json(check);
+    } catch(error) {
+      next(error);
+    }
+  },
+
   //관리자 모드
   //회원정보 조회
   async getAllUser(req, res, next) {

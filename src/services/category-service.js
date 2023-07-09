@@ -1,7 +1,6 @@
 import { categoryModel } from "../db/models/category-model.js";
 import { subcategoryModel } from "../db/models/subcategory-model.js";
 
-
 class CategoryService {
     // 카테고리 생성
     async addCat(newCat) {
@@ -14,7 +13,7 @@ class CategoryService {
             // 서브 카테고리 생성
             const subCatinCats = category.subcategory;
             
-             subCatinCats.forEach( async (subcatId) => {
+            for(const subcatId of subCatinCats){
                 const subcat = await subcategoryModel.findById(subcatId);
                 const name = subcat.subcategoryName;
 
@@ -22,7 +21,7 @@ class CategoryService {
                     throw new Error("이미 존재하는 서브 카테고리입니다.");
                     return;
                 }
-            })
+            }
            
             const addSubcat =  await subcategoryModel.create(subcategoryName);
             console.log("add -> ", addSubcat);
