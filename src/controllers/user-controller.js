@@ -30,7 +30,7 @@ const UserController = {
 
       console.log(checkUser);
 
-      res.status(201).json(checkUser);
+      res.status(200).json(checkUser);
     } catch (error) {
       next(error);
     }
@@ -38,17 +38,16 @@ const UserController = {
 
   // 사용자가 User 정보 조회
   async getInfo(req, res, next) {
-    try{
+    try {
       const userId = req.params.userId;
       console.log(`유저 아이디 ${userId}`);
 
-      const findUserOne = await userService.findByUserId({_id: userId});
+      const findUserOne = await userService.findByUserId({ _id: userId });
 
       const { name, email } = findUserOne;
 
-      res.json({ name, email })
-
-    }catch(error) {
+      res.json({ name, email });
+    } catch (error) {
       next(error);
     }
   },
@@ -62,7 +61,7 @@ const UserController = {
       const deleteUserInfo = await userService.deleteById({ _id: userId });
 
       res.status(200).json(deleteUserInfo);
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
@@ -81,7 +80,7 @@ const UserController = {
 
       const checkUpdate = await userService.updateInfo(userId, toUpdate);
 
-      res.status(201).json(checkUpdate);
+      res.status(200).json(checkUpdate);
     } catch (error) {
       next(error);
     }
