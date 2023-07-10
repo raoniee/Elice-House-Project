@@ -25,6 +25,7 @@ const searchAddressBtn = document.querySelector("#search-address-btn");
 
 searchAddressBtn.addEventListener("click", searchAddress);
 
+let userData;
 function getOrders() {
   fetch("dummy.json")
     .then((response) => response.json())
