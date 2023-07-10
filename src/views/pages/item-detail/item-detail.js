@@ -3,8 +3,8 @@ import { insertHeaderData } from "../components/header/header.js";
 import { drawFooter } from "../components/footer/footer.js";
 import { drawMenubar } from "../components/menu-bar/menu-bar.js";
 import { drawItemCard } from "../components/item-card/item-detail-card.js";
-//import { getUrlParams } from "../../useful-functions.js";
-//import * as API from "../../api.js";
+//import { getUrlParams } from "./useful-functions.js";
+//import * as API from "./api.js";
 
 // Header, Footer 템플릿 삽입
 drawHeader();
@@ -39,8 +39,8 @@ let Products = [];
 insertProductData();
 
 async function insertProductData() {
-  //const { id } = getUrlParams();
-  //const product = await API.get(`/products/detail/${id}`);
+  // const { id } = getUrlParams();
+  // const product = await API.get(`/products/detail/${id}`);
   const product = {
     _id: "1234",
     name: "밀튼 침대 Q (매트제외)",
