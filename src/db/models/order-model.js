@@ -15,8 +15,8 @@ class OrderModel {
   }
 
   async getAll() {
-      const All = await Order.find({});
-      return All;
+    const All = await Order.find({});
+    return All;
   }
 
   async update(_id, toUpdate) {
@@ -37,7 +37,6 @@ class OrderModel {
     const deleteOrder = await Order.deleteOne({ _id: orderId });
     return deleteOrder;
   }
-  
 }
 
 const orderModel = new OrderModel();

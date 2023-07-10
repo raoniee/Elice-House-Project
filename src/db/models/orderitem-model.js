@@ -14,13 +14,13 @@ class OrderitemModel {
     return orderItemInfo;
   }
   async getOrderOne(orderId) {
-      const orderOneInfo = await OrderItem.find({ orderId });
-      return orderOneInfo;
+    const orderOneInfo = await OrderItem.find({ orderId });
+    return orderOneInfo;
   }
 
   async getAll() {
-      const All = await OrderItem.find({});
-      return All;
+    const All = await OrderItem.find({});
+    return All;
   }
 
   async getOrderOne(orderId) {
@@ -28,9 +28,9 @@ class OrderitemModel {
     return orderOneInfo;
   }
 
-  // orderId를 가지고 orderItems 삭제
-  async deleteOrder(orderId) {
-    const deleteData = await OrderItem.deleteOne({ _id: orderId });
+  // orderId를 가지고 orderItem들 삭제
+  async deleteByOrderId(orderId) {
+    const deleteData = await OrderItem.deleteMany({ orderId });
     return deleteData;
   }
 }

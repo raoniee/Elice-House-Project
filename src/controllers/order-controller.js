@@ -15,44 +15,47 @@ const OrderController = {
       const productIds = req.body.productId;
       const quantitys = req.body.quantity;
 
-      const addOrder = await orderService.addOrder({ 
-                userId,
-                userName,
-                userPhoneNumber,
-                addrNum,
-                roughAddr,
-                detailAddr,
-                deliReq,
-             }, {
-                productIds,
-                quantitys,
-             });
+      const addOrder = await orderService.addOrder(
+        {
+          userId,
+          userName,
+          userPhoneNumber,
+          addrNum,
+          roughAddr,
+          detailAddr,
+          deliReq,
+        },
+        {
+          productIds,
+          quantitys,
+        }
+      );
 
-            res.status(201).json(addOrder);
-      } catch(error) {
-          next(error);
-      }
+      res.status(201).json(addOrder);
+    } catch (error) {
+      next(error);
+    }
   },
 
   async getUserOrder(req, res, next) {
-      try {
-          const userId = req.params.userId;
-          const userOrderInfo = await orderService.getOrder(userId);
+    try {
+      const userId = req.params.userId;
+      const userOrderInfo = await orderService.getOrder(userId);
 
-          res.status(200).json(userOrderInfo);
-      } catch (error) {
-          next(error);
-      }
+      res.status(200).json(userOrderInfo);
+    } catch (error) {
+      next(error);
+    }
   },
-      
-    async getAdminOrder(req, res, next) {
-      try {
-          const getAllOrder = await orderService.getAll();
-          
-          res.status(200).json(getAllOrder);
-      } catch (error) {
-          next(error)
-      }
+
+  async getAdminOrder(req, res, next) {
+    try {
+      const getAllOrder = await orderService.getAll();
+
+      res.status(200).json(getAllOrder);
+    } catch (error) {
+      next(error);
+    }
   },
 
   async updateOrderByUser(req, res, next) {
@@ -135,6 +138,58 @@ const OrderController = {
     try {
       // order 삭제
       // orderItem 삭제
+    } catch (error) {
+      next(error);
+    }
+  },
+  async deleteOrderByUser(req, res, next) {
+    try {
+      const orderId = req.params.orderId;
+
+      // 배송 전인지 확인
+      const isBeforeShipping = await orderService.getStateById(orderId);
+
+      if (!isBeforeShipping) {
+        throw new Error("이미 배송시작되었습니다.");
+      }
+
+      console.log(isBeforeShipping);
+
+      // orderId로 order 삭제
+      const checkDeleteOrder = await orderService.deleteOrder(orderId);
+
+      // orderItem 삭제
+      const checkDeleteOrderItems = await orderService.deleteOrderItems(
+        orderId
+      );
+
+      const result = {
+        deletedOrder: checkDeleteOrder,
+        deletedOrderItems: checkDeleteOrderItems,
+      };
+      res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async deleteOrderByAdmin(req, res, next) {
+    try {
+      const orderId = req.params.orderId;
+
+      // orderId로 order 삭제
+      const checkDeleteOrder = await orderService.deleteOrder(orderId);
+
+      // orderItem 삭제
+      const checkDeleteOrderItems = await orderService.deleteOrderItems(
+        orderId
+      );
+
+      const result = {
+        deletedOrder: checkDeleteOrder,
+        deletedOrderItems: checkDeleteOrderItems,
+      };
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

@@ -3,147 +3,142 @@ import { orderitemModel } from "../db/models/orderitem-model.js";
 import { orderModel } from "../db/models/order-model.js";
 
 class OrderService {
-    async addOrder(newOrder, newOrderitem) {
-        const createOrder = await orderModel.create(newOrder);
-        let createOrderitems = [];
-        let result = [];
-        if (createOrder) {
-            
-            const orderId = createOrder._id;
-            const productIds = newOrderitem.productIds;
-            for (const productId of productIds) {
-                const orderProduct  = await productModel.getProdInfo(productId);
-                const productName = orderProduct.name;
-                const productImg = orderProduct.imageUrl;
-                const price = orderProduct.price;
+  async addOrder(newOrder, newOrderitem) {
+    const createOrder = await orderModel.create(newOrder);
+    let createOrderitems = [];
+    let result = [];
+    if (createOrder) {
+      const orderId = createOrder._id;
+      const productIds = newOrderitem.productIds;
+      for (const productId of productIds) {
+        const orderProduct = await productModel.getProdInfo(productId);
+        const productName = orderProduct.name;
+        const productImg = orderProduct.imageUrl;
+        const price = orderProduct.price;
 
-                const createOrderitem= {};  
+        const createOrderitem = {};
 
-                createOrderitem.orderId = orderId;
-                createOrderitem.productId = productId;
-                createOrderitem.productName = productName;
-                createOrderitem.productImg = productImg;
-                createOrderitem.quantity = 0;
-                createOrderitem.price = price;
+        createOrderitem.orderId = orderId;
+        createOrderitem.productId = productId;
+        createOrderitem.productName = productName;
+        createOrderitem.productImg = productImg;
+        createOrderitem.quantity = 0;
+        createOrderitem.price = price;
 
-                createOrderitems.push(createOrderitem);
-            }
-            
-            const quantitys = newOrderitem.quantitys;
-            let cnt = 0;
+        createOrderitems.push(createOrderitem);
+      }
 
-            for (const quantity of quantitys) {
-                createOrderitems[cnt].quantity = quantity;
-                const addOrderIfo = await orderitemModel.create(createOrderitems[cnt]);
-                if (addOrderIfo) {
-                    result.push(addOrderIfo)
-                }
-                cnt++;
-            }
-				}
-        const order = {
-            createOrder : createOrder,
-            createOrderitems: result
+      const quantitys = newOrderitem.quantitys;
+      let cnt = 0;
+
+      for (const quantity of quantitys) {
+        createOrderitems[cnt].quantity = quantity;
+        const addOrderIfo = await orderitemModel.create(createOrderitems[cnt]);
+        if (addOrderIfo) {
+          result.push(addOrderIfo);
         }
-        
-        return order;
+        cnt++;
+      }
+    }
+    const order = {
+      createOrder: createOrder,
+      createOrderitems: result,
+    };
+
+    return order;
+  }
+
+  async getOrder(userId) {
+    const orders = await orderModel.getOrder(userId);
+    const result = {};
+
+    for (const ord of orders) {
+      const ordId = ord._id;
+
+      result.orderId = ordId;
+      result.userPhoneNumber = ord.userPhoneNumber;
+      result.roughAddr = ord.roughAddr;
+      result.detailAddr = ord.detailAddr;
+      result.deliReq = ord.deliReq;
+
+      if (ordId) {
+        const ordItems = await orderitemModel.getOrderOne(ordId);
+        console.log("11", ordItems);
+        const productIds = [];
+        const productNames = [];
+        const productImgs = [];
+        const quantitys = [];
+        const prices = [];
+
+        for (const ordItem of ordItems) {
+          console.log("22", ordItem);
+          productIds.push(ordItem.productId);
+          productNames.push(ordItem.productName);
+          productImgs.push(ordItem.productImg);
+          quantitys.push(ordItem.quantity);
+          prices.push(ordItem.price);
+        }
+        result.productId = productIds;
+        result.productName = productNames;
+        result.productImg = productImgs;
+        result.quantity = quantitys;
+        result.price = prices;
+      }
+    }
+    console.log(result);
+
+    return result;
+  }
+
+  async getAll() {
+    const orders = await orderModel.getAll();
+    const orderItems = await orderitemModel.getAll();
+    const results = [];
+
+    for (const ord of orders) {
+      const result = {};
+      const createdAt = ord.createdAt.toString();
+      const ordId = ord._id;
+      console.log(createdAt);
+      result.orderDate = String(ord.createdAt).slice(0, 15);
+      result.orderTime = String(ord.createdAt).slice(16, 21);
+      result.orderId = ord._id;
+      result.state = ord.state;
+      result.userName = ord.userName;
+      result.userId = ord.userId;
+      result.userPhoneNumber = ord.userPhoneNumber;
+      result.roughAddr = ord.roughAddr;
+      result.detailAddr = ord.detailAddr;
+      result.deliReq = ord.deliReq;
+
+      if (ordId) {
+        const ordItems = await orderitemModel.getOrderOne(ordId);
+        console.log("11", ordItems);
+        const productIds = [];
+        const productNames = [];
+        const productImgs = [];
+        const quantitys = [];
+        const prices = [];
+
+        for (const ordItem of ordItems) {
+          console.log("22", ordItem);
+          productIds.push(ordItem.productId);
+          productNames.push(ordItem.productName);
+          productImgs.push(ordItem.productImg);
+          quantitys.push(ordItem.quantity);
+          prices.push(ordItem.price);
+        }
+        result.productId = productIds;
+        result.productName = productNames;
+        result.productImg = productImgs;
+        result.quantity = quantitys;
+        result.price = prices;
+      }
+      results.push(result);
     }
 
-    async getOrder(userId) {
-        const orders = await orderModel.getOrder(userId);
-        const result = {};
-
-        for (const ord of orders) {
-            const ordId = ord._id;
-
-            result.orderId = ordId;
-            result.userPhoneNumber = ord.userPhoneNumber;
-            result.roughAddr = ord.roughAddr;
-            result.detailAddr = ord.detailAddr;
-            result.deliReq = ord.deliReq;
-
-            if (ordId) {
-                const ordItems = await orderitemModel.getOrderOne(ordId);
-                console.log("11",ordItems);
-                const productIds = [];
-                const productNames = [];
-                const productImgs = [];
-                const quantitys = [];
-                const prices = [];
-
-                for (const ordItem of ordItems) {
-                    console.log("22", ordItem);
-                    productIds.push(ordItem.productId);
-                    productNames.push(ordItem.productName);
-                    productImgs.push(ordItem.productImg);
-                    quantitys.push(ordItem.quantity);
-                    prices.push(ordItem.price);
-                }
-                result.productId = productIds;
-                result.productName = productNames;
-                result.productImg = productImgs;
-                result.quantity = quantitys;
-                result.price = prices;
-
-            }
-        }
-        console.log(result);
-
-
-        return result;
-    }
-
-    async getAll() {
-        const orders = await orderModel.getAll();
-        const orderItems = await orderitemModel.getAll();
-        const results = [];
-
-        for (const ord of orders) {
-            const result = {};
-            const createdAt = ord.createdAt.toString();
-            const ordId = ord._id;
-            console.log(createdAt)
-            result.orderDate = String(ord.createdAt).slice(0, 15);
-            result.orderTime = String(ord.createdAt).slice(16, 21);
-            result.orderId = ord._id;
-            result.state = ord.state;
-            result.userName = ord.userName;
-            result.userId = ord.userId;
-            result.userPhoneNumber = ord.userPhoneNumber;
-            result.roughAddr = ord.roughAddr;
-            result.detailAddr = ord.detailAddr;
-            result.deliReq = ord.deliReq;
-
-            if (ordId) {
-                const ordItems = await orderitemModel.getOrderOne(ordId);
-                console.log("11",ordItems);
-                const productIds = [];
-                const productNames = [];
-                const productImgs = [];
-                const quantitys = [];
-                const prices = [];
-
-                for (const ordItem of ordItems) {
-                    console.log("22", ordItem);
-                    productIds.push(ordItem.productId);
-                    productNames.push(ordItem.productName);
-                    productImgs.push(ordItem.productImg);
-                    quantitys.push(ordItem.quantity);
-                    prices.push(ordItem.price);
-                }
-                result.productId = productIds;
-                result.productName = productNames;
-                result.productImg = productImgs;
-                result.quantity = quantitys;
-                result.price = prices;
-
-            }
-            results.push(result);
-        }
-
-        return results;
-    }
-
+    return results;
+  }
 
   // 수신 받은 주문 정보 수정
   async updateOrderInfo(orderId, toUpdate) {
@@ -151,13 +146,9 @@ class OrderService {
     return checkUpdate;
   }
 
-
   // 주문의 배송상태 확인
   async getStateById(orderId) {
-    console.log(orderId);
     const order = await orderModel.findByUserId(orderId);
-    console.log(order);
-    console.log(orderId);
     const checkOrderState = order.state == "배송준비중";
     return checkOrderState;
   }
@@ -168,7 +159,27 @@ class OrderService {
 
     if (deleteData.deletedCount === 0) {
       throw new Error("주문 삭제 실패");
+    }
 
+    return { result: "success" };
+  }
+
+  // orderId를 가지고 order 삭제
+  async deleteOrder(orderId) {
+    const deleteData = await orderModel.deleteByOrderId(orderId);
+
+    if (deleteData.deletedCount === 0) {
+      throw new Error("주문 삭제 실패");
+    }
+
+    return { result: "success" };
+  }
+
+  async deleteOrderItems(orderId) {
+    const deleteData = await orderitemModel.deleteByOrderId(orderId);
+
+    if (deleteData.deletedCount === 0) {
+      throw new Error("주문 삭제 실패");
     }
 
     return { result: "success" };
