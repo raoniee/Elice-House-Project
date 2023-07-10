@@ -1,18 +1,20 @@
-import * as productData from "./product-mockdata.js";
+import * as dummyData from "./product-mockdata.js";
 
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
 
-//제목 누르면 홈 화면
+// 메인 페이지 이동
 adminTitle.addEventListener("click", function () {
   location.href = "/admin/main";
 });
 
-//db에서 임시로 fetch로 데이터 가져옴
+//db에서 임시 fetch >>> 추후 api.js 사용예정
 async function getProductData() {
-  let tempdata = await fetch("/api/admin/products").then((res) => res.json());
+  let productData = await fetch("/api/admin/products").then((res) =>
+    res.json()
+  );
 
-  return tempdata;
+  return productData;
 }
 
 // 상품 관리창 생성 함수
@@ -44,10 +46,10 @@ const makeProductList = async () => {
     </button>
   </div>`;
 
-  let data = await getProductData();
-  console.log(data[0]);
   // 데이터 정의
-  // let data = productData.data;
+  // let data = dummyData.data;
+  let data = await getProductData();
+  console.log(data);
 
   for (let i = 0; i < data.length; i++) {
     const productTableBody = document.createElement("tr");
@@ -58,7 +60,7 @@ const makeProductList = async () => {
         <td>${data[i].subCategoryName}</td>
         <td>${data[i].name}</td>
         <td>${data[i].brand}</td>
-        <td>${data[i].price}</td>
+        <td>${data[i].price.toLocaleString("en")}원</td>
         <td>${data[i].imageUrl}</td>
         <td>${createDate}</td>
         <td>${data[i].soldQuantity}</td>

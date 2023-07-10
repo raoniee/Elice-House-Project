@@ -8,6 +8,13 @@ adminTitle.addEventListener("click", function () {
   location.href = "/admin/main";
 });
 
+//db에서 임시 fetch >>> 추후 api.js 사용예정
+async function getCategoryData() {
+  let tempdata = await fetch("/api/admin/orders").then((res) => res.json());
+
+  return tempdata;
+}
+
 // 주문 정보 리스트 박스 생성 함수
 function makeOrderBox() {
   const data = mockdata.data;

@@ -1,15 +1,22 @@
-import * as categoryData from "./category-mockdata.js";
+// import * as catMockData from "./category-mockdata.js";
 
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
 
-// 제목 누르면 홈 화면
+// 메인 페이지 이동
 adminTitle.addEventListener("click", function () {
   location.href = "/admin/main";
 });
 
+//db에서 임시 fetch >>> 추후 api.js 사용예정
+async function getCategoryData() {
+  let tempdata = await fetch("/api/admin/categories").then((res) => res.json());
+
+  return tempdata;
+}
+
 // 카테고리 관리창 생성 함수
-function makeCategoryList() {
+async function makeCategoryList() {
   // 테이블 상단 만들기
   listContainer.innerHTML = `
   <div>
@@ -32,7 +39,11 @@ function makeCategoryList() {
   `;
 
   // 데이터 정의
-  const data = categoryData.data;
+  let categoryObj = await getCategoryData();
+  let data = categoryObj.AllCategory;
+  console.log(data);
+  // mockData
+  // const data = catMockData.data;
 
   for (let i = 0; i < data.length; i++) {
     const categoryTableBody = document.createElement("tr");
@@ -40,7 +51,7 @@ function makeCategoryList() {
     categoryTableBody.innerHTML = `
     <td>${data[i].categoryName}</td>
     <td>${data[i].subcategoryName}</td>
-    <td>${data[i].productQuantity}</td>
+    <td>${data[i].productQauntity}</td>
     <td>
     <button type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
     수정
