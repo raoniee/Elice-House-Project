@@ -16,10 +16,6 @@ main {
   margin: 30px 0 50px 20px;
 }
 
-#admin-title:hover {
-  cursor: pointer;
-}
-
 #main-container {
   display: flex;
   height: 100%;

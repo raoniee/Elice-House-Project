@@ -1,16 +1,15 @@
 import * as productData from "./product-mockdata.js";
 
-const productBtn = document.querySelector("#product-btn");
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
 
 //제목 누르면 홈 화면
 adminTitle.addEventListener("click", function () {
-  location.href = "../admin-main/admin-main.html";
+  location.href = "/admin/main";
 });
 
 // 상품 관리창 생성 함수
-function makeProductList() {
+const makeProductList = () => {
   // 테이블 상단 만들기
   listContainer.innerHTML = `
   <div id="table-container">
@@ -33,7 +32,7 @@ function makeProductList() {
       <tbody id="tbody">
       </tbody>
   </table>
-    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addProductModal">
       추가
     </button>
   </div>`;
@@ -48,30 +47,77 @@ function makeProductList() {
         <td>${data[i].categoryName}</td>
         <td>${data[i].subCategoryName}</td>
         <td>${data[i].productName}</td>
-        <td>${data[i].brandName}</td>
+        <td>${data[i].brand}</td>
         <td>${data[i].price}</td>
-        <td>${data[i].productImage}</td>
+        <td>${data[i].imageUrl}</td>
         <td>${data[i].createDate}</td>
         <td>${data[i].salesVolume}</td>
         <td>${data[i].saleState}</td>
-        <td>${data[i].detail}</td>
+        <td>${data[i].description}</td>
         <td>
-          <button type="button" class="btn btn-dark btn-sm">수정</button>
-          <button type="button" class="btn btn-dark btn-sm">삭제</button>
+          <button type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
+          수정
+          </button>
+          <button type="button" class="btn btn-dark btn-sm del-product-btn">삭제</button>
         </td>
         `;
 
     // 기존의 tbody 태그 안에 tr 생성
-    const temp = document.querySelector("#tbody");
-    temp.appendChild(productTableBody);
+    const tableBody = document.querySelector("#tbody");
+    tableBody.appendChild(productTableBody);
   }
-}
+
+  //수정 버튼 작동 함수
+  modifyProduct();
+  //삭제 버튼 작동 함수
+  deleteProduct();
+};
 
 // 상품 추가 함수
 function addProduct() {}
+
 // 상품 수정 함수
-function modifyProduct() {}
+function modifyProduct() {
+  const modProductBtn = document.querySelectorAll(".mod-product-btn");
+  if (modProductBtn && Array.from(modProductBtn).length) {
+    modProductBtn.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        console.log("modProductBtn clicked");
+      })
+    );
+  }
+}
 // 상품 삭제 함수
-function deleteProduct() {}
+function deleteProduct() {
+  const delProductBtn = document.querySelectorAll(".del-product-btn");
+  if (delProductBtn && Array.from(delProductBtn).length) {
+    delProductBtn.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        confirm("정말로 삭제하시겠습니까?");
+      })
+    );
+  }
+}
+
+// navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
+function clickNavbar() {
+  const orderBtn = document.querySelector("#order-btn");
+  const productBtn = document.querySelector("#product-btn");
+  const categoryBtn = document.querySelector("#category-btn");
+
+  orderBtn.addEventListener("click", function () {
+    location.href = "/admin/order";
+  });
+
+  productBtn.addEventListener("click", function () {
+    location.href = "/admin/product";
+  });
+
+  categoryBtn.addEventListener("click", function () {
+    location.href = "/admin/category";
+  });
+}
+// navbar 함수 실행
+clickNavbar();
 
 window.onload = makeProductList();

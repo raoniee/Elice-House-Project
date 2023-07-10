@@ -28,22 +28,22 @@
       </div>
       <div class="col-9">
         <h2 class="fs-4 mb-4">내 정보 수정</h2>
-        <form id="sign-up-form" class="row g-3 w-50" onsubmit="changeMyInfo()">
+        <form id="sign-up-form" class="row g-3 w-50">
           <div class="col-12">
             <label for="input-name" class="form-label">이름</label>
-            <input type="text" class="form-control" id="input-name" />
+            <input type="text" class="form-control" id="name" />
           </div>
           <div class="col-12">
             <label for="input-email" class="form-label">이메일</label>
-            <input type="email" class="form-control" id="input-email" />
+            <input type="email" class="form-control" id="email" disabled />
           </div>
           <div class="col-12">
-            <label for="password1" class="form-label">비밀번호</label>
+            <label for="password" class="form-label">비밀번호</label>
             <input
               type="password"
-              id="password1"
+              id="password"
               class="form-control"
-              id="inputPassword"
+              id="password"
               autocomplete="off"
             />
           </div>
@@ -58,13 +58,12 @@
             />
           </div>
           <button
-              type="submit"
-              class="btn btn-primary w-25 mx-1"
-              id="change-my-info-confirm"
-            >
-              수정하기
-            </button>
-          </div>
+            type="submit"
+            class="btn btn-primary w-25 mx-1"
+            id="save-info-change-btn"
+          >
+            저장하기
+          </button>
         </form>
       </div>
     </section>

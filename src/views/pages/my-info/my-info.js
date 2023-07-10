@@ -1,54 +1,74 @@
-import { drawHeader } from "../../components/header/header.js";
-import { drawFooter } from "../../components/footer/footer.js";
-import { drawMyNav } from "../../components/my-nav/my-nav.js";
+import { drawHeader } from "../components/header/header.js";
+import { insertHeaderData } from "../components/header/header.js";
+import { drawFooter } from "../components/footer/footer.js";
+import { drawMyNav } from "../components/my-nav/my-nav.js";
+import * as Api from "../../api.js";
 
 // Header, Footer 템플릿 삽입
 drawHeader();
+insertHeaderData();
 drawFooter();
 
 // 마이페이지 사이드메뉴 템플릿 삽입
 drawMyNav();
 
-// 내 정보 유효성 검사
-const changeMyInfo = (e) => {
-  // 이벤트 기본값(효과) 제거
-  e.preventDefault();
+getUserData();
 
-  const USER_NAME = document.getElementById("input-name");
-  const USER_PW1 = document.getElementById("password1");
-  const USER_PW2 = document.getElementById("password2");
-  const USER_EMAIL = document.getElementById("input-email");
-  const SIGN_UP_SUBMIT = document.getElementById("change-my-info-confirm");
+const nameInput = document.querySelector("#name");
+const emailInput = document.querySelector("#email");
+const passwordInput = document.querySelector("#password");
+const password2Input = document.querySelector("#password2");
+const saveInfoChangeBtn = document.querySelector("#save-info-change-btn");
 
-  // 사용자 이름 유효성 검사: 빈 칸 불가
-  if (USER_NAME.value == "") {
-    alert("이름을 입력해주세요.");
-    USER_NAME.focus();
-    return;
-  }
+// let userData;
+async function getUserData() {
+  // userData = await Api.get("/api/users/userId");
 
-  // 비밀번호 유효성 검사: 빈칸 불가, 비밀번호 === 비밀번호 재확인
-  if (USER_PW1.value == "") {
-    alert("비밀번호를 입력해주세요.");
-    USER_PW1.focus();
-    return;
-  }
-  if (USER_PW2.value == "") {
-    alert("비밀번호 재확인을 입력해주세요.");
-    USER_PW2.focus();
-    return;
-  }
+  fetch("dummy.json")
+    .then((response) => response.json())
+    .then((userData) => {
+      const { name, email } = userData;
+      userData.password = "";
 
-  if (USER_PW1.value !== USER_PW2.value) {
-    alert("비밀번호와 비밀번호 재확인이 동일하지 않습니다!");
-    USER_PW1.focus();
-    return;
-  }
+      nameInput.value = name;
+      emailInput.value = email;
 
-  // 이메일 유효성 검사: 빈 칸 불가
-  if (USER_EMAIL.value == "") {
-    alert("이메일을 입력해주세요.");
-    USER_EMAIL.focus();
-    return;
-  }
-};
+      saveInfoChangeBtn.addEventListener("click", saveInfoChange);
+      function saveInfoChange(e) {
+        e.preventDefault();
+
+        const changedData = {};
+        const name = nameInput.value;
+        const password = passwordInput.value;
+        const password2 = password2Input.value;
+
+        if (name !== userData.name) {
+          if (name === "") {
+            return alert("이름을 입력해주세요.");
+          } else {
+            changedData.name = name;
+          }
+        }
+
+        if (password !== "" || password2 !== "") {
+          if (password !== password2) {
+            return alert("비밀번호와 비밀번호 재확인이 일치하지 않습니다.");
+          } else {
+            changedData.password = password;
+          }
+        }
+
+        if (Object.keys(changedData).length === 0) {
+          return alert("수정된 정보가 없습니다");
+        }
+        console.log(changedData);
+        // 수정 사항 업데이트
+        // try {
+        //   await Api.patch("/api/users", email, changedData);
+        //   alert("수정 사항이 저장되었습니다.");
+        // } catch (err) {
+        //   alert(`오류가 발생하였습니다: ${err}`);
+        // }
+      }
+    });
+}

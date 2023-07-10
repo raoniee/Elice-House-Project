@@ -1,9 +1,11 @@
 import { drawHeader } from "../../components/header/header.js";
+import { insertHeaderData } from "../../components/header/header.js";
 import { drawFooter } from "../../components/footer/footer.js";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 
 // Header, Footer 템플릿 삽입
 drawHeader();
+insertHeaderData();
 drawFooter();
 
 // 마이페이지 사이드메뉴 템플릿 삽입
@@ -29,32 +31,29 @@ function getOrders() {
     .then((orders) => {
       for (const order of orders) {
         const {
-          orderID,
           orderDate,
+          orderID,
+          state,
           userPhoneNumber,
           addrNum,
           roughAddr,
           detailAddr,
-          orderItem,
-          state,
           deliReq,
+          productName,
+          quantity,
+          price,
         } = order;
 
-        // 상품명, 총 결제금액
-        let orderItemList;
-        let orderPrice = 0;
-        if (orderItem.length === 1) {
-          orderItemList = orderItem[0]["productName"];
-          orderPrice = orderItem[0]["price"];
+        // 상품명
+        let productList;
+        if (productName.length === 1) {
+          productList = productName[0];
         } else {
-          orderItemList = `${orderItem[0]["productName"]} 외 ${
-            orderItem.length - 1
-          }건`;
-
-          for (let i = 0; i < orderItem.length; i++) {
-            orderPrice += orderItem[i]["price"];
-          }
+          productList = `${productName[0]} 외 ${productName.length - 1}건`;
         }
+
+        // 총 가격
+        let orderPrice = price.reduce((acc, cur) => acc + cur);
 
         // 주문 내역 삽입
         orderContainer.insertAdjacentHTML(
@@ -62,10 +61,10 @@ function getOrders() {
           `
           <tr>
             <td class="py-3 col-2 align-middle">
-              ${orderDate.slice(0, 10)}
+              ${orderDate.slice(4)}
             </td>
             <td class="py-3 col-4 align-middle">
-              ${orderItemList}
+              ${productList}
             </td>
             <td class="py-3 align-middle">
               ${orderPrice.toLocaleString("ko-KR")}원
@@ -93,15 +92,23 @@ function getOrders() {
         //주문 수정창 : 수정 가능 데이터 삽입
         const changeOrderBtn = document.querySelector("#change-order-btn");
         const deliveryRequest = deliveryRequestSelect;
+        let isRun = false;
         changeOrderBtn.addEventListener("click", changeOrder);
         function changeOrder(e) {
           e.preventDefault();
+
+          //클릭이벤트 중복 방지
+          if (isRun === true) {
+            return false;
+          }
 
           phoneNumberInput.value = userPhoneNumber;
           postcodeInput.value = addrNum;
           roadAddressInput.value = roughAddr;
           detailAddressInput.value = detailAddr;
           deliveryRequestSelect.value = deliReq;
+
+          isRun = true;
 
           //주문 수정 저장
           const saveOrderChangeBtn = document.querySelector(
