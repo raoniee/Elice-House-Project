@@ -2,7 +2,6 @@ import { productModel } from "../db/models/product-model.js";
 import { orderitemModel } from "../db/models/orderitem-model.js";
 import { orderModel } from "../db/models/order-model.js";
 
-
 class OrderService {
     async addOrder(newOrder, newOrderitem) {
         const createOrder = await orderModel.create(newOrder);
@@ -41,8 +40,7 @@ class OrderService {
                 }
                 cnt++;
             }
-
-        }
+				}
         const order = {
             createOrder : createOrder,
             createOrderitems: result
@@ -145,6 +143,36 @@ class OrderService {
 
         return results;
     }
+
+
+  // 수신 받은 주문 정보 수정
+  async updateOrderInfo(orderId, toUpdate) {
+    const checkUpdate = await orderModel.update(orderId, toUpdate);
+    return checkUpdate;
+  }
+
+
+  // 주문의 배송상태 확인
+  async getStateById(orderId) {
+    console.log(orderId);
+    const order = await orderModel.findByUserId(orderId);
+    console.log(order);
+    console.log(orderId);
+    const checkOrderState = order.state == "배송준비중";
+    return checkOrderState;
+  }
+
+  // orderId를 가지고 order 삭제
+  async deleteOrder(orderId) {
+    const deleteData = await orderModel.deleteByOrderId(orderId);
+
+    if (deleteData.deletedCount === 0) {
+      throw new Error("주문 삭제 실패");
+
+    }
+
+    return { result: "success" };
+  }
 }
 
 const orderService = new OrderService();
