@@ -19,7 +19,7 @@ export const drawHeader = () => {
             <a href="" class="nav-link link-dark px-2">Sign up</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link link-dark px-2">장바구니</a>
+            <a href="../order-cart/order-cart.html" class="nav-link link-dark px-2">장바구니</a>
           </li>
         </ul>
       </div>
@@ -149,7 +149,6 @@ export const insertHeaderData = () => {
   let htmlcategory = "";
 
   for (let i = 0; i < deduplicationCategoryName.length; i++) {
-    console.log("아이는", i);
     const Category = `<li class="nav-item">
                           <div class="dropdown text-end">
                             <a
@@ -158,7 +157,8 @@ export const insertHeaderData = () => {
                               data-bs-toggle="dropdown"
                               aria-expanded="false"
                               >
-                            </a>${deduplicationCategoryName[i]}
+                              ${deduplicationCategoryName[i]}
+                            </a>
                             <ul class="dropdown-menu text-small subnav"></ul>
                           </div>
                         </li>`;
@@ -170,17 +170,15 @@ export const insertHeaderData = () => {
     const result = Nav.filter(
       (v) => v.categoryName === deduplicationCategoryName[i]
     ).map((v) => v.subcategoryName);
-    console.log(result);
+    //console.log(result);
 
     for (let j = 0; j < result.length; j++) {
-      console.log("아이는", i, "j", j, "result", result[j]);
-
       const subCategory = `<li><a class="dropdown-item" href="#">${result[j]}</a></li>`;
       htmlsubcategory += subCategory;
     }
-    console.log(htmlsubcategory);
+
     const subul = document.querySelector(".subnav");
-    console.log(subul);
     subul.innerHTML = htmlsubcategory;
+    //console.log(htmlsubcategory);
   }
 };

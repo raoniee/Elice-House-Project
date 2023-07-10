@@ -1,51 +1,36 @@
 [
   {
-    "orderID": "12345",
-    "orderDate": "2023-07-07",
-    "userID": "abc@naver.com",
-    "userName": "엘리스",
-    "userPhoneNumber": "010-9999-9999",
-    "addrNum": "05831",
-    "roughAddr": "서울 강남구 11",
-    "detailAddr": "111",
-    "orderItem": [
-      {
-        "productId": "01234",
-        "productName": "밀튼 침대",
-        "productImg": "../../public/assets/imgs/item-list-card.webp",
-        "quantity": "1",
-        "price": 100000
-      },
-      {
-        "productId": "01235",
-        "productName": "밀튼 의자",
-        "productImg": "../../public/assets/imgs/item-list-card.webp",
-        "quantity": "1",
-        "price": 100000
-      }
-    ],
+    "orderDate": "Mon Jul 3 2023",
+    "orderTime": "06:11",
+    "orderId": "64ab2294bec1108651974ff4",
     "state": "배송완료",
-    "deliReq": "선택 안 함"
+    "userName": "엘리스",
+    "userId": "64a7db93072b8881f32b5d56",
+    "userPhoneNumber": "010-1111-0000",
+    "roughAddr": "서울시 떙떙구 땡떙동",
+    "detailAddr": "102동 1703호",
+    "deliReq": "선택 없음",
+    "productId": ["64ab0392ca36a71193fd5604"],
+    "productName": ["스탠드형 LED 조명"],
+    "productImg": ["789789"],
+    "quantity": [2],
+    "price": [90000]
   },
   {
-    "orderID": "12346",
-    "orderDate": "2023-07-09",
-    "userID": "abc@naver.com",
-    "userName": "엘리스",
-    "userPhoneNumber": "010-1234-5678",
-    "addrNum": "05831",
-    "roughAddr": "서울 송파구 동남로 99",
-    "detailAddr": "2층",
-    "orderItem": [
-      {
-        "productId": "01234",
-        "productName": "밀튼 옷장",
-        "productImg": "../../public/assets/imgs/item-list-card.webp",
-        "quantity": "1",
-        "price": 100000
-      }
-    ],
+    "orderDate": "Mon Jul 10 2023",
+    "orderTime": "06:11",
+    "orderId": "64ab2294bec1108651974ff4",
     "state": "배송준비중",
-    "deliReq": "부재 시, 연락 주세요"
+    "userName": "엘리스",
+    "userId": "64a7db93072b8881f32b5d56",
+    "userPhoneNumber": "010-0000-0000",
+    "roughAddr": "인천시 떙떙구 땡떙동",
+    "detailAddr": "떙떙아파트 102동 1703호",
+    "deliReq": "선택 없음",
+    "productId": ["64ab036eca36a71193fd55fd", "64ab0392ca36a71193fd5604"],
+    "productName": ["이탈리아 스타일 소파", "스탠드형 LED 조명"],
+    "productImg": ["789789", "423423"],
+    "quantity": [2, 5],
+    "price": [300000, 90000]
   }
 ]
