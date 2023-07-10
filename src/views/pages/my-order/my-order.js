@@ -25,11 +25,25 @@ const searchAddressBtn = document.querySelector("#search-address-btn");
 
 searchAddressBtn.addEventListener("click", searchAddress);
 
-let userData;
+// async function ordersData() {
+//   let data = await fetch("api/orders/64a7db93072b8881f32b5d56").then((res) =>
+//     res.json()
+//   );
+
+//   return data;
+// }
+
+// let orders = await ordersData();
+// console.log(orders);
+
 function getOrders() {
-  fetch("dummy.json")
+  fetch("/api/orders/64a7db93072b8881f32b5d56")
     .then((response) => response.json())
     .then((orders) => {
+      // fetch("dummy.json")
+      //   .then((response) => response.json())
+      //   .then((orders) => {
+      console.log(orders);
       for (const order of orders) {
         const {
           orderDate,
@@ -54,7 +68,10 @@ function getOrders() {
         }
 
         // 총 가격
-        let orderPrice = price.reduce((acc, cur) => acc + cur);
+        let orderPrice = 0;
+        for (let i = 0; i < price.length; i++) {
+          orderPrice += quantity[i] * price[i];
+        }
 
         // 주문 내역 삽입
         orderContainer.insertAdjacentHTML(
@@ -75,7 +92,7 @@ function getOrders() {
             </td>
             <td class="py-3 align-middle">
               <div style="display:none" id="changeable-order">
-                <button type="button" id="change-order-btn" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
+                <button type="button" class="btn btn-outline-primary btn-sm change-order-btn" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">주문 취소</button>
               </div>
               <span style="display:none" id="unchangeable-order">변경 불가</span>
@@ -91,7 +108,7 @@ function getOrders() {
         }
 
         //주문 수정창 : 수정 가능 데이터 삽입
-        const changeOrderBtn = document.querySelector("#change-order-btn");
+        const changeOrderBtn = document.querySelector(".change-order-btn");
         const deliveryRequest = deliveryRequestSelect;
         let isRun = false;
         changeOrderBtn.addEventListener("click", changeOrder);

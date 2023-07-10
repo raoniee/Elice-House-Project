@@ -1,7 +1,7 @@
-import { drawHeader } from "../components/header/header.js";
-import { insertHeaderData } from "../components/header/header.js";
-import { drawFooter } from "../components/footer/footer.js";
-import { drawMyNav } from "../components/my-nav/my-nav.js";
+import { drawHeader } from "../../components/header/header.js";
+import { insertHeaderData } from "../../components/header/header.js";
+import { drawFooter } from "../../components/footer/footer.js";
+import { drawMyNav } from "../../components/my-nav/my-nav.js";
 // import * as Api from "../../api.js";
 
 // Header, Footer 템플릿 삽입
@@ -19,52 +19,80 @@ const emailInput = document.querySelector("#email");
 const passwordInput = document.querySelector("#password");
 const password2Input = document.querySelector("#password2");
 const saveInfoChangeBtn = document.querySelector("#save-info-change-btn");
+const deleteInfoBtn = document.querySelector("#delete-info-btn");
 
-let userData;
+// let userData;
 async function getUserData() {
-  userData = await Api.get("/api/users/64a7db93072b8881f32b5d56");
+  // userData = await Api.get("/api/users/64a7db93072b8881f32b5d56");
+  fetch("/api/users/64a7db93072b8881f32b5d56")
+    .then((response) => response.json())
+    .then((userData) => {
+      const { name, email } = userData;
+      userData.password = "";
 
-  const { name, email } = userData;
-  userData.password = "";
+      nameInput.value = name;
+      emailInput.value = email;
 
-  nameInput.value = name;
-  emailInput.value = email;
+      //정보 수정
+      saveInfoChangeBtn.addEventListener("click", saveInfoChange);
+      async function saveInfoChange(e) {
+        e.preventDefault();
 
-  saveInfoChangeBtn.addEventListener("click", saveInfoChange);
-  function saveInfoChange(e) {
-    e.preventDefault();
+        const changedData = {};
+        const name = nameInput.value;
+        const password = passwordInput.value;
+        const password2 = password2Input.value;
 
-    const changedData = {};
-    const name = nameInput.value;
-    const password = passwordInput.value;
-    const password2 = password2Input.value;
+        if (name !== userData.name) {
+          if (name === "") {
+            return alert("이름을 입력해주세요.");
+          } else {
+            changedData.name = name;
+          }
+        }
 
-    if (name !== userData.name) {
-      if (name === "") {
-        return alert("이름을 입력해주세요.");
-      } else {
-        changedData.name = name;
+        if (password !== "" || password2 !== "") {
+          if (password !== password2) {
+            return alert("비밀번호와 비밀번호 재확인이 일치하지 않습니다.");
+          } else {
+            changedData.password = password;
+          }
+        }
+
+        if (Object.keys(changedData).length === 0) {
+          return alert("수정된 정보가 없습니다");
+        }
+
+        // 수정 사항 업데이트
+        // try {
+        //   await Api.patch("/api/users", _id, changedData);
+        //   alert("수정 사항이 저장되었습니다.");
+        // } catch (err) {
+        //   alert(`오류가 발생하였습니다: ${err}`);
+        // }
+
+        try {
+          await fetch("/api/users/64a7db93072b8881f32b5d56", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(changedData),
+          })
+            .then((response) => response.json())
+            .then((userData) => {
+              console.log(userData);
+              alert("수정 사항이 저장되었습니다.");
+            });
+        } catch (err) {
+          alert(`오류가 발생하였습니다: ${err}`);
+        }
       }
-    }
 
-    if (password !== "" || password2 !== "") {
-      if (password !== password2) {
-        return alert("비밀번호와 비밀번호 재확인이 일치하지 않습니다.");
-      } else {
-        changedData.password = password;
+      //탈퇴
+      deleteInfoBtn.addEventListener("click", deleteInfo);
+      async function deleteInfo(e) {
+        console.log("delete");
       }
-    }
-
-    if (Object.keys(changedData).length === 0) {
-      return alert("수정된 정보가 없습니다");
-    }
-    console.log(changedData);
-    // 수정 사항 업데이트
-    // try {
-    //   await Api.patch("/api/users", email, changedData);
-    //   alert("수정 사항이 저장되었습니다.");
-    // } catch (err) {
-    //   alert(`오류가 발생하였습니다: ${err}`);
-    // }
-  }
+    });
 }
