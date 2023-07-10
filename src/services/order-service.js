@@ -62,8 +62,7 @@ class OrderService {
       result.deliReq = ord.deliReq;
 
       if (ordId) {
-        const ordItems = await orderitemModel.getOrderOne(ordId);
-        console.log("11", ordItems);
+        const ordItems = await orderitemModel.getOrderId(ordId);
         const productIds = [];
         const productNames = [];
         const productImgs = [];
@@ -71,7 +70,6 @@ class OrderService {
         const prices = [];
 
         for (const ordItem of ordItems) {
-          console.log("22", ordItem);
           productIds.push(ordItem.productId);
           productNames.push(ordItem.productName);
           productImgs.push(ordItem.productImg);
@@ -85,7 +83,6 @@ class OrderService {
         result.price = prices;
       }
     }
-    console.log(result);
 
     return result;
   }
