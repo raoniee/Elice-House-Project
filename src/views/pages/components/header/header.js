@@ -172,15 +172,15 @@ export const insertHeaderData = () => {
     //console.log(result);
 
     for (let j = 0; j < result.length; j++) {
-      console.log("아이는", i, "j", j, "result", result[j]);
+      //console.log("아이는", i, "j", j, "result", result[j]);
 
       const subCategory = `<li><a class="dropdown-item" href="#">${result[j]}</a></li>`;
       htmlsubcategory += subCategory;
     }
 
-    console.log(htmlsubcategory);
+    //console.log(htmlsubcategory);
     const subul = document.querySelector(".subnav");
-    console.log(subul);
+    //console.log(subul);
     subul.innerHTML = htmlsubcategory;
   }
 };

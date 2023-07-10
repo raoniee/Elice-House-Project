@@ -1,13 +1,17 @@
 import { drawHeader } from "../components/header/header.js";
+import { insertHeaderData } from "../components/header/header.js";
 import { drawFooter } from "../components/footer/footer.js";
 import { drawMenubar } from "../components/menu-bar/menu-bar.js";
 import { drawItemCard } from "../components/item-card/item-detail-card.js";
-import { getUrlParams } from "../../useful-functions.js";
-import * as API from "../../api.js";
+//import { getUrlParams } from "../../useful-functions.js";
+//import * as API from "../../api.js";
 
 // Header, Footer 템플릿 삽입
 drawHeader();
 drawFooter();
+
+// Header 메뉴 삽입
+insertHeaderData();
 
 // Menubar 템플릿 삽입
 drawMenubar();
@@ -35,16 +39,25 @@ let Products = [];
 insertProductData();
 
 async function insertProductData() {
-  const { id } = getUrlParams();
-  const product = await API.get(`/products/detail/${id}`);
-  const { name, brand, price, subcategoryId, imageUrl, description } = product;
+  //const { id } = getUrlParams();
+  //const product = await API.get(`/products/detail/${id}`);
+  const product = {
+    _id: "1234",
+    name: "밀튼 침대 Q (매트제외)",
+    brand: "까사미아",
+    price: 4000000,
+    imageUrl: "../public/assets/imgs/item-list-card.webp",
+    description: "세상 어디에도 없는 디자인",
+  };
+  const { _id, name, brand, price, subcategoryId, imageUrl, description } =
+    product;
 
   ItemImg.src = imageUrl;
   ItemName.innerText = name;
   ItemBrand.innerText = brand;
   ItemPrice.innerText = `${price.toLocaleString()}원`;
   ItemDesc.innerText = description;
-  ItemTotalPrice.value = `${price.toLocaleString()}원`;
+  ItemTotalPrice.innerText = `${price.toLocaleString()}원`;
 
   ItemQuantityplus.addEventListener("click", () => {
     ItemQuantityinput.value++;
@@ -65,7 +78,7 @@ async function insertProductData() {
   });
 
   addToCartButton.addEventListener("click", () => {
-    if (Products.map(product).includes(product.id)) {
+    if (Products.map((p) => p.id).includes(product._id)) {
       // 로컬스토리지에 해당 상품이 포함되어 있다면
       alert("이미 장바구니에 추가되어 있습니다.");
     } else {
@@ -75,7 +88,7 @@ async function insertProductData() {
       }
 
       const newProductObj = {
-        id: Date.now(),
+        id: _id,
         productImg: imageUrl,
         productName: name,
         productBrand: brand,
@@ -89,7 +102,7 @@ async function insertProductData() {
   });
 
   purchaseButton.addEventListener("click", () => {
-    if (Products.map(product).includes(product.id)) {
+    if (Products.map((p) => p.id).includes(product._id)) {
       // 이미 로컬스토리지에 담겨있다면 바로 구매페이지로 이동
       window.location.href = "/order";
     } else {
@@ -99,7 +112,7 @@ async function insertProductData() {
       }
 
       const newProductObj = {
-        id: Date.now(),
+        id: _id,
         productImg: imageUrl,
         productName: name,
         productBrand: brand,

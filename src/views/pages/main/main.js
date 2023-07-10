@@ -6,4 +6,5 @@ import { drawFooter } from "../components/footer/footer.js";
 drawHeader();
 drawFooter();
 
+// Header 메뉴 삽입
 insertHeaderData();
