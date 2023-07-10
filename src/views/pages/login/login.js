@@ -1,24 +1,9 @@
-import * as API from "../../api.js";
+// import * as API from "../../api.js";
+// import { getUrlParams } from "../../useful-functions";
 
 const INPUT_EMAIL = document.getElementById("input-email");
 const INPUT_PW = document.getElementById("input-password");
-const LOGIN_SUBMIT = document.getElementById("login-submit");
 const LOGIN_FORM = document.getElementById("login-form");
-
-// // 주소창 url의 params를 객체로 만드는 함수
-// // user/:userId -- ?userId 방식으로 다시 생각해보기
-// const getUrlParams = () => {
-//   const queryString = window.location.search;
-//   const urlParams = new URLSearchParams(queryString);
-
-//   const result = {};
-
-//   for (const [key, value] of urlParams) {
-//     result[key] = value;
-//   }
-
-//   return result;
-// };
 
 // 로그인
 LOGIN_FORM.addEventListener("submit", async (event) => {
@@ -26,6 +11,11 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   try {
+    const response = await fetch("dummyData.json");
+    const data = await response.json();
+    console.log("data: ", data);
+    console.log(data.users);
+
     // 코드리뷰 반영 -- 유효성 체크 필드가 늘어나는 경우 생각하기
     const validateList = [
       { elem: INPUT_EMAIL, label: "이메일" },
@@ -41,36 +31,41 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
       return;
     }
 
-    const response = await fetch("/api/users/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+    // 더미 데이터에 저장된 이메일에 해당하는 회원 찾기
+    const user = data.users.find((user) => user.email === INPUT_EMAIL.value);
+    console.log(user.email);
+    console.log(INPUT_EMAIL.value);
+    console.log(user.email === INPUT_EMAIL.value);
 
-    if (response.ok) {
-      const data = await response.json();
-      localStorage.setItem("token", data.token);
-      alert(`로그인 성공! 환영합니다 :)`);
+    // 더미 데이터에 회원 이메일 존재 + 비밀번호 일치 -> 로그인 성공
+    if (user && user.password === INPUT_PW.value) {
+      // 관리자인 경우
+      if (user.isAdmin === "true") {
+        alert("관리자 계정으로 로그인 되었습니다!");
+        localStorage.setItem("admin", "admin");
+        window.location.href = "/admin/main";
+      } else {
+        alert("로그인 성공!");
+
+        // // 메인 페이지 외 다른 페이지(예: 상품 상세페이지)에서 로그인 페이지로 온 경우, 해당 페이지로 복귀
+        // const { previouspage } = getUrlParams();
+
+        // if (previouspage) {
+        //   window.location.href = previouspage;
+        //   return;
+        // }
+
+        // 메인 페이지에서 로그인한 경우, 메인 페이지로 이동
+        window.location.href = "/";
+      }
     } else {
-      const errorData = await response.json();
-      alert(`로그인 실패: ${errorData.error}`);
+      alert("이메일 또는 비밀번호가 올바르지 않습니다.");
     }
 
-    // 관리자(admin)인 경우, 로컬스토리지에 기록
-    if (isAdmin) {
-      localStorage.setItem("admin", "admin");
-    }
-
-    // 메인 페이지 외 다른 페이지(예: 상품 상세페이지)에서 로그인 페이지로 온 경우, 해당 페이지로 복귀
-    const { previouspage } = getUrlParams();
-
-    if (previouspage) {
-      window.location.href = previouspage;
-      return;
-    }
-
-    // 메인 페이지에서 로그인한 경우, 메인 페이지로 이동
-    window.location.href = "/";
+    // // 관리자(admin)인 경우, 로컬스토리지에 기록
+    // if (isAdmin) {
+    //   localStorage.setItem("admin", "admin");
+    // }
   } catch (error) {
     console.error(error.stack);
     alert(`로그인 실패 :: 입력하신 내용을 다시 확인해 주세요.`);
