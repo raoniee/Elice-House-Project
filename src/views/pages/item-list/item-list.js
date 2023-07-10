@@ -1,4 +1,5 @@
 import { drawHeader } from "../../components/header/header.js";
+import { insertHeaderData } from "../components/header/header.js";
 import { drawFooter } from "../../components/footer/footer.js";
 import { drawMenubar } from "../../components/menu-bar/menu-bar.js";
 import { drawItemList } from "../../components/item-card/item-list-card.js";
@@ -13,17 +14,14 @@ drawMenubar();
 // drawItemList 템플릿 삽입
 drawItemList();
 
+// Header 메뉴 삽입
+insertHeaderData();
+
 const productItemContainer = document.querySelector(".item_list");
 
-//API가 없어서 더미 데이터 끌어다 씀
-fetch("./item-dummy.json")
-  .then((res) => res.json())
-  .then((data) => {
-    let Items = data;
-    addProductItemsToContainer(Items);
-  });
+addProductItemsToContainer();
 
-function addProductItemsToContainer(Items) {
+function addProductItemsToContainer() {
   Items.forEach((product) => {
     const { name, price, brand, subcategoryId, imageUrl } = product;
     // prodcuct가 몇갠지 알아서 html 요소 생성
