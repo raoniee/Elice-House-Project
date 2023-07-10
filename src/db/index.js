@@ -7,6 +7,8 @@
 // mongoose.connect(DB_URL, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
+<<<<<<< HEAD
+=======
 // });
 
 // const db = mongoose.connection;
@@ -22,4 +24,20 @@
 
 // app.listen(PORT, () => {
 //   console.log(`Example app listening on port ${PORT}`);
+>>>>>>> acd1763aacaec42acc010aec13f55a7b76cfa1b4
 // });
+
+// const db = mongoose.connection;
+
+// db.on("open", () => console.log("☑️  Connected to DB"));
+// db.on("error", (error) => console.log("❌  DB Error", error));
+
+// export * from "./models/user-model.js";
+// export * from "./models/category-model.js";
+// export * from "./models/product-model.js";
+// export * from "./models/order-model.js";
+// export * from "./models/orderitem-model.js";
+
+// // app.listen(PORT, () => {
+// //   console.log(`Example app listening on port ${PORT}`);
+// // });
