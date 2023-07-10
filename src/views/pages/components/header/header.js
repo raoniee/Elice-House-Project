@@ -19,14 +19,14 @@ export const drawHeader = () => {
             <a href="" class="nav-link link-dark px-2">Sign up</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link link-dark px-2">장바구니</a>
+            <a href="../order-cart/order-cart.html" class="nav-link link-dark px-2">장바구니</a>
           </li>
         </ul>
       </div>
     </div>
     <nav class="py-2 bg-light border-bottom">
       <div class="container">
-        <ul class="nav-bottom justify-content-center nav-pills">
+        <ul class="nav nav-bottom justify-content-center nav-pills" style="list-style: none;">
         </ul>
       </div>
     </nav>
@@ -56,6 +56,7 @@ export const drawHeader = () => {
 
 export const insertHeaderData = () => {
   const ul = document.querySelector(".nav-bottom");
+
   const Nav = [
     {
       categoryName: "침실가구",
@@ -140,25 +141,44 @@ export const insertHeaderData = () => {
   ];
   const { categoryName, subcategoryName } = Nav;
 
-  for (let i = 0; i < Nav.length; i++) {
-    const Category = `<li class="nav-item">
-    <div class="dropdown text-end">
-      <a
-        href="#"
-        class="d-block link-dark text-decoration-none nav-bottom-link"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-        >
-      </a>
-      <ul class="dropdown-menu text-small"></ul>
-    </div>
-  </li>`;
-    ul.innerHTML = Category;
-    const a = document.querySelector(".nav-bottom-link");
-    a.innerText = Nav[i].categoryName;
-  }
+  const deduplicationNav = [
+    ...new Map(Nav.map((value) => [value.categoryName, value])).values(),
+  ];
+  const deduplicationCategoryName = deduplicationNav.map((v) => v.categoryName);
 
-  for (let i = 0; i < Nav.length; i++) {
-    console.log(Nav[i].categoryName);
+  let htmlcategory = "";
+
+  for (let i = 0; i < deduplicationCategoryName.length; i++) {
+    const Category = `<li class="nav-item">
+                          <div class="dropdown text-end">
+                            <a
+                              href="#"
+                              class="d-block link-dark text-decoration-none nav-link nav-bottom-link"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                              >
+                              ${deduplicationCategoryName[i]}
+                            </a>
+                            <ul class="dropdown-menu text-small subnav"></ul>
+                          </div>
+                        </li>`;
+    htmlcategory += Category;
+    ul.innerHTML = htmlcategory;
+
+    let htmlsubcategory = "";
+
+    const result = Nav.filter(
+      (v) => v.categoryName === deduplicationCategoryName[i]
+    ).map((v) => v.subcategoryName);
+    //console.log(result);
+
+    for (let j = 0; j < result.length; j++) {
+      const subCategory = `<li><a class="dropdown-item" href="#">${result[j]}</a></li>`;
+      htmlsubcategory += subCategory;
+    }
+
+    const subul = document.querySelector(".subnav");
+    subul.innerHTML = htmlsubcategory;
+    //console.log(htmlsubcategory);
   }
 };

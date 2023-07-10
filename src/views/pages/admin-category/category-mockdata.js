@@ -2,17 +2,17 @@
 export const data = [
   {
     categoryName: "침실가구",
-    productNumber: "침대",
-    inventory: "5",
+    subcategoryName: "침대",
+    productQuantity: "5",
   },
   {
     categoryName: "주방가구",
-    productNumber: "식탁",
-    inventory: "7",
+    subcategoryName: "식탁",
+    productQuantity: "7",
   },
   {
     categoryName: "거실가구",
-    productNumber: "소파",
-    inventory: "11",
+    subcategoryName: "소파",
+    productQuantity: "11",
   },
 ];
