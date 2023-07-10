@@ -25,7 +25,7 @@ function makeCategoryList() {
       <tbody id="tBody">
       </tbody>
     </table>
-    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
     추가
   </button>
   </div>
@@ -42,8 +42,10 @@ function makeCategoryList() {
     <td>${data[i].subcategoryName}</td>
     <td>${data[i].productQuantity}</td>
     <td>
-      <button type="button" class="btn btn-dark btn-sm">수정</button>
-      <button type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
+    <button type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
+    수정
+    </button>
+    <button type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
     </td>
     `;
 
@@ -51,7 +53,9 @@ function makeCategoryList() {
     temp.appendChild(categoryTableBody);
   }
 
-  //삭제 버튼 누르면 실행되는 함수
+  //수정 버튼 작동 함수
+  modifyCategory();
+  //삭제 버튼 작동 함수
   deleteCategory();
 }
 
@@ -73,7 +77,16 @@ function deleteCategory() {
 }
 
 // 수정 버튼 함수
-function modifyCategory() {}
+function modifyCategory() {
+  const modCategoryBtn = document.querySelectorAll(".mod-category-btn");
+  if (modCategoryBtn && Array.from(modCategoryBtn).length) {
+    modCategoryBtn.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        console.log("modCategoryBtn clicked");
+      })
+    );
+  }
+}
 
 // navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
 function clickNavbar() {

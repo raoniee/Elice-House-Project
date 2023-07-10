@@ -23,7 +23,6 @@ const makeAdminNav = () => {
       href="#"
       >카테고리 관리</a
     >
-    <a id="user-btn" class="nav-link" href="#">회원 관리</a>
   </nav>`;
 
   navContainer.innerHTML = adminNavTemplate;

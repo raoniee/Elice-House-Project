@@ -32,7 +32,7 @@ const makeProductList = () => {
       <tbody id="tbody">
       </tbody>
   </table>
-    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#addProductModal">
       추가
     </button>
   </div>`;
@@ -55,7 +55,9 @@ const makeProductList = () => {
         <td>${data[i].saleState}</td>
         <td>${data[i].description}</td>
         <td>
-          <button type="button" class="btn btn-dark btn-sm">수정</button>
+          <button type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
+          수정
+          </button>
           <button type="button" class="btn btn-dark btn-sm del-product-btn">삭제</button>
         </td>
         `;
@@ -65,14 +67,26 @@ const makeProductList = () => {
     tableBody.appendChild(productTableBody);
   }
 
-  //삭제 버튼 누르면 실행되는 함수
+  //수정 버튼 작동 함수
+  modifyProduct();
+  //삭제 버튼 작동 함수
   deleteProduct();
 };
 
 // 상품 추가 함수
 function addProduct() {}
+
 // 상품 수정 함수
-function modifyProduct() {}
+function modifyProduct() {
+  const modProductBtn = document.querySelectorAll(".mod-product-btn");
+  if (modProductBtn && Array.from(modProductBtn).length) {
+    modProductBtn.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        console.log("modProductBtn clicked");
+      })
+    );
+  }
+}
 // 상품 삭제 함수
 function deleteProduct() {
   const delProductBtn = document.querySelectorAll(".del-product-btn");
