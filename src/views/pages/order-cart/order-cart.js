@@ -12,15 +12,15 @@ insertHeaderData();
 const cartContainer = document.querySelector(".cartContainer");
 
 const Products_KEY = "products";
-let Products = [];
+let Products = "";
 
 insertCartData();
 
 async function insertCartData() {
   const cartProducts = localStorage.getItem(Products_KEY);
   const parsedProducts = JSON.parse(cartProducts);
-  Products.push(parsedProducts);
-  console.log(Products);
+  Products = parsedProducts;
+  //console.log(Products.map((p) => p.id));
 
   const productImg = parsedProducts.map((p) => p.productImg);
   const productName = parsedProducts.map((p) => p.productName);
@@ -84,8 +84,11 @@ async function insertCartData() {
 
   IndividualDeleteBTN.addEventListener("click", () => {
     product_tr.remove();
-    //toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
-    //console.log(parsedProducts.map((p) => p.id));
+    console.log(product_tr.id === Products.map((p) => p.id));
+    console.log(parseInt(product_tr.id));
+    console.log(Products.map((p) => p.id));
+    //Products = Products.filter((p) => p.id !== parseInt(product_tr.id));
+    //console.log(Products);
     //saveProducts();
   });
 }
