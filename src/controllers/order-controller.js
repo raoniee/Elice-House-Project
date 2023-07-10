@@ -46,6 +46,16 @@ const OrderController = {
         } catch (error) {
             next(error);
         }
+    },
+
+    async getAdminOrder(req, res, next) {
+        try {
+            const getAllOrder = await orderService.getAll();
+            
+            res.status(200).json(getAllOrder);
+        } catch (error) {
+            next(error)
+        }
     }
 };
 

@@ -15,8 +15,13 @@ class OrderitemModel {
     }
 
     async getOrderOne(orderId) {
-        const orderOneInfo = await OrderItem.findOne({ orderId });
+        const orderOneInfo = await OrderItem.find({ orderId });
         return orderOneInfo;
+    }
+
+    async getAll() {
+        const All = await OrderItem.find({});
+        return All;
     }
 }
 

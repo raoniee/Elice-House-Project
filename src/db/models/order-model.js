@@ -14,7 +14,12 @@ class OrderModel {
         return orderInfo;
     }
 
-    
+    async getAll() {
+        const All = await Order.find({});
+        return All;
+    }
+
+
 }
 
 const orderModel = new OrderModel();

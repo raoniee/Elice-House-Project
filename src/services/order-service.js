@@ -8,7 +8,6 @@ class OrderService {
         const createOrder = await orderModel.create(newOrder);
         let createOrderitems = [];
         let result = [];
-        let createOrderitem= {};  
         if (createOrder) {
             
             const orderId = createOrder._id;
@@ -17,12 +16,16 @@ class OrderService {
                 const orderProduct  = await productModel.getProdInfo(productId);
                 const productName = orderProduct.name;
                 const productImg = orderProduct.imageUrl;
+                const price = orderProduct.price;
+
+                const createOrderitem= {};  
 
                 createOrderitem.orderId = orderId;
                 createOrderitem.productId = productId;
                 createOrderitem.productName = productName;
                 createOrderitem.productImg = productImg;
                 createOrderitem.quantity = 0;
+                createOrderitem.price = price;
 
                 createOrderitems.push(createOrderitem);
             }
@@ -50,17 +53,97 @@ class OrderService {
 
     async getOrder(userId) {
         const orders = await orderModel.getOrder(userId);
-        let orderInfo = [];
+        const result = {};
 
-        for (const order of orders) {
-            const orderId = order._id;
-            if (orderId) {
-                const orderItem = await orderitemModel.getOrderOne(orderId);
-                orderInfo.push(orderItem);
+        for (const ord of orders) {
+            const ordId = ord._id;
+
+            result.orderId = ordId;
+            result.userPhoneNumber = ord.userPhoneNumber;
+            result.roughAddr = ord.roughAddr;
+            result.detailAddr = ord.detailAddr;
+            result.deliReq = ord.deliReq;
+
+            if (ordId) {
+                const ordItems = await orderitemModel.getOrderOne(ordId);
+                console.log("11",ordItems);
+                const productIds = [];
+                const productNames = [];
+                const productImgs = [];
+                const quantitys = [];
+                const prices = [];
+
+                for (const ordItem of ordItems) {
+                    console.log("22", ordItem);
+                    productIds.push(ordItem.productId);
+                    productNames.push(ordItem.productName);
+                    productImgs.push(ordItem.productImg);
+                    quantitys.push(ordItem.quantity);
+                    prices.push(ordItem.price);
+                }
+                result.productId = productIds;
+                result.productName = productNames;
+                result.productImg = productImgs;
+                result.quantity = quantitys;
+                result.price = prices;
+
             }
         }
+        console.log(result);
 
-        return orderInfo;
+
+        return result;
+    }
+
+    async getAll() {
+        const orders = await orderModel.getAll();
+        const orderItems = await orderitemModel.getAll();
+        const results = [];
+
+        for (const ord of orders) {
+            const result = {};
+            const createdAt = ord.createdAt.toString();
+            const ordId = ord._id;
+            console.log(createdAt)
+            result.orderDate = String(ord.createdAt).slice(0, 15);
+            result.orderTime = String(ord.createdAt).slice(16, 21);
+            result.orderId = ord._id;
+            result.state = ord.state;
+            result.userName = ord.userName;
+            result.userId = ord.userId;
+            result.userPhoneNumber = ord.userPhoneNumber;
+            result.roughAddr = ord.roughAddr;
+            result.detailAddr = ord.detailAddr;
+            result.deliReq = ord.deliReq;
+
+            if (ordId) {
+                const ordItems = await orderitemModel.getOrderOne(ordId);
+                console.log("11",ordItems);
+                const productIds = [];
+                const productNames = [];
+                const productImgs = [];
+                const quantitys = [];
+                const prices = [];
+
+                for (const ordItem of ordItems) {
+                    console.log("22", ordItem);
+                    productIds.push(ordItem.productId);
+                    productNames.push(ordItem.productName);
+                    productImgs.push(ordItem.productImg);
+                    quantitys.push(ordItem.quantity);
+                    prices.push(ordItem.price);
+                }
+                result.productId = productIds;
+                result.productName = productNames;
+                result.productImg = productImgs;
+                result.quantity = quantitys;
+                result.price = prices;
+
+            }
+            results.push(result);
+        }
+
+        return results;
     }
 }
 
