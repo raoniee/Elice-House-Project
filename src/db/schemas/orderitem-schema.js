@@ -30,10 +30,15 @@ const orderItemSchema = new Schema(
       type: Number,
       required: true,
     },
+    // 주문한 상품 가격
+    price: {
+      type: Number,
+      required: true,
+    }
   },
   {
     collection: "orderItems",
-    timestamp: true,
+    timestamps: true,
   }
 );
 export { orderItemSchema };
