@@ -149,7 +149,6 @@ export const insertHeaderData = () => {
   let htmlcategory = "";
 
   for (let i = 0; i < deduplicationCategoryName.length; i++) {
-    console.log("아이는", i);
     const Category = `<li class="nav-item">
                           <div class="dropdown text-end">
                             <a
@@ -170,7 +169,7 @@ export const insertHeaderData = () => {
     const result = Nav.filter(
       (v) => v.categoryName === deduplicationCategoryName[i]
     ).map((v) => v.subcategoryName);
-    console.log(result);
+    //console.log(result);
 
     for (let j = 0; j < result.length; j++) {
       console.log("아이는", i, "j", j, "result", result[j]);
@@ -178,6 +177,7 @@ export const insertHeaderData = () => {
       const subCategory = `<li><a class="dropdown-item" href="#">${result[j]}</a></li>`;
       htmlsubcategory += subCategory;
     }
+
     console.log(htmlsubcategory);
     const subul = document.querySelector(".subnav");
     console.log(subul);
