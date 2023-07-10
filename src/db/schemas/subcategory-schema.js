@@ -16,7 +16,7 @@ const subcategorySchema = new Schema(
   },
   {
     collection: "subcategories",
-    timestamp: true,
+    timestamps: true,
   }
 );
 

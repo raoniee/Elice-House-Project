@@ -15,37 +15,44 @@ const OrderController = {
       const productIds = req.body.productId;
       const quantitys = req.body.quantity;
 
-      const addOrder = await orderService.addOrder(
-        {
-          userId,
-          userName,
-          userPhoneNumber,
-          addrNum,
-          roughAddr,
-          detailAddr,
-          deliReq,
-        },
-        {
-          productIds,
-          quantitys,
-        }
-      );
+      const addOrder = await orderService.addOrder({ 
+                userId,
+                userName,
+                userPhoneNumber,
+                addrNum,
+                roughAddr,
+                detailAddr,
+                deliReq,
+             }, {
+                productIds,
+                quantitys,
+             });
 
-      res.status(201).json(addOrder);
-    } catch (error) {
-      next(error);
-    }
+            res.status(201).json(addOrder);
+      } catch(error) {
+          next(error);
+      }
   },
 
   async getUserOrder(req, res, next) {
-    try {
-      const userId = req.params.userId;
-      const userOrderInfo = await orderService.getOrder(userId);
+      try {
+          const userId = req.params.userId;
+          const userOrderInfo = await orderService.getOrder(userId);
 
-      res.status(200).json(userOrderInfo);
-    } catch (error) {
-      next(error);
-    }
+          res.status(200).json(userOrderInfo);
+      } catch (error) {
+          next(error);
+      }
+  },
+      
+    async getAdminOrder(req, res, next) {
+      try {
+          const getAllOrder = await orderService.getAll();
+          
+          res.status(200).json(getAllOrder);
+      } catch (error) {
+          next(error)
+      }
   },
 
   async updateOrderByUser(req, res, next) {
