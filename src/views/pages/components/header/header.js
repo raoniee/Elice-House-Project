@@ -19,7 +19,7 @@ export const drawHeader = () => {
             <a href="" class="nav-link link-dark px-2">Sign up</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link link-dark px-2">장바구니</a>
+            <a href="../order-cart/order-cart.html" class="nav-link link-dark px-2">장바구니</a>
           </li>
         </ul>
       </div>
@@ -179,6 +179,6 @@ export const insertHeaderData = () => {
 
     const subul = document.querySelector(".subnav");
     subul.innerHTML = htmlsubcategory;
-    console.log(htmlsubcategory);
+    //console.log(htmlsubcategory);
   }
 };
