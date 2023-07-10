@@ -8,8 +8,15 @@ adminTitle.addEventListener("click", function () {
   location.href = "/admin/main";
 });
 
+//db에서 임시로 fetch로 데이터 가져옴
+async function getProductData() {
+  let tempdata = await fetch("/api/admin/products").then((res) => res.json());
+
+  return tempdata;
+}
+
 // 상품 관리창 생성 함수
-const makeProductList = () => {
+const makeProductList = async () => {
   // 테이블 상단 만들기
   listContainer.innerHTML = `
   <div id="table-container">
@@ -37,21 +44,24 @@ const makeProductList = () => {
     </button>
   </div>`;
 
+  let data = await getProductData();
+  console.log(data[0]);
   // 데이터 정의
-  let data = productData.data;
+  // let data = productData.data;
 
   for (let i = 0; i < data.length; i++) {
     const productTableBody = document.createElement("tr");
+    let createDate = data[i].createdAt.slice(0, 10);
     // tr에 데이터 받아서 추가 >> tbody에 추가
     productTableBody.innerHTML = `
         <td>${data[i].categoryName}</td>
         <td>${data[i].subCategoryName}</td>
-        <td>${data[i].productName}</td>
+        <td>${data[i].name}</td>
         <td>${data[i].brand}</td>
         <td>${data[i].price}</td>
         <td>${data[i].imageUrl}</td>
-        <td>${data[i].createDate}</td>
-        <td>${data[i].salesVolume}</td>
+        <td>${createDate}</td>
+        <td>${data[i].soldQuantity}</td>
         <td>${data[i].saleState}</td>
         <td>${data[i].description}</td>
         <td>
