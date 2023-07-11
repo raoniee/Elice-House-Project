@@ -3,7 +3,7 @@ import { Schema } from "mongoose";
 const productSchema = new Schema(
   {
     // 상품 이름
-    name: {
+    productName: {
       type: String,
       required: true,
     },
@@ -17,12 +17,18 @@ const productSchema = new Schema(
       type: Number,
       required: true,
     },
+    categoryId: {
+      type: Schema.Types.ObjectId,
+      ref: "categories",
+      required: true,
+    },
     // 상품이 포함된 자식 카테고리id
     subcategoryId: {
       type: Schema.Types.ObjectId,
       ref: "subcategories",
       required: true,
     },
+
     // 상품 이미지Url
     imageUrl: {
       type: String,
@@ -38,6 +44,12 @@ const productSchema = new Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    // 판매상태:
+    saleStatus: {
+      type: String,
+      required: true,
+      default: "판매준비중",
     },
   },
   {
