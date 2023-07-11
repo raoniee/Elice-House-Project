@@ -26,49 +26,51 @@
     <div class="container">
       <!-- 회원가입 컨텐츠 컨테이너 -->
       <div class="register-container">
-        <h2 id="registerp-head">회원가입</h2>
+        <h2 id="register-head">회원가입</h2>
         <!-- 회원가입 폼 -->
         <!-- <form id="register-form" class="row g-3" onsubmit="validateSignUp()"> -->
         <form id="register-form" class="row g-3">
-          <div class="col-12">
-            <label for="input-name" class="form-label">이름</label>
-            <input
-              type="text"
-              class="form-control"
-              id="input-name"
-              placeholder="이름을 입력해주세요."
-            />
+          <div class="form-input-container">
+            <div class="col-12">
+              <label for="input-name" class="form-label">이름</label>
+              <input
+                type="text"
+                class="form-control"
+                id="input-name"
+                placeholder="이름을 입력해주세요."
+              />
+            </div>
+            <div class="col-12">
+              <label for="input-email" class="form-label">이메일</label>
+              <input
+                type="email"
+                class="form-control"
+                id="input-email"
+                placeholder="expample@example.com"
+              />
+            </div>
+            <div class="col-12">
+              <label for="password1" class="form-label">비밀번호</label>
+              <input
+                type="password"
+                id="password1"
+                class="form-control"
+                id="inputPassword"
+                autocomplete="off"
+              />
+            </div>
+            <div class="col-12">
+              <label for="password2" class="form-label">비밀번호 재확인</label>
+              <input
+                type="password"
+                id="password2"
+                class="form-control"
+                id="inputPassword"
+                autocomplete="off"
+              />
+            </div>
           </div>
-          <div class="col-12">
-            <label for="input-email" class="form-label">이메일</label>
-            <input
-              type="email"
-              class="form-control"
-              id="input-email"
-              placeholder="expample@example.com"
-            />
-          </div>
-          <div class="col-12">
-            <label for="password1" class="form-label">비밀번호</label>
-            <input
-              type="password"
-              id="password1"
-              class="form-control"
-              id="inputPassword"
-              autocomplete="off"
-            />
-          </div>
-          <div class="col-12">
-            <label for="password2" class="form-label">비밀번호 재확인</label>
-            <input
-              type="password"
-              id="password2"
-              class="form-control"
-              id="inputPassword"
-              autocomplete="off"
-            />
-          </div>
-          <div id="form-btn-group" class="d-grid gap-3 col-6 mx-auto">
+          <div class="d-grid gap-3 col-6 mx-auto">
             <button
               type="submit"
               class="btn btn-lg btn-primary"
@@ -76,15 +78,17 @@
             >
               회원가입
             </button>
-            <button
-              type="submit"
-              id="register-cancel"
-              class="btn btn-lg btn-primary"
-            >
-              <a href="../main/main.html">취소</a>
-            </button>
           </div>
         </form>
+        <div class="d-grid gap-3 col-6 mx-auto" style="padding-left: 0.8em">
+          <button
+            type="submit"
+            class="btn btn-lg btn-primary"
+            id="register-cancel"
+          >
+            <a href="../main/main.html">취소</a>
+          </button>
+        </div>
       </div>
     </div>
   </body>

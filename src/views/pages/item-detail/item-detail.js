@@ -1,23 +1,24 @@
-import { drawHeader } from "../components/header/header.js";
-import { insertHeaderData } from "../components/header/header.js";
-import { drawFooter } from "../components/footer/footer.js";
-import { drawMenubar } from "../components/menu-bar/menu-bar.js";
-import { drawItemCard } from "../components/item-card/item-detail-card.js";
-//import { getUrlParams } from "./useful-functions.js";
-//import * as API from "./api.js";
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
+import { insertHeaderCategoryData } from "../../components/header/header-category.js";
+import { drawFooter } from "../../components/footer/footer.js";
 
-// Header, Footer 템플릿 삽입
-drawHeader();
+// Header 삽입
+drawHeaderMenu();
+insertHeaderCategoryData();
+
+//Footer 삽입
 drawFooter();
 
-// Header 메뉴 삽입
-insertHeaderData();
+//Menubar 템플릿 삽입
+// drawMenubar();
 
-// Menubar 템플릿 삽입
-drawMenubar();
+async function getItemDetailData() {
+  let itemdetaildata = await fetch(
+    "/api/products/detail/64ad0f9abe56c15d3eb02f19"
+  ).then((res) => res.json());
 
-// ItemCard 템플릿 삽입
-drawItemCard();
+  return itemdetaildata;
+}
 
 const ItemImg = document.querySelector(".item_detail_img");
 const ItemName = document.querySelector(".item_detail_name");
@@ -41,19 +42,11 @@ insertProductData();
 async function insertProductData() {
   // const { id } = getUrlParams();
   // const product = await API.get(`/products/detail/${id}`);
-  const product = {
-    _id: "1234",
-    name: "밀튼 침대 Q (매트제외)",
-    brand: "까사미아",
-    price: 4000000,
-    imageUrl: "../public/assets/imgs/item-list-card.webp",
-    description: "세상 어디에도 없는 디자인",
-  };
-  const { _id, name, brand, price, subcategoryId, imageUrl, description } =
-    product;
+  const product = await getItemDetailData();
+  const { _id, productName, brand, price, imageUrl, description } = product;
 
   ItemImg.src = imageUrl;
-  ItemName.innerText = name;
+  ItemName.innerText = productName;
   ItemBrand.innerText = brand;
   ItemPrice.innerText = `${price.toLocaleString()}원`;
   ItemDesc.innerText = description;
@@ -86,11 +79,10 @@ async function insertProductData() {
       function saveProducts() {
         localStorage.setItem(Products_KEY, JSON.stringify(Products));
       }
-
       const newProductObj = {
         id: _id,
         productImg: imageUrl,
-        productName: name,
+        productName: productName,
         productBrand: brand,
         productPrice: price,
         productQuantity: ItemQuantityinput.value.toLocaleString(),
@@ -114,7 +106,7 @@ async function insertProductData() {
       const newProductObj = {
         id: _id,
         productImg: imageUrl,
-        productName: name,
+        productName: productName,
         productBrand: brand,
         productPrice: price,
         productQuantity: ItemQuantityinput.value.toLocaleString(),

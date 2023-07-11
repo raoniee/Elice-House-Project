@@ -19,4 +19,7 @@ categoryRouter.delete("/admin/categories/:subcategoryId", CategoryController.del
 // 전체 카테고리 조회
 categoryRouter.get("/categories", CategoryController.getAllCat);
 
+//유저 모드
+// 전체 카테고리 조회
+categoryRouter.get("/categories", CategoryController.getAllCat);
 export { categoryRouter };

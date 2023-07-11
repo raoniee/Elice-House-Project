@@ -15,7 +15,44 @@
   </head>
   <body>
     <header class="header">
-      <!-- headertemplate 삽입 -->
+      <div class="py-3 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+          <a
+            href="/"
+            class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
+          >
+            <svg class="bi me-2" width="40" height="32">
+              <use xlink:href="#bootstrap" />
+            </svg>
+            <span class="fs-4">로고 넣기</span>
+          </a>
+          <ul class="nav">
+            <li id="login" class="nav-item">
+              <a href="" class="nav-link link-dark px-2">Login</a>
+            </li>
+            <li id="sign-up" class="nav-item">
+              <a href="" class="nav-link link-dark px-2">Sign up</a>
+            </li>
+            <li id="cart" class="nav-item">
+              <a
+                href="../order-cart/order-cart.html"
+                class="nav-link link-dark px-2"
+                >장바구니</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <nav class="py-2 bg-light border-bottom">
+        <div class="container">
+          <ul
+            class="nav nav-bottom justify-content-center nav-pills"
+            style="list-style: none"
+          >
+            <!-- headertemplate로 삽입 -->
+          </ul>
+        </div>
+      </nav>
     </header>
 
     <main>
@@ -28,7 +65,31 @@
         </div>
 
         <div class="item_detail_card d-flex justify-content-between">
-          <!-- itemcardTemplate 삽입 -->
+          <img
+            class="item_detail_img w-50 border border-2 rounded-3"
+            src=""
+            alt="가구"
+          />
+          <div
+            class="item_detail_content d-flex flex-column justify-content-center w-50 ps-5"
+          >
+            <span class="item_detail_name fs-1"></span>
+            <p class="item_detail_brand text-muted"></p>
+            <p class="item_detail_price fs-3"></p>
+            <p class="item_detail_desc text-muted"></p>
+            <div class="item_detail_quantity mb-3">
+              <p>수량옵션</p>
+              <button id="minus">-</button>
+              <input type="number" value="1" readonly />
+              <button id="plus">+</button>
+            </div>
+            <p>총 결제 금액</p>
+            <p class="item_detail_totalprice fs-3"></p>
+            <div class="item_detail_option">
+              <button class="cart">장바구니 추가하기</button>
+              <button class="purchase">바로 구매하기</button>
+            </div>
+          </div>
         </div>
       </div>
     </main>

@@ -25,14 +25,29 @@ const searchAddressBtn = document.querySelector("#search-address-btn");
 
 searchAddressBtn.addEventListener("click", searchAddress);
 
+// async function ordersData() {
+//   let data = await fetch("api/orders/64a7db93072b8881f32b5d56").then((res) =>
+//     res.json()
+//   );
+
+//   return data;
+// }
+
+// let orders = await ordersData();
+// console.log(orders);
+
 function getOrders() {
-  fetch("dummy.json")
+  fetch("/api/orders/64a7db93072b8881f32b5d56")
     .then((response) => response.json())
     .then((orders) => {
+      // fetch("dummy.json")
+      //   .then((response) => response.json())
+      //   .then((orders) => {
+      console.log(orders);
       for (const order of orders) {
         const {
           orderDate,
-          orderID,
+          orderId,
           state,
           userPhoneNumber,
           addrNum,
@@ -53,13 +68,16 @@ function getOrders() {
         }
 
         // 총 가격
-        let orderPrice = price.reduce((acc, cur) => acc + cur);
+        let orderPrice = 0;
+        for (let i = 0; i < price.length; i++) {
+          orderPrice += quantity[i] * price[i];
+        }
 
         // 주문 내역 삽입
         orderContainer.insertAdjacentHTML(
           "afterbegin",
           `
-          <tr>
+          <tr id="${orderId}">
             <td class="py-3 col-2 align-middle">
               ${orderDate.slice(4)}
             </td>
@@ -74,7 +92,7 @@ function getOrders() {
             </td>
             <td class="py-3 align-middle">
               <div style="display:none" id="changeable-order">
-                <button type="button" id="change-order-btn" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
+                <button type="button" class="btn btn-outline-primary btn-sm change-order-btn" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
                 <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">주문 취소</button>
               </div>
               <span style="display:none" id="unchangeable-order">변경 불가</span>
@@ -90,7 +108,7 @@ function getOrders() {
         }
 
         //주문 수정창 : 수정 가능 데이터 삽입
-        const changeOrderBtn = document.querySelector("#change-order-btn");
+        const changeOrderBtn = document.querySelector(".change-order-btn");
         const deliveryRequest = deliveryRequestSelect;
         let isRun = false;
         changeOrderBtn.addEventListener("click", changeOrder);
@@ -150,15 +168,30 @@ function getOrders() {
 
             // 수정 사항 업데이트
             // try {
-            //   const { _id } = userData;
-            //   // db에 수정된 정보 저장
-            //   await Api.patch("/api/users", _id, data);
-
+            //   await Api.patch("/api/users", orderId, data);
             //   alert("수정 사항이 저장되었습니다.");
             // } catch (err) {
             //   alert(`오류가 발생하였습니다: ${err}`);
             // }
           }
+
+          //주문 취소
+          // const cancelOrderBtn = document.querySelector("#cancel-order-btn");
+          // saveOrderChangeBtn.addEventListener("click", cancelOrder);
+          // async function cancelOrder(e) {
+          //   e.preventDefault();
+
+          //   try {
+          //     await Api.delete("/api/orders", orderId);
+          //     alert("주문이 취소되었습니다.");
+
+          //     // 삭제한 아이템 화면에서 지우기
+          //     const deletedItem = document.querySelector(`#${orderId}`);
+          //     deletedItem.remove();
+          //   } catch (err) {
+          //     alert(`오류가 발생하였습니다: ${err}`);
+          //   }
+          // }
         }
       }
     });

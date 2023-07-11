@@ -94,6 +94,11 @@ const CategoryController = {
     }
   }
 
+      res.status(200).json(getAllCat);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 export { CategoryController };
