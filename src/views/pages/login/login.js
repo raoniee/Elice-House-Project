@@ -106,7 +106,7 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
       // }
     }
   } catch (error) {
-    console.error(error);
-    alert(`catch__ 로그인 실패: ${error.message}`);
+    // console.error(error);
+    alert(`로그인 실패: 이메일 또는 비밀번호가 틀렸습니다.`);
   }
 });
