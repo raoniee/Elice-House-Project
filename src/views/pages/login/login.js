@@ -3,6 +3,7 @@
 const INPUT_EMAIL = document.getElementById("input-email");
 const INPUT_PW = document.getElementById("input-password");
 const LOGIN_FORM = document.getElementById("login-form");
+const LOGIN_CANCEL = document.getElementById("login-cancel");
 
 // 주소창 url의 params를 객체로 만드는 함수
 // user/:userId -- ?userId 방식으로 다시 생각해보기
@@ -51,7 +52,10 @@ async function post(endpoint, data) {
   return result;
 }
 
-//
+// 로그인 페이지 '취소' 버튼 클릭 -> 메인 페이지로 이동
+LOGIN_CANCEL.addEventListener("click", () => {
+  window.location.href = "/";
+});
 
 // 로그인
 LOGIN_FORM.addEventListener("submit", async (event) => {
@@ -90,20 +94,23 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
     } else {
       // localStorage.setItem("token", data.token);
       localStorage.setItem("token", token);
+
+      // isLoggedIn 값을 true로 설정
+      localStorage.setItem("isLoggedIn", "true");
+
       alert(`로그인 성공! 환영합니다 :)`);
 
-      window.location.href = "/";
+      // window.location.href = "/";
       // 메인 페이지 외 다른 페이지(예: 상품 상세페이지)에서 로그인 페이지로 온 경우, 해당 페이지로 복귀
       const { previouspage } = getUrlParams();
 
       if (previouspage) {
         window.location.href = previouspage;
         return;
+      } else {
+        // 메인 페이지에서 로그인한 경우, 메인 페이지로 이동
+        window.location.href = "/";
       }
-      // } else {
-      //   // 메인 페이지에서 로그인한 경우, 메인 페이지로 이동
-      //   window.location.href = "/";
-      // }
     }
   } catch (error) {
     // console.error(error);
