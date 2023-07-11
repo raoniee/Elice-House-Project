@@ -7,8 +7,6 @@
 // mongoose.connect(DB_URL, {
 //   useNewUrlParser: true,
 //   useUnifiedTopology: true,
-<<<<<<< HEAD
-=======
 // });
 
 // const db = mongoose.connection;
@@ -24,7 +22,6 @@
 
 // app.listen(PORT, () => {
 //   console.log(`Example app listening on port ${PORT}`);
->>>>>>> acd1763aacaec42acc010aec13f55a7b76cfa1b4
 // });
 
 // const db = mongoose.connection;

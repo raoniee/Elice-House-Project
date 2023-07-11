@@ -1,4 +1,4 @@
-import * as mockdata from "./order-mockdata.js";
+import * as orderMockdata from "./order-mockdata.js";
 
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
@@ -8,9 +8,19 @@ adminTitle.addEventListener("click", function () {
   location.href = "/admin/main";
 });
 
+//db에서 임시 fetch >>> 추후 api.js 사용예정
+async function getOrderData() {
+  let tempdata = await fetch("/api/admin/orders").then((res) => res.json());
+
+  return tempdata;
+}
+
 // 주문 정보 리스트 박스 생성 함수
-function makeOrderBox() {
-  const data = mockdata.data;
+async function makeOrderBox() {
+  const data = await getOrderData();
+  console.log(data[0]);
+  // 데이터 정의
+  // const data = orderMockdata.data;
 
   for (let i = 0; i < data.length; i++) {
     const orderBox = document.createElement("div");
@@ -20,7 +30,7 @@ function makeOrderBox() {
     const orderInfo = document.createElement("div");
 
     orderInfo.innerHTML = `
-  <p><b>주문 일자</b>: ${data[i].orderDate}</p>
+  <p><b>주문 일자</b>: ${data[i].createdAt.slice(0, 10)}</p>
   <p><b>주문 시간</b>: ${data[i].orderTime}</p>
   <p><b>주문 번호</b>: ${data[i].orderId}</p>
   <p><b>요청 사항</b>: ${data[i].deliReq}</p>`;
@@ -88,11 +98,11 @@ function deleteOrder() {
 //배송 상태 변경 시 작동하는 기능들을 담을 함수
 function changeDeliverState() {
   const orderStateSelects = document.querySelectorAll(".deliver-state-select");
-  if (orderStateSelects) {
+  if (orderStateSelects && Array.from(orderStateSelects).length) {
     orderStateSelects.forEach((select) =>
       select.addEventListener(
         "change",
-        () => alert("배송상태가 변경되었습니다.")
+        () => console.log(select.value)
         // 여기에 데이터 변경 관련 함수 필요 >> data[i].deliverState가 바뀌어야함
       )
     );

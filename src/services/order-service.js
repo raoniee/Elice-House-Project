@@ -97,6 +97,7 @@ class OrderService {
       const createdAt = ord.createdAt.toString();
       const ordId = ord._id;
       console.log(createdAt);
+      result.createdAt = ord.createdAt;
       result.orderDate = String(ord.createdAt).slice(0, 15);
       result.orderTime = String(ord.createdAt).slice(16, 21);
       result.orderId = ord._id;
@@ -109,7 +110,7 @@ class OrderService {
       result.deliReq = ord.deliReq;
 
       if (ordId) {
-        const ordItems = await orderitemModel.getOrderOne(ordId);
+        const ordItems = await orderitemModel.getOrderId(ordId);
         console.log("11", ordItems);
         const productIds = [];
         const productNames = [];
