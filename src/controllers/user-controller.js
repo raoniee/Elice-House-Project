@@ -89,7 +89,7 @@ const UserController = {
   // 비밀번호 확인
   async checkPassword(req, res, next) {
     try{
-      const userId = req.body.email;
+      const userId = req.params.userId;
       const password = req.body.password;
 
       const check = await userService.checkPassword(userId, password);
