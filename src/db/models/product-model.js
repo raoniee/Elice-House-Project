@@ -32,6 +32,14 @@ class ProductModel {
     return getProd;
   }
 
+  // product 정보 수정
+  async update(_id, toUpdate) {
+    const updateInfo = await Product.findOneAndUpdate({ _id }, toUpdate, {
+      returnOriginal: false,
+    });
+    return updateInfo;
+  }
+
   // 서브카테고리Id에 의한 상품 삭제
   async deleteBySubCat (subcategoryId) {
     const deleteBySubId = await Product.deleteMany({ subcategoryId })

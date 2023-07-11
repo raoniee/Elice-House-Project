@@ -1,7 +1,16 @@
 import { Router } from "express";
+import multer from "multer";
 import { ProductController } from "../controllers/product-controller.js";
 
 const productRouter = Router();
+const upload = multer({
+  dest: "uploads/",
+});
+
+productRouter.post("/admin/image", upload.single("image"), (req, res, next) => {
+  console.log(req.file);
+  res.status(200).send(util.success(200, "요청성공!!", image));
+});
 
 // 전체 상품 조회(admin)
 productRouter.get("/admin/products", ProductController.getAllProducts);
@@ -19,6 +28,9 @@ productRouter.get("/products/:subcatId", ProductController.getProductsByCat);
 productRouter.get("/products/detail/:productId", ProductController.getProdById);
 
 // 상품 수정
-// productRouter.patch("/products/admin/products/:productId", ProductController.updateUser);
+productRouter.patch(
+  "/products/admin/products/:productId",
+  ProductController.updateProduct
+);
 
 export { productRouter };

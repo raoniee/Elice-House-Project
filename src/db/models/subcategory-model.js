@@ -6,18 +6,18 @@ const Subcategory = model("subcategories", subcategorySchema);
 class SubcategoryModel {
   async create(subcategoryName) {
       const createSubcat = await Subcategory.create({subcategoryName});
-      return createSubcat;
+    return createSubcat;
   }
 
   async findById(_id) {
       const subcategory = await Subcategory.findById({_id});
-      return subcategory;
-    }
+    return subcategory;
+  }
 
   async findAll() {
-      const allsubcat = await Subcategory.find({});
+    const allsubcat = await Subcategory.find({});
 
-      return allsubcat;
+    return allsubcat;
   }
 
   // 서브카테고리 업데이트 

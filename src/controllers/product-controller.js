@@ -3,7 +3,7 @@ import { productService } from "../services/product-service.js";
 const ProductController = {
   // 전체 상품 조회 (admin)
   async getAllProducts(req, res, next) {
-    // response: name, brand, price, subcategoryId, imageUrl, description, soldQuantity
+    // response: productName, brand, price, subcategoryId, imageUrl, description, soldQuantity
     try {
       const AllProductInfo = await productService.getAllProductInfo();
 
@@ -15,12 +15,12 @@ const ProductController = {
 
   // 상품 추가(admin)
   async createProduct(req, res, next) {
-    // categoryName, subcategoryName, name, price, imageUrl ,brand, description
+    // categoryName, subcategoryName, productName, price, imageUrl ,brand, description
     try {
       const {
         categoryName,
         subcategoryName,
-        name,
+        productName,
         price,
         imageUrl,
         brand,
@@ -30,7 +30,7 @@ const ProductController = {
       const newProduct = await productService.addProduct({
         categoryName,
         subcategoryName,
-        name,
+        productName,
         price,
         imageUrl,
         brand,
@@ -72,11 +72,48 @@ const ProductController = {
   // 상품 정보 상세 조회(user)
   async getProdById(req, res, next) {
     // request : productId
-    // response: productId, name, brand, price, subcategoryId, imageUrl, description, soldQuantity
+    // response: productId, productName, brand, price, subcategoryId, imageUrl, description, soldQuantity
     try {
       const productId = req.params.productId;
       const productInfo = await productService.getProdById(productId);
       res.status(200).json(productInfo);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  // 상품 정보 수정(admin)
+  async updateProduct(req, res, next) {
+    // path params: productId
+    // body params: categoryName, subcategoryName, productName, brand, price, imageUrl, description, saleStatus
+
+    const productId = req.params.productId;
+    const {
+      categoryName,
+      subcategoryName,
+      productName,
+      brand,
+      price,
+      imageUrl,
+      description,
+      saleStatus,
+    } = req.body;
+
+    const toUpdate = {
+      ...(categoryName && { categoryName }),
+      ...(subcategoryName && { subcategoryName }),
+      ...(productName && { productName }),
+      ...(brand && { brand }),
+      ...(price && { price }),
+      ...(imageUrl && { imageUrl }),
+      ...(description && { description }),
+      ...(saleStatus && { saleStatus }),
+    };
+
+    const checkUpdate = await productService.updateInfo(productId, toUpdate);
+
+    try {
+      res.status(200).json(checkUpdate);
     } catch (error) {
       next(error);
     }
