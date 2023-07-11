@@ -1,12 +1,12 @@
 import { drawHeader } from "../../components/header/header.js";
-import { insertHeaderData } from "../../components/header/header.js";
+import { insertHeaderCategoryData } from "../../components/header/header.js";
 import { drawFooter } from "../../components/footer/footer.js";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 // import * as Api from "../../api.js";
 
 // Header, Footer 템플릿 삽입
 drawHeader();
-insertHeaderData();
+insertHeaderCategoryData();
 drawFooter();
 
 // 마이페이지 사이드메뉴 템플릿 삽입
