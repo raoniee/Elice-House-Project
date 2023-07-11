@@ -1,6 +1,7 @@
 import { drawHeaderMenu } from "../../components/header/header-menu.js";
 import { insertHeaderCategoryData } from "../../components/header/header-category.js";
 import { drawFooter } from "../../components/footer/footer.js";
+import * as Api from "../../apiUtil";
 
 // Header 삽입
 drawHeaderMenu();
@@ -11,14 +12,6 @@ drawFooter();
 
 //Menubar 템플릿 삽입
 // drawMenubar();
-
-async function getItemDetailData() {
-  let itemdetaildata = await fetch(
-    "/api/products/detail/64ad0f9abe56c15d3eb02f19"
-  ).then((res) => res.json());
-
-  return itemdetaildata;
-}
 
 const ItemImg = document.querySelector(".item_detail_img");
 const ItemName = document.querySelector(".item_detail_name");
@@ -34,15 +27,16 @@ const ItemTotalPrice = document.querySelector(".item_detail_totalprice");
 const addToCartButton = document.querySelector(".cart");
 const purchaseButton = document.querySelector(".purchase");
 
-const Products_KEY = "products";
-let Products = [];
+// const Products_KEY = "products";
+// let Products = [];
 
 insertProductData();
 
 async function insertProductData() {
   // const { id } = getUrlParams();
   // const product = await API.get(`/products/detail/${id}`);
-  const product = await getItemDetailData();
+  const productId = window.location.href.split("id=")[1];
+  const product = await Api.get(`/api/products/detail/${productId}`);
   const { _id, productName, brand, price, imageUrl, description } = product;
 
   ItemImg.src = imageUrl;
@@ -70,15 +64,29 @@ async function insertProductData() {
     ).toLocaleString()}원`;
   });
 
+  const Products_KEY = "products";
+  let Products = "";
+
+  function getProducts() {
+    const cartProducts = localStorage.getItem(Products_KEY);
+    const parsedProducts = JSON.parse(cartProducts);
+    if (parsedProducts !== null) {
+      Products = parsedProducts;
+    } else {
+      return (Products = []);
+    }
+  }
+
+  function saveProducts() {
+    localStorage.setItem(Products_KEY, JSON.stringify(Products));
+  }
+
   addToCartButton.addEventListener("click", () => {
+    getProducts();
     if (Products.map((p) => p.id).includes(product._id)) {
       // 로컬스토리지에 해당 상품이 포함되어 있다면
       alert("이미 장바구니에 추가되어 있습니다.");
     } else {
-      // 없다면 로컬스토리지에 담기
-      function saveProducts() {
-        localStorage.setItem(Products_KEY, JSON.stringify(Products));
-      }
       const newProductObj = {
         id: _id,
         productImg: imageUrl,
@@ -90,13 +98,15 @@ async function insertProductData() {
       };
       Products.push(newProductObj);
       saveProducts();
+      //console.log(Products);
     }
   });
 
   purchaseButton.addEventListener("click", () => {
+    getProducts();
     if (Products.map((p) => p.id).includes(product._id)) {
       // 이미 로컬스토리지에 담겨있다면 바로 구매페이지로 이동
-      window.location.href = "/order";
+      window.location.href = "/order/progerss";
     } else {
       // 아니라면 로컬스토리지에 담고 구매페이지로 이동
       function saveProducts() {
@@ -114,7 +124,7 @@ async function insertProductData() {
       };
       Products.push(newProductObj);
       saveProducts();
-      window.location.href = "/order";
+      window.location.href = "/order/progerss";
     }
   });
 }
