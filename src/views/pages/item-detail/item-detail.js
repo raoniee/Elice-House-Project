@@ -1,12 +1,12 @@
-// 헤더 수정후 임포트 다시 하기
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
 import { insertHeaderCategoryData } from "../../components/header/header-category.js";
 import { drawFooter } from "../../components/footer/footer.js";
-// import { drawMenubar } from "../../components/menu-bar/menu-bar.js";
 
 // Header 삽입
+drawHeaderMenu();
 insertHeaderCategoryData();
 
-//Footer 템플릿 삽입
+//Footer 삽입
 drawFooter();
 
 //Menubar 템플릿 삽입
@@ -14,7 +14,7 @@ drawFooter();
 
 async function getItemDetailData() {
   let itemdetaildata = await fetch(
-    "/api/products/detail/64aca994784d350826797406"
+    "/api/products/detail/64ad0f9abe56c15d3eb02f19"
   ).then((res) => res.json());
 
   return itemdetaildata;
@@ -79,7 +79,6 @@ async function insertProductData() {
       function saveProducts() {
         localStorage.setItem(Products_KEY, JSON.stringify(Products));
       }
-
       const newProductObj = {
         id: _id,
         productImg: imageUrl,
