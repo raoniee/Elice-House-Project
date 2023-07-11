@@ -1,6 +1,7 @@
 import { drawHeaderMenu } from "../../components/header/header-menu.js";
 import { insertHeaderCategoryData } from "../../components/header/header-category.js";
 import { drawFooter } from "../../components/footer/footer.js";
+import * as Api from "../../apiUtil";
 
 // Header 삽입
 drawHeaderMenu();
@@ -9,23 +10,17 @@ insertHeaderCategoryData();
 //Footer 삽입
 drawFooter();
 
-// 임시 api
-async function getItemlistData() {
-  let itemlistdata = await fetch("/api/products/64ad0e774735f7cfdc9877e9").then(
-    (res) => res.json()
-  );
-
-  return itemlistdata;
-}
-
 const productItemContainer = document.querySelector(".item_list");
 
 addProductItemsToContainer();
 
 async function addProductItemsToContainer() {
   //api 코드 입력
-  const products = await getItemlistData();
+  //const products = await getItemlistData();
   //console.log(products);
+  const subcategoryId = window.location.href.split("categoryid=")[1];
+  console.log(subcategoryId);
+  const products = await Api.get(`/api/products/${subcategoryId}`);
 
   products.forEach(async (product) => {
     const { _id, productName, brand, price, imageUrl } = product;
