@@ -1,25 +1,21 @@
-import * as orderMockdata from "./order-mockdata.js";
+// import * as orderMockdata from "./order-mockdata.js";
+import {
+  makeAdminNav,
+  clickNavbar,
+} from "../../components/admin-nav/admin-nav.js";
+import * as apiUtil from "../../apiUtil.js";
+
+//admin navbar 생성
+makeAdminNav();
+clickNavbar();
 
 const listContainer = document.querySelector("#list-container");
-const adminTitle = document.querySelector("#admin-title");
-
-// 메인 페이지 이동
-adminTitle.addEventListener("click", function () {
-  location.href = "/admin/main";
-});
-
-//db에서 임시 fetch >>> 추후 api.js 사용예정
-async function getOrderData() {
-  let tempdata = await fetch("/api/admin/orders").then((res) => res.json());
-
-  return tempdata;
-}
 
 // 주문 정보 리스트 박스 생성 함수
 async function makeOrderBox() {
-  const data = await getOrderData();
-  console.log(data[0]);
   // 데이터 정의
+  const data = await apiUtil.get("/api/admin/orders");
+  console.log(data);
   // const data = orderMockdata.data;
 
   for (let i = 0; i < data.length; i++) {
@@ -50,12 +46,12 @@ async function makeOrderBox() {
     orderStateModify.innerHTML = `
   <div><b>배송 상태</b>: ${data[i].state}</div>
   <label><b>배송상태변경</b></label>
-  <select class="deliver-state-select">
+  <select id="${data[i].orderId}"class="deliver-state-select">
   <option>배송준비</option>
   <option>배송중</option>
   <option>배송완료</option>
   </select>
-  <button type="button" class="btn btn-dark btn-sm del-order-btn">주문삭제</button>
+  <button id="${data[i].orderId}"type="button" class="btn btn-dark btn-sm del-order-btn">주문삭제</button>
   `;
 
     const orderProductInfo = document.createElement("div");
@@ -88,10 +84,17 @@ function deleteOrder() {
   const deleteOrderBtns = document.querySelectorAll(".del-order-btn");
   if (deleteOrderBtns && Array.from(deleteOrderBtns).length) {
     deleteOrderBtns.forEach((btn) =>
-      btn.addEventListener("click", () => confirm("정말로 삭제하시겠습니까?"))
+      btn.addEventListener("click", async () => {
+        const confirmRes = confirm("정말로 삭제하시겠습니까?");
+        // confirm 응답이 true인 경우 삭제 api 실행
+        if (confirmRes === true) {
+          // 삭제 함수 실행
+          await apiUtil.delete("/api/admin/orders", btn.id);
+          // 삭제 후 새로고침으로 삭제확인
+          location.reload();
+        }
+      })
     );
-    // confirm >> true/false 받아서 작업필요
-    // 추후 데이터 삭제 관련 로직 필요
   }
 }
 
@@ -100,35 +103,13 @@ function changeDeliverState() {
   const orderStateSelects = document.querySelectorAll(".deliver-state-select");
   if (orderStateSelects && Array.from(orderStateSelects).length) {
     orderStateSelects.forEach((select) =>
-      select.addEventListener(
-        "change",
-        () => console.log(select.value)
-        // 여기에 데이터 변경 관련 함수 필요 >> data[i].deliverState가 바뀌어야함
-      )
+      select.addEventListener("change", () => {
+        const patchData = select.value;
+        console.log(select.id, select.value);
+        // await apiUtil.patch("/api/admin/orders", select.id, patchData);
+      })
     );
   }
-  // 백 데이터에 상태변경 정보 반영
 }
-
-// navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
-function clickNavbar() {
-  const orderBtn = document.querySelector("#order-btn");
-  const productBtn = document.querySelector("#product-btn");
-  const categoryBtn = document.querySelector("#category-btn");
-
-  orderBtn.addEventListener("click", function () {
-    location.href = "/admin/order";
-  });
-
-  productBtn.addEventListener("click", function () {
-    location.href = "/admin/product";
-  });
-
-  categoryBtn.addEventListener("click", function () {
-    location.href = "/admin/category";
-  });
-}
-// navbar 함수 실행
-clickNavbar();
 
 window.onload = makeOrderBox();

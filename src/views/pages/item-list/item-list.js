@@ -15,11 +15,8 @@ const productItemContainer = document.querySelector(".item_list");
 addProductItemsToContainer();
 
 async function addProductItemsToContainer() {
-  //api 코드 입력
-  //const products = await getItemlistData();
-  //console.log(products);
-  const subcategoryId = window.location.href.split("categoryid=")[1];
-  console.log(subcategoryId);
+  const params = new URLSearchParams(location.search);
+  const subcategoryId = params.get("categoryId");
   const products = await Api.get(`/api/products/${subcategoryId}`);
 
   products.forEach(async (product) => {

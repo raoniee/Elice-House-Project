@@ -20,27 +20,24 @@ async function insertCartData() {
   const cartProducts = localStorage.getItem(Products_KEY);
   const parsedProducts = JSON.parse(cartProducts);
   Products = parsedProducts;
-  console.log(Products);
+  //console.log(Products);
 
-  const productImg = parsedProducts.map((p) => p.productImg);
-  const productId = parsedProducts.map((p) => p.id);
-  const productName = parsedProducts.map((p) => p.productName);
-  const productQuantity = parsedProducts.map((p) => p.productQuantity);
-  const productPrice = parsedProducts.map((p) => p.productPrice);
+  Products.forEach((product) => {
+    const { id, productImg, productName, productPrice, productQuantity } =
+      product;
 
-  const product_tr = document.createElement("tr");
-  product_tr.id = parsedProducts.map((p) => p.id);
-  cartContainer.appendChild(product_tr);
-
-  product_tr.innerHTML = `
+    cartContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+          <tr id="${id}">
             <td class="py-3 col-4 align-middle">
               <img src="${productImg}" class="img-thumbnail" alt="상품이미지" />
               <p>${productName}</p>
             </td>
             <td class="py-3 col-2 align-middle">
-              <button class="minus" id="${productId}">-</button>
+              <button class="minus" id="${id}">-</button>
               <input type="number" class="col-3 item_detail_quantity_input" value="${productQuantity}" readonly/>
-              <button class="plus" id="${productId}">+</button>
+              <button class="plus" id="${id}">+</button>
             </td>
             <td class="py-3 align-middle item_detail_totalprice">
             ${(productQuantity * productPrice).toLocaleString()}원</td>
@@ -48,11 +45,15 @@ async function insertCartData() {
               <button
                 type="button"
                 class="btn btn-outline-dark btn-sm individual_delete_btn"
-                id="${productId}"
+                id="${id}"
               >
                 삭제
               </button>
-            </td>`;
+            </td>
+          </tr>`
+    );
+  });
+
   const ItemQuantityinput = document.querySelector(
     ".item_detail_quantity_input"
   );

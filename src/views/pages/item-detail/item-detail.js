@@ -33,9 +33,8 @@ const purchaseButton = document.querySelector(".purchase");
 insertProductData();
 
 async function insertProductData() {
-  // const { id } = getUrlParams();
-  // const product = await API.get(`/products/detail/${id}`);
-  const productId = window.location.href.split("id=")[1];
+  const params = new URLSearchParams(location.search);
+  const productId = params.get("id");
   const product = await Api.get(`/api/products/detail/${productId}`);
   const { _id, productName, brand, price, imageUrl, description } = product;
 

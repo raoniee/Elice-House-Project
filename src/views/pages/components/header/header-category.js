@@ -37,7 +37,7 @@ export async function insertHeaderCategoryData() {
       result1.insertAdjacentHTML(
         "beforeend",
         `<li>
-      <a class="dropdown-item" href="/product/list?categoryid=${CategoryData[i].subcategory[j].subcategoryId}">
+      <a class="dropdown-item" href="/product/list?categoryId=${CategoryData[i].subcategory[j].subcategoryId}">
       ${CategoryData[i].subcategory[j].subcategoryName}
       </a>
       </li>`
