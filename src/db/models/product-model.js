@@ -31,6 +31,22 @@ class ProductModel {
     const getProd = await Product.findOne({ _id: productId });
     return getProd;
   }
+
+  // product 정보 수정
+  async update(_id, toUpdate) {
+    const updateInfo = await Product.findOneAndUpdate({ _id }, toUpdate, {
+      returnOriginal: false,
+    });
+    return updateInfo;
+  }
+
+  // 서브카테고리Id에 의한 상품 삭제
+  async deleteBySubCat (subcategoryId) {
+    const deleteBySubId = await Product.deleteMany({ subcategoryId })
+
+    return deleteBySubId;
+  }
+
 }
 
 const productModel = new ProductModel();
