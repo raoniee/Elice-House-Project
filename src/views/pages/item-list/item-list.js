@@ -1,20 +1,17 @@
-// 헤더 수정후 임포트 다시 하기
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
 import { insertHeaderCategoryData } from "../../components/header/header-category.js";
 import { drawFooter } from "../../components/footer/footer.js";
-// import { drawMenubar } from "../../components/menu-bar/menu-bar.js";
 
 // Header 삽입
+drawHeaderMenu();
 insertHeaderCategoryData();
 
-//Footer 템플릿 삽입
+//Footer 삽입
 drawFooter();
-
-//Menubar 템플릿 삽입
-// drawMenubar();
 
 // 임시 api
 async function getItemlistData() {
-  let itemlistdata = await fetch("/api/products/64ab013cca36a71193fd55e4").then(
+  let itemlistdata = await fetch("/api/products/64ad0e774735f7cfdc9877e9").then(
     (res) => res.json()
   );
 
@@ -39,7 +36,7 @@ async function addProductItemsToContainer() {
             <div
               class="item_list_card d-flex flex-column m-2"
               style="cursor: pointer"
-              id="${_id}"
+              id="a${_id}"
             >
               <img
                 class="item_list_img mb-2 border border-2 rounded-3"
@@ -51,7 +48,7 @@ async function addProductItemsToContainer() {
               <p class="item_list_price mb-3 fw-bold">${price.toLocaleString()}원</p>
             </div>`
     );
-    const ItemListCard = document.querySelector(".item_list_card");
+    const ItemListCard = document.querySelector(`#a${_id}`);
     ItemListCard.addEventListener("click", () => {
       console.log("아이템클릭하기");
       location.href = `/product/detail?id=${_id}`;
