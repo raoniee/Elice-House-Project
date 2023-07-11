@@ -1,13 +1,5 @@
 //라온님
-
-// Api
-async function getHeaderCategoryData() {
-  let headercategorydata = await fetch("/api/categories").then((res) =>
-    res.json()
-  );
-
-  return headercategorydata;
-}
+import * as Api from "../../apiUtil";
 
 // 로직
 const result = document.querySelector(".nav-bottom");
@@ -16,8 +8,9 @@ const result = document.querySelector(".nav-bottom");
 
 export async function insertHeaderCategoryData() {
   //api 코드 입력
-  const CategoryData = await getHeaderCategoryData();
+  //const CategoryData = await getHeaderCategoryData();
   //console.log(CategoryData);
+  const CategoryData = await Api.get(`/api/categories`);
 
   for (let i = 0; i < CategoryData.length; i++) {
     result.insertAdjacentHTML(
