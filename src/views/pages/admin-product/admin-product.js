@@ -1,12 +1,13 @@
-import * as productMockData from "./product-mockdata.js";
+// import * as productMockData from "./product-mockdata.js";
+import {
+  makeAdminNav,
+  clickNavbar,
+} from "../../components/admin-nav/admin-nav.js";
+//admin navbar 생성
+makeAdminNav();
+clickNavbar();
 
 const listContainer = document.querySelector("#list-container");
-const adminTitle = document.querySelector("#admin-title");
-
-// 메인 페이지 이동
-adminTitle.addEventListener("click", function () {
-  location.href = "/admin/main";
-});
 
 //db에서 임시 fetch >>> 추후 api.js 사용예정
 async function getProductData() {
@@ -17,7 +18,7 @@ async function getProductData() {
   return productData;
 }
 
-// 상품 관리창 생성 함수
+// 상품 관리 테이블 생성 함수
 const makeProductList = async () => {
   // 테이블 상단 만들기
   listContainer.innerHTML = `
@@ -158,26 +159,5 @@ function deleteProduct() {
     );
   }
 }
-
-// navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
-function clickNavbar() {
-  const orderBtn = document.querySelector("#order-btn");
-  const productBtn = document.querySelector("#product-btn");
-  const categoryBtn = document.querySelector("#category-btn");
-
-  orderBtn.addEventListener("click", function () {
-    location.href = "/admin/order";
-  });
-
-  productBtn.addEventListener("click", function () {
-    location.href = "/admin/product";
-  });
-
-  categoryBtn.addEventListener("click", function () {
-    location.href = "/admin/category";
-  });
-}
-// navbar 함수 실행
-clickNavbar();
 
 window.onload = makeProductList();
