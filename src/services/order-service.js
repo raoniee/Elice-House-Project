@@ -97,6 +97,7 @@ class OrderService {
       const createdAt = ord.createdAt.toString();
       const ordId = ord._id;
       console.log(createdAt);
+      result.createdAt = ord.createdAt;
       result.orderDate = String(ord.createdAt).slice(0, 15);
       result.orderTime = String(ord.createdAt).slice(16, 21);
       result.orderId = ord._id;

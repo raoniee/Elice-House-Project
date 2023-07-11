@@ -70,7 +70,9 @@ const makeProductList = async () => {
           <button type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
           수정
           </button>
-          <button type="button" class="btn btn-dark btn-sm del-product-btn">삭제</button>
+          <button id="${
+            data[i]._id
+          }" type="button" class="btn btn-dark btn-sm del-product-btn">삭제</button>
         </td>
         `;
 
@@ -78,15 +80,24 @@ const makeProductList = async () => {
     const tableBody = document.querySelector("#tbody");
     tableBody.appendChild(productTableBody);
   }
-
-  //수정 버튼 작동 함수
+  // 추가 버튼 작동 함수
+  addProduct();
+  // 수정 버튼 작동 함수
   modifyProduct();
-  //삭제 버튼 작동 함수
+  // 삭제 버튼 작동 함수
   deleteProduct();
 };
 
 // 상품 추가 함수
-function addProduct() {}
+function addProduct() {
+  const submitBtn = document.querySelector("#submitBtn");
+  //모달 데이터 담을 object
+  const modalInputData = {};
+  submitBtn.addEventListener("click", () => {
+    // 모달 submit 클릭 확인
+    console.log("submit clicked");
+  });
+}
 
 // 상품 수정 함수
 function modifyProduct() {
@@ -99,13 +110,50 @@ function modifyProduct() {
     );
   }
 }
+// Api.del 임시구현 (추후 삭제 예정)
+async function del(endpoint, params = "", data = {}) {
+  const apiUrl = `${endpoint}/${params}`;
+  const bodyData = JSON.stringify(data);
+
+  console.log(`DELETE 요청 ${apiUrl}`);
+  console.log(`DELETE 요청 데이터: ${bodyData}`);
+
+  const res = await fetch(apiUrl, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: bodyData,
+  });
+
+  // 응답 코드가 4XX 계열일 때 (400, 403 등)
+  if (!res.ok) {
+    const errorContent = await res.json();
+    const { reason } = errorContent;
+
+    throw new Error(reason);
+  }
+
+  const result = await res.json();
+
+  return result;
+}
+
 // 상품 삭제 함수
 function deleteProduct() {
   const delProductBtn = document.querySelectorAll(".del-product-btn");
   if (delProductBtn && Array.from(delProductBtn).length) {
     delProductBtn.forEach((btn) =>
-      btn.addEventListener("click", () => {
-        confirm("정말로 삭제하시겠습니까?");
+      btn.addEventListener("click", async () => {
+        let confirmRes = confirm("정말로 삭제하시겠습니까?");
+        // confirm 응답이 true인 경우 삭제 api 실행
+        if (confirmRes === true) {
+          // 삭제 함수 실행
+          await del("/api/admin/products", btn.id);
+          // 삭제 후 새로고침으로 삭제확인
+          location.reload();
+        }
       })
     );
   }

@@ -16,8 +16,11 @@ async function getOrderData() {
 }
 
 // 주문 정보 리스트 박스 생성 함수
-function makeOrderBox() {
-  const data = orderMockdata.data;
+async function makeOrderBox() {
+  const data = await getOrderData();
+  console.log(data[0]);
+  // 데이터 정의
+  // const data = orderMockdata.data;
 
   for (let i = 0; i < data.length; i++) {
     const orderBox = document.createElement("div");
@@ -27,7 +30,7 @@ function makeOrderBox() {
     const orderInfo = document.createElement("div");
 
     orderInfo.innerHTML = `
-  <p><b>주문 일자</b>: ${data[i].orderDate}</p>
+  <p><b>주문 일자</b>: ${data[i].createdAt.slice(0, 10)}</p>
   <p><b>주문 시간</b>: ${data[i].orderTime}</p>
   <p><b>주문 번호</b>: ${data[i].orderId}</p>
   <p><b>요청 사항</b>: ${data[i].deliReq}</p>`;
