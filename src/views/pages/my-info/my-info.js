@@ -23,7 +23,7 @@ const deleteInfoBtn = document.querySelector("#delete-info-btn");
 
 // let userData;
 async function getUserData() {
-  // userData = await Api.get("/api/users/64a7db93072b8881f32b5d56");
+  // userData = await Api.get("/api/users/",  _id);
   fetch("/api/users/64a7db93072b8881f32b5d56")
     .then((response) => response.json())
     .then((userData) => {
@@ -66,7 +66,7 @@ async function getUserData() {
         // 수정 사항 업데이트
         // try {
         //   await Api.patch("/api/users", _id, changedData);
-        //   alert("수정 사항이 저장되었습니다.");
+        //   alert("수정된 정보가 저장되었습니다.");
         // } catch (err) {
         //   alert(`오류가 발생하였습니다: ${err}`);
         // }
@@ -82,7 +82,7 @@ async function getUserData() {
             .then((response) => response.json())
             .then((userData) => {
               console.log(userData);
-              alert("수정 사항이 저장되었습니다.");
+              alert("수정된 정보가 저장되었습니다.");
             });
         } catch (err) {
           alert(`오류가 발생하였습니다: ${err}`);
@@ -90,9 +90,21 @@ async function getUserData() {
       }
 
       //탈퇴
-      deleteInfoBtn.addEventListener("click", deleteInfo);
-      async function deleteInfo(e) {
-        console.log("delete");
-      }
+      // deleteInfoBtn.addEventListener("click", deleteInfo);
+      // async function deleteInfo(e) {
+      //   e.preventDefault();
+
+      //   try {
+      //     await Api.delete("/api/users", _id);
+
+      //     // 삭제 성공
+      //     alert("탈퇴되었습니다.");
+      //     sessionStorage.removeItem("token");
+      //     window.location.href = "/";
+
+      //   } catch (err) {
+      //     alert(`오류가 발생하였습니다: ${err}`);
+      //   }
+      // }
     });
 }

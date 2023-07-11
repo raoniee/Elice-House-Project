@@ -47,7 +47,7 @@ function getOrders() {
       for (const order of orders) {
         const {
           orderDate,
-          orderID,
+          orderId,
           state,
           userPhoneNumber,
           addrNum,
@@ -77,7 +77,7 @@ function getOrders() {
         orderContainer.insertAdjacentHTML(
           "afterbegin",
           `
-          <tr>
+          <tr id="${orderId}">
             <td class="py-3 col-2 align-middle">
               ${orderDate.slice(4)}
             </td>
@@ -168,15 +168,30 @@ function getOrders() {
 
             // 수정 사항 업데이트
             // try {
-            //   const { _id } = userData;
-            //   // db에 수정된 정보 저장
-            //   await Api.patch("/api/users", _id, data);
-
+            //   await Api.patch("/api/users", orderId, data);
             //   alert("수정 사항이 저장되었습니다.");
             // } catch (err) {
             //   alert(`오류가 발생하였습니다: ${err}`);
             // }
           }
+
+          //주문 취소
+          // const cancelOrderBtn = document.querySelector("#cancel-order-btn");
+          // saveOrderChangeBtn.addEventListener("click", cancelOrder);
+          // async function cancelOrder(e) {
+          //   e.preventDefault();
+
+          //   try {
+          //     await Api.delete("/api/orders", orderId);
+          //     alert("주문이 취소되었습니다.");
+
+          //     // 삭제한 아이템 화면에서 지우기
+          //     const deletedItem = document.querySelector(`#${orderId}`);
+          //     deletedItem.remove();
+          //   } catch (err) {
+          //     alert(`오류가 발생하였습니다: ${err}`);
+          //   }
+          // }
         }
       }
     });
