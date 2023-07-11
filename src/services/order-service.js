@@ -109,7 +109,7 @@ class OrderService {
       result.deliReq = ord.deliReq;
 
       if (ordId) {
-        const ordItems = await orderitemModel.getOrderOne(ordId);
+        const ordItems = await orderitemModel.getOrderId(ordId);
         console.log("11", ordItems);
         const productIds = [];
         const productNames = [];

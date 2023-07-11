@@ -1,4 +1,4 @@
-import * as dummyData from "./product-mockdata.js";
+import * as productMockData from "./product-mockdata.js";
 
 const listContainer = document.querySelector("#list-container");
 const adminTitle = document.querySelector("#admin-title");
@@ -47,7 +47,7 @@ const makeProductList = async () => {
   </div>`;
 
   // 데이터 정의
-  // let data = dummyData.data;
+  // let data = productMockData.data;
   let data = await getProductData();
   console.log(data);
 
@@ -58,13 +58,13 @@ const makeProductList = async () => {
     productTableBody.innerHTML = `
         <td>${data[i].categoryName}</td>
         <td>${data[i].subCategoryName}</td>
-        <td>${data[i].name}</td>
+        <td>${data[i].productName}</td>
         <td>${data[i].brand}</td>
         <td>${data[i].price.toLocaleString("en")}원</td>
         <td>${data[i].imageUrl}</td>
         <td>${createDate}</td>
         <td>${data[i].soldQuantity}</td>
-        <td>${data[i].saleState}</td>
+        <td>${data[i].saleStatus}</td>
         <td>${data[i].description}</td>
         <td>
           <button type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
