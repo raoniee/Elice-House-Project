@@ -1,13 +1,16 @@
-import { drawHeader } from "../components/header/header.js";
-import { insertHeaderData } from "../components/header/header.js";
-import { drawFooter } from "../components/footer/footer.js";
+// 헤더 수정후 임포트 다시 하기
+import { insertHeaderCategoryData } from "../../components/header/header-category.js";
+import { drawFooter } from "../../components/footer/footer.js";
+// import { drawMenubar } from "../../components/menu-bar/menu-bar.js";
 
-// Header, Footer 템플릿 삽입
-drawHeader();
+// Header 삽입
+insertHeaderCategoryData();
+
+//Footer 템플릿 삽입
 drawFooter();
 
-// Header 메뉴 삽입
-insertHeaderData();
+//Menubar 템플릿 삽입
+// drawMenubar();
 
 const cartContainer = document.querySelector(".cartContainer");
 
@@ -60,6 +63,12 @@ async function insertCartData() {
   const ItemTotalPrice = document.querySelector(".item_detail_totalprice");
   const IndividualDeleteBTN = document.querySelector(".individual_delete_btn");
 
+  const totalOrderPrice = document.querySelector(".total_order_price");
+
+  function saveProducts() {
+    localStorage.setItem(Products_KEY, JSON.stringify(Products));
+  }
+
   ItemQuantityplus.addEventListener("click", () => {
     ItemQuantityinput.value++;
     ItemTotalPrice.innerText = `${(
@@ -77,10 +86,6 @@ async function insertCartData() {
       productPrice * ItemQuantityinput.value
     ).toLocaleString()}원`;
   });
-
-  function saveProducts() {
-    localStorage.setItem(Products_KEY, JSON.stringify(Products));
-  }
 
   IndividualDeleteBTN.addEventListener("click", () => {
     product_tr.remove();

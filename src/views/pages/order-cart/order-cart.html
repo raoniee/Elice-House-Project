@@ -21,8 +21,18 @@
   </head>
   <body>
     <header class="header">
-      <!-- headertemplate로 삽입 -->
+      <nav class="py-2 bg-light border-bottom">
+        <div class="container">
+          <ul
+            class="nav nav-bottom justify-content-center nav-pills"
+            style="list-style: none"
+          >
+            <!-- headertemplate로 삽입 -->
+          </ul>
+        </div>
+      </nav>
     </header>
+
     <section class="px-5 pb-5">
       <nav
         style="--bs-breadcrumb-divider: '>'"
@@ -37,6 +47,7 @@
           <li class="breadcrumb-item">주문완료</li>
         </ol>
       </nav>
+
       <table class="table table-bordered text-center">
         <thead class="table-light">
           <tr>
@@ -52,8 +63,9 @@
           <!--  -->
         </tbody>
       </table>
+
       <p class="fs-5 text-center mt-5">
-        총 주문금액 <span class="text-danger">100,000</span>원
+        총 주문금액 <span class="text-danger total_order_price"></span>원
       </p>
       <!--  -->
       <div class="text-center">

@@ -86,6 +86,40 @@ class CategoryService {
     }
     return { AllCategory };
   }
+
+  async getAllCategory() {
+    const allCatInfo = await categoryModel.findAll();
+    const AllCategory = [];
+
+    for (const catInfo of allCatInfo) {
+      const res = {};
+      const subResArr = [];
+      const subCatIds = catInfo.subcategory;
+
+      res.categoryName = catInfo.categoryName;
+      res.categoryId = catInfo._id;
+
+      for (const subCatId of subCatIds) {
+        console.log("subCatId : ", subCatId);
+        const subcatInCat = await subcategoryModel.findById(subCatId);
+        console.log("subcatInCat : ", subcatInCat);
+        if (subcatInCat) {
+          const subRes = {};
+          const subcategoryName = subcatInCat.subcategoryName;
+          const subcategoryId = subcatInCat._id;
+
+          subRes.subcategoryName = subcategoryName;
+          subRes.subcategoryId = subcategoryId;
+
+          subResArr.push(subRes);
+        }
+        res.subcategory = subResArr;
+      }
+      AllCategory.push(res);
+    }
+
+    return AllCategory;
+  }
 }
 
 const categoryService = new CategoryService();
