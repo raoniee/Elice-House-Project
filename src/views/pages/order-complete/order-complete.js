@@ -1,6 +1,10 @@
-import { drawHeader } from "../../components/header/header.js";
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
+import { insertHeaderCategoryData } from "../../components/header/header-category.js";
 import { drawFooter } from "../../components/footer/footer.js";
 
-// Header, Footer 템플릿 삽입
-drawHeader();
+// Header 삽입
+drawHeaderMenu();
+insertHeaderCategoryData();
+
+//Footer 삽입
 drawFooter();

@@ -1,17 +1,22 @@
-import { drawHeader } from "../components/header/header.js";
-import { insertHeaderData } from "../components/header/header.js";
-import { drawFooter } from "../components/footer/footer.js";
-import { drawMenubar } from "../components/menu-bar/menu-bar.js";
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
+import { insertHeaderCategoryData } from "../../components/header/header-category.js";
+import { drawFooter } from "../../components/footer/footer.js";
 
-// Header, Footer 템플릿 삽입
-drawHeader();
+// Header 삽입
+drawHeaderMenu();
+insertHeaderCategoryData();
+
+//Footer 삽입
 drawFooter();
 
-// Header 메뉴 삽입
-insertHeaderData();
+// 임시 api
+async function getItemlistData() {
+  let itemlistdata = await fetch("/api/products/64ad0e774735f7cfdc9877e9").then(
+    (res) => res.json()
+  );
 
-// Menubar 템플릿 삽입
-drawMenubar();
+  return itemlistdata;
+}
 
 const productItemContainer = document.querySelector(".item_list");
 
@@ -19,104 +24,34 @@ addProductItemsToContainer();
 
 async function addProductItemsToContainer() {
   //api 코드 입력
-  const products = [
-    {
-      _id: "1234",
-      name: "1.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "2.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "3.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "4.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "5.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "6.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "7.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "8.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-    {
-      _id: "1234",
-      name: "9.밀튼 침대 Q (매트제외)",
-      brand: "까사미아",
-      price: 4000000,
-      imageUrl: "../public/assets/imgs/item-list-card.webp",
-      description: "세상 어디에도 없는 디자인",
-    },
-  ];
-  const { _id, name, brand, price, subcategoryId, imageUrl } = products;
+  const products = await getItemlistData();
+  //console.log(products);
 
-  let innerContainer = "";
+  products.forEach(async (product) => {
+    const { _id, productName, brand, price, imageUrl } = product;
 
-  for (let i = 0; i < products.length; i++) {
-    const htmlContainer = `
-          <div
-            class="item_list_card d-flex flex-column m-2"
-            style="cursor: pointer"
-          >
-            <img
-              class="item_list_img mb-2 border border-2 rounded-3"
-              src="${products[i].imageUrl}"
-              alt="가구"
-            />
-            <span class="item_list_name mb-1">${products[i].name}</span>
-            <p class="item_list_brand mb-1 text-muted">${
-              products[i].brand
-            }</p></p>
-            <p class="item_list_price mb-3 fw-bold">${products[
-              i
-            ].price.toLocaleString()}원</p>
-          </div>`;
-    innerContainer += htmlContainer;
-  }
-  productItemContainer.innerHTML = innerContainer;
+    productItemContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+            <div
+              class="item_list_card d-flex flex-column m-2"
+              style="cursor: pointer"
+              id="a${_id}"
+            >
+              <img
+                class="item_list_img mb-2 border border-2 rounded-3"
+                src="${imageUrl}"
+                alt="가구"
+              />
+              <span class="item_list_name mb-1">${productName}</span>
+              <p class="item_list_brand mb-1 text-muted">${brand}</p></p>
+              <p class="item_list_price mb-3 fw-bold">${price.toLocaleString()}원</p>
+            </div>`
+    );
+    const ItemListCard = document.querySelector(`#a${_id}`);
+    ItemListCard.addEventListener("click", () => {
+      console.log("아이템클릭하기");
+      location.href = `/product/detail?id=${_id}`;
+    });
+  });
 }
