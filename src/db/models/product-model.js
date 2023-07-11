@@ -31,6 +31,14 @@ class ProductModel {
     const getProd = await Product.findOne({ _id: productId });
     return getProd;
   }
+
+  // product 정보 수정
+  async update(_id, toUpdate) {
+    const updateInfo = await Product.findOneAndUpdate({ _id }, toUpdate, {
+      returnOriginal: false,
+    });
+    return updateInfo;
+  }
 }
 
 const productModel = new ProductModel();

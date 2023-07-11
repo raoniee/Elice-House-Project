@@ -91,7 +91,7 @@ class UserService {
   }
 
   async checkPassword(email, passowrd) {
-    const userInfo = await userModel.findByEmail({email});
+    const userInfo = await userModel.findByEmail({ email });
 
     const hashedPassword = userInfo.password;
     const checkPassword = await bcrypt.compare(passowrd, hashedPassword);

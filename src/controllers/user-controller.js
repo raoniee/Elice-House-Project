@@ -71,12 +71,11 @@ const UserController = {
   async updateUser(req, res, next) {
     try {
       const userId = req.params._id;
-      const name = req.body.name;
-      const password = req.body.password;
+      const { name, newPassword } = req.body;
 
       const toUpdate = {
         ...(name && { name }),
-        ...(password && { password }),
+        ...(newPassword && { newPassword }),
       };
 
       const checkUpdate = await userService.updateInfo(userId, toUpdate);
@@ -87,7 +86,7 @@ const UserController = {
     }
   },
 
-  // 비밀번호 확인 
+  // 비밀번호 확인
   async checkPassword(req, res, next) {
     try{
       const userId = req.body.email;
