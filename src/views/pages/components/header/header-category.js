@@ -1,20 +1,5 @@
 //라온님
 
-// headercategory 템플릿
-// export const drawHeaderCategory1 = () => {
-//   let headerTemplate = `
-//     <nav class="py-2 bg-light border-bottom">
-//       <div class="container">
-//         <ul class="nav nav-bottom justify-content-center nav-pills" style="list-style: none;">
-//         </ul>
-//       </div>
-//     </nav>
-//     `;
-//   // .header 부분에 삽입
-//   const headerTag = document.querySelector(".header");
-//   headerTag.innerHTML = headerTemplate;
-// };
-
 // Api
 async function getHeaderCategoryData() {
   let headercategorydata = await fetch("/api/categories").then((res) =>
