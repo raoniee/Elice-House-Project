@@ -1,7 +1,13 @@
 // import * as API from "../api.js";
 // import { application } from "express";
 
+const REGISTER_CANCEL = document.getElementById("register-cancel");
 const REGISTER_FORM = document.getElementById("register-form");
+
+// 회원가입 페이지의 '취소' 버튼 클릭 -> 메인 페이지로 이동
+REGISTER_CANCEL.addEventListener("click", () => {
+  window.location.href = "/";
+});
 
 REGISTER_FORM.addEventListener("submit", async (event) => {
   // 이벤트 기본값(효과) 제거
