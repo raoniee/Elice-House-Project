@@ -17,7 +17,7 @@ userRouter.patch("/users/:userId", UserController.updateUser);
 // 사용자 정보 삭제(회원 탈퇴)
 userRouter.delete("/users/:userId", UserController.deleteUser);
 // 사용자 비밀번호 확인 
-userRouter.post("/user/password/check", UserController.checkPassword);
+userRouter.post("/user/password/check/:userId", UserController.checkPassword);
 
 //관리자 모드
 //모든 회원정보 조회

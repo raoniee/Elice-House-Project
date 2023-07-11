@@ -31,6 +31,14 @@ class ProductModel {
     const getProd = await Product.findOne({ _id: productId });
     return getProd;
   }
+
+  // 서브카테고리Id에 의한 상품 삭제
+  async deleteBySubCat (subcategoryId) {
+    const deleteBySubId = await Product.deleteMany({ subcategoryId })
+
+    return deleteBySubId;
+  }
+
 }
 
 const productModel = new ProductModel();
