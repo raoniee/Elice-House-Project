@@ -104,35 +104,6 @@ function modifyProduct() {
     );
   }
 }
-// Api.del 임시구현 (추후 삭제 예정)
-async function del(endpoint, params = "", data = {}) {
-  const apiUrl = `${endpoint}/${params}`;
-  const bodyData = JSON.stringify(data);
-
-  console.log(`DELETE 요청 ${apiUrl}`);
-  console.log(`DELETE 요청 데이터: ${bodyData}`);
-
-  const res = await fetch(apiUrl, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: bodyData,
-  });
-
-  // 응답 코드가 4XX 계열일 때 (400, 403 등)
-  if (!res.ok) {
-    const errorContent = await res.json();
-    const { reason } = errorContent;
-
-    throw new Error(reason);
-  }
-
-  const result = await res.json();
-
-  return result;
-}
 
 // 상품 삭제 함수
 function deleteProduct() {
@@ -144,7 +115,7 @@ function deleteProduct() {
         // confirm 응답이 true인 경우 삭제 api 실행
         if (confirmRes === true) {
           // 삭제 함수 실행
-          await del("/api/admin/products", btn.id);
+          await apiUtil.delete("/api/admin/products", btn.id);
           // 삭제 후 새로고침으로 삭제확인
           location.reload();
         }

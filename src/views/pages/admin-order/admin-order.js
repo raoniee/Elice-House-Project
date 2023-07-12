@@ -98,15 +98,15 @@ function deleteOrder() {
   }
 }
 
-//배송 상태 변경 시 작동하는 기능들을 담을 함수
+//배송 상태 변경 함수
 function changeDeliverState() {
   const orderStateSelects = document.querySelectorAll(".deliver-state-select");
   if (orderStateSelects && Array.from(orderStateSelects).length) {
     orderStateSelects.forEach((select) =>
       select.addEventListener("change", async () => {
-        const patchData = { state: select.value };
+        const patchOrderData = { state: select.value };
         console.log(select.id, patchData);
-        await apiUtil.patch("/api/admin/orders", select.id, patchData);
+        await apiUtil.patch("/api/admin/orders", select.id, patchOrderData);
         location.reload();
       })
     );

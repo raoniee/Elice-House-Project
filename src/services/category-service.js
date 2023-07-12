@@ -40,18 +40,20 @@ class CategoryService {
       );
 
       return subcatRefcat;
+    } else {
+      // 부모 카테고리 생성
+      const createCat = await categoryModel.create(categoryName);
+      const addSubcat = await subcategoryModel.create(subcategoryName);
+
+      const newCatId = createCat._id;
+      const newSubcatId = addSubcat._id;
+
+      // 부모 카테고리에 서브 카테고리 참조
+      const subcatRefcat = await categoryModel.refSubcat(newCatId, newSubcatId);
+
+      return subcatRefcat;
     }
   }
-  // } else {
-  //   // 부모 카테고리 생성
-  //   const createCat = await categoryModel.create(categoryName);
-  //   const addSubcat = await subcategoryModel.create(subcategoryName);
-
-  //   const newCatId = createCat._id;
-  //   const newSubcatId = addSubcat._id;
-
-  //   // 부모 카테고리에 서브 카테고리 참조
-  //   const subcatRefcat = await categoryModel.refSubcat(newCatId, newSubcatId);
 
   // 전체 카테고리 정보 조회
   async getAllCatService() {
