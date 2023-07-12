@@ -89,12 +89,6 @@ const CategoryController = {
       const deleteSubCat = await categoryService.deleteSubCat(subCatId, catId);
 
       res.status(204).json(deleteSubCat);
-    }catch(error){
-      next(error);
-    }
-  }
-
-      res.status(200).json(getAllCat);
     } catch (error) {
       next(error);
     }
