@@ -10,6 +10,9 @@ insertHeaderCategoryData();
 drawFooter();
 
 const cartContainer = document.querySelector(".cartContainer");
+const allcartPrice = document.querySelector(".total_order_price");
+const deleteBTN = document.querySelector(".delete_btn");
+const nextstepBTN = document.querySelector(".nextstep");
 
 const Products_KEY = "products";
 let Products = [];
@@ -29,109 +32,157 @@ async function insertCartData() {
     cartContainer.insertAdjacentHTML(
       "beforeend",
       `
-          <tr id="${id}">
+          <tr class="tr_${id}">
             <td class="py-3 col-4 align-middle">
               <img src="${productImg}" class="img-thumbnail" alt="상품이미지" />
               <p>${productName}</p>
             </td>
-            <td class="py-3 col-2 align-middle">
-              <button class="minus" id="${id}">-</button>
-              <input type="number" class="col-3 item_detail_quantity_input" value="${productQuantity}" readonly/>
-              <button class="plus" id="${id}">+</button>
+            <td class="py-3 col-2 align-middle ee">
+              <button class="minus_${id}">-</button>
+              <input type="number" class="col-3 item_detail_quantity_input_${id}" value="${productQuantity}" readonly/>
+              <button class="plus_${id}">+</button>
             </td>
-            <td class="py-3 align-middle item_detail_totalprice">
+            <td class="py-3 align-middle item_detail_totalprice_${id}">
             ${(productQuantity * productPrice).toLocaleString()}원</td>
             <td class="py-3 align-middle">
               <button
                 type="button"
-                class="btn btn-outline-dark btn-sm individual_delete_btn"
-                id="${id}"
+                class="btn btn-outline-dark btn-sm individual_delete_btn_${id}"
               >
                 삭제
               </button>
             </td>
           </tr>`
     );
+
+    document
+      .querySelector(`.plus_${id}`)
+      .addEventListener("click", () => handlePlus(id));
+
+    document
+      .querySelector(`.minus_${id}`)
+      .addEventListener("click", () => handleMinus(id));
+
+    document
+      .querySelector(`.individual_delete_btn_${id}`)
+      .addEventListener("click", () => handleDeleteIndividual(id));
   });
 
-  const ItemQuantityinput = document.querySelector(
-    ".item_detail_quantity_input"
-  );
-  const ItemQuantityplus = document.querySelector(".plus");
-  const ItemQuantityminus = document.querySelector(".minus");
-  const ItemTotalPrice = document.querySelector(".item_detail_totalprice");
-  const IndividualDeleteBTN = document.querySelector(".individual_delete_btn");
+  showAllCartPrice();
 
-  const totalOrderPrice = document.querySelector(".total_order_price");
+  async function handlePlus(id) {
+    setQuantityBox(id, "plus");
+    updateProductItem(id, "increase");
 
-  function saveProducts() {
+    await putToLocalStorage(id);
+  }
+
+  async function handleMinus(id) {
+    setQuantityBox(id, "minus");
+    updateProductItem(id, "decrease");
+
+    await putToLocalStorage(id);
+  }
+
+  function setQuantityBox(id, type) {
+    const isPlus = type.includes("plus");
+    const isMinus = type.includes("minus");
+    const isInput = type.includes("input");
+
+    const quantityInput = document.querySelector(
+      `.item_detail_quantity_input_${id}`
+    );
+
+    let quantityUpdate;
+    if (isPlus) {
+      quantityUpdate = +1;
+    } else if (isMinus) {
+      quantityUpdate = -1;
+    } else if (isInput) {
+      quantityUpdate = 0;
+    } else {
+      quantityUpdate = 0;
+    }
+
+    const currentQuantity = parseInt(quantityInput.value);
+    const newQuantity = currentQuantity + quantityUpdate;
+
+    if (newQuantity < 1) {
+      alert("최소 1개이상 구매합니다!");
+    } else {
+      quantityInput.value = newQuantity;
+    }
+  }
+
+  async function updateProductItem(id) {
+    const inputElem = document.querySelector(
+      `.item_detail_quantity_input_${id}`
+    );
+    const totalpriceElem = document.querySelector(
+      `.item_detail_totalprice_${id}`
+    );
+    const inputQuantity = inputElem.value;
+
+    const unitPrice = Products.find((p) => p.id === id).productPrice;
+
+    totalpriceElem.innerText = `${(
+      inputQuantity * unitPrice
+    ).toLocaleString()}원`;
+  }
+
+  async function putToLocalStorage(id) {
+    Products = Products.filter((product) => product.id !== id);
+    const cartProducts = localStorage.getItem(Products_KEY);
+    const parsedProducts = JSON.parse(cartProducts);
+    const update = parsedProducts.find((p) => p.id === id);
+    const inputElem = document.querySelector(
+      `.item_detail_quantity_input_${id}`
+    );
+    const inputQuantity = inputElem.value;
+    const updateProductObj = {
+      id: update.id,
+      productImg: update.productImg,
+      productName: update.productName,
+      productBrand: update.productbrand,
+      productPrice: update.productPrice,
+      productQuantity: inputQuantity,
+      productTotalPrice: update.productPrice * inputQuantity,
+    };
+    Products.push(updateProductObj);
+    saveProducts();
+    showAllCartPrice();
+  }
+
+  async function handleDeleteIndividual(id) {
+    const trElem = document.querySelector(`.tr_${id}`);
+    trElem.remove();
+    Products = Products.filter((p) => p.id !== id);
+    saveProducts();
+  }
+
+  async function saveProducts() {
     localStorage.setItem(Products_KEY, JSON.stringify(Products));
   }
 
-  ItemQuantityplus.addEventListener("click", (e) => {
-    ItemQuantityinput.value++;
-    ItemTotalPrice.innerText = `${(
-      productPrice * ItemQuantityinput.value
-    ).toLocaleString()}원`;
+  async function showAllCartPrice() {
+    //총 주문금액 쓰기
+    const price = Products.map((p) => p.productTotalPrice);
+    let sum = 0;
 
-    Products = Products.filter((product) => product.id !== e.target.id);
-    const cartProducts = localStorage.getItem(Products_KEY);
-    const parsedProducts = JSON.parse(cartProducts);
-    const update = parsedProducts.find((p) => p.id === e.target.id);
-    const updateProductObj = {
-      id: update.id,
-      productImg: update.productImg,
-      productName: update.productName,
-      productBrand: update.productbrand,
-      productPrice: update.productPrice,
-      productQuantity: ItemQuantityinput.value.toLocaleString(),
-      productTotalPrice: (
-        update.productPrice * ItemQuantityinput.value
-      ).toLocaleString(),
-    };
-    Products.push(updateProductObj);
+    price.forEach((p) => {
+      sum += p;
+    });
+
+    allcartPrice.innerText = sum.toLocaleString();
+  }
+
+  deleteBTN.addEventListener("click", () => {
+    cartContainer.innerHTML = "";
+    Products = [];
     saveProducts();
   });
 
-  ItemQuantityminus.addEventListener("click", (e) => {
-    if (ItemQuantityinput.value <= 1) {
-      alert("최소 1개 이상만 구매가능합니다!");
-    } else {
-      ItemQuantityinput.value--;
-    }
-    ItemTotalPrice.innerText = `${(
-      productPrice * ItemQuantityinput.value
-    ).toLocaleString()}원`;
-
-    Products = Products.filter((product) => product.id !== e.target.id);
-    const cartProducts = localStorage.getItem(Products_KEY);
-    const parsedProducts = JSON.parse(cartProducts);
-    const update = parsedProducts.find((p) => p.id === e.target.id);
-    const updateProductObj = {
-      id: update.id,
-      productImg: update.productImg,
-      productName: update.productName,
-      productBrand: update.productbrand,
-      productPrice: update.productPrice,
-      productQuantity: ItemQuantityinput.value.toLocaleString(),
-      productTotalPrice: (
-        update.productPrice * ItemQuantityinput.value
-      ).toLocaleString(),
-    };
-    Products.push(updateProductObj);
-    saveProducts();
-  });
-
-  IndividualDeleteBTN.addEventListener("click", (e) => {
-    const td = e.target.parentElement;
-    const tr = td.parentElement;
-    tr.remove();
-    // product_tr.remove();
-    // console.log(product_tr.id === Products.map((p) => p.id));
-    // console.log(parseInt(product_tr.id));
-    // console.log(Products.map((p) => p.id));
-    //Products = Products.filter((p) => p.id !== parseInt(product_tr.id));
-    //console.log(Products);
-    //saveProducts();
+  nextstepBTN.addEventListener("click", () => {
+    location.href = `/order/progerss`;
   });
 }
