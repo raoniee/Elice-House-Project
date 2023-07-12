@@ -40,7 +40,7 @@
   padding-left: 0.8em;
 }
 #login-cancel {
-  width: 7.8em;
+  width: 9em;
   margin-top: 0.5em;
 }
 
@@ -53,9 +53,4 @@
   margin-bottom: 1em;
   font-size: 1.5em;
   text-align: center;
-}
-
-button > a {
-  text-decoration: none;
-  color: #fff;
 }
