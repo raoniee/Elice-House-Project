@@ -52,7 +52,7 @@ class OrderService {
     const orders = await orderModel.getOrder(userId);
     console.log(orders);
     const results = [];
-    let result = new Object;
+    let result = new Object();
 
     for (const ord of orders) {
       const ordId = ord._id;

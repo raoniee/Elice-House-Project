@@ -7,10 +7,18 @@ const upload = multer({
   dest: "uploads/",
 });
 
-productRouter.post("/admin/image", upload.single("image"), (req, res, next) => {
-  console.log(req.file);
-  res.status(200).send(util.success(200, "요청성공!!", image));
-});
+productRouter.post(
+  "/admin/image",
+  upload.single("image"),
+  async (req, res, next) => {
+    try {
+      console.log(req.file.path);
+      res.status(200).send("sucess!!");
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 // 전체 상품 조회(admin)
 productRouter.get("/admin/products", ProductController.getAllProducts);
