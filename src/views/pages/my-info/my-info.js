@@ -3,7 +3,7 @@ import { insertHeaderCategoryData } from "../../components/header/header-categor
 import { drawFooter } from "../../components/footer/footer.js";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 import * as Api from "../../apiUtil";
-import jwt from "../../../node_modules/jsonwebtoken";
+import jwt from "../../../../node_modules/jsonwebtoken";
 
 // Header 삽입
 drawHeaderMenu();
