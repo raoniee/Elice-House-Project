@@ -86,10 +86,17 @@ const makeProductList = async () => {
 function addProduct() {
   const submitBtn = document.querySelector("#submitBtn");
   //모달 데이터 담을 object
-  const modalInputData = {};
+
   submitBtn.addEventListener("click", () => {
+    const Form = document.getElementById("addProductForm");
+    const formData = new FormData(Form);
+    const productData = {};
+    for (let [key, value] of formData.entries()) {
+      productData[key] = value;
+    }
     // 모달 submit 클릭 확인
     console.log("submit clicked");
+    console.log(productData);
   });
 }
 
@@ -117,7 +124,7 @@ function deleteProduct() {
           // 삭제 함수 실행
           await apiUtil.delete("/api/admin/products", btn.id);
           // 삭제 후 새로고침으로 삭제확인
-          location.reload();
+          // location.reload();
         }
       })
     );

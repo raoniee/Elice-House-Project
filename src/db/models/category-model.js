@@ -74,7 +74,7 @@ class CategoryModel {
 
     const updateSubId = await Category.findOneAndUpdate(
       { _id },
-      { subcategory: newSubIdsInCat },
+      { $push: { subcategory: newSubIdsInCat } },
       {
         returnOriginal: false,
       }
