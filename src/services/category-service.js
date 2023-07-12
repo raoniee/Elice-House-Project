@@ -1,6 +1,6 @@
 import { categoryModel } from "../db/models/category-model.js";
 import { subcategoryModel } from "../db/models/subcategory-model.js";
-import { productModel } from "../db/models/product-model.js"
+import { productModel } from "../db/models/product-model.js";
 
 class CategoryService {
   // 카테고리 생성
@@ -40,112 +40,114 @@ class CategoryService {
       );
 
       return subcatRefcat;
-    } else {
-      // 부모 카테고리 생성
-      const createCat = await categoryModel.create(categoryName);
-      const addSubcat = await subcategoryModel.create(subcategoryName);
-
-      const newCatId = createCat._id;
-      const newSubcatId = addSubcat._id;
-
-      // 부모 카테고리에 서브 카테고리 참조
-      const subcatRefcat = await categoryModel.refSubcat(newCatId, newSubcatId);
-
-    // 전체 카테고리 정보 조회
-    async getAllCatService() {
-        const allCatInfo = await categoryModel.findAll();
-        // const allSubcatInfo = await subcategoryModel.findAll();
-        const AllCategory = [];
-
-        for(const catInfo of allCatInfo) {
-            const catIds = catInfo.subcategory;
-          
-            for (const subcatId of catIds) {
-
-                const subcatInCat = await subcategoryModel.findById(subcatId);
-                if (subcatInCat) {
-                    const res = {};
-                    const subcatId = subcatInCat._id;
-                    const subcatName = subcatInCat.subcategoryName;
-                    const subcatProductQuantity = subcatInCat.productQuantity;
-
-                    // response로 보내줄 객체 생성!!
-                    res.categoryId = catInfo._id;
-                    res.subcategoryId = subcatId;
-                    res.categoryName = catInfo.categoryName;
-                    res.subcategoryName = subcatName;
-                    res.productQauntity = subcatProductQuantity;
-
-                    AllCategory.push(res);
-                }
-            }
-        }    
-    
-        return { AllCategory };
     }
+  }
+  // } else {
+  //   // 부모 카테고리 생성
+  //   const createCat = await categoryModel.create(categoryName);
+  //   const addSubcat = await subcategoryModel.create(subcategoryName);
 
-    async getAllCategory() {
-        const allCatInfo = await categoryModel.findAll();
-        const AllCategory = [];
+  //   const newCatId = createCat._id;
+  //   const newSubcatId = addSubcat._id;
 
+  //   // 부모 카테고리에 서브 카테고리 참조
+  //   const subcatRefcat = await categoryModel.refSubcat(newCatId, newSubcatId);
 
-        for (const catInfo of allCatInfo) {
-            const res = {};
-            const subResArr = []
-            const subCatIds = catInfo.subcategory;
+  // 전체 카테고리 정보 조회
+  async getAllCatService() {
+    const allCatInfo = await categoryModel.findAll();
+    // const allSubcatInfo = await subcategoryModel.findAll();
+    const AllCategory = [];
 
-            res.categoryName = catInfo.categoryName;
-            res.categoryId = catInfo._id;
+    for (const catInfo of allCatInfo) {
+      const catIds = catInfo.subcategory;
 
-            for (const subCatId of subCatIds) {
-                console.log("subCatId : ", subCatId);
-                const subcatInCat = await subcategoryModel.findById(subCatId);
-                console.log("subcatInCat : ", subcatInCat);
-                if (subcatInCat) {
+      for (const subcatId of catIds) {
+        const subcatInCat = await subcategoryModel.findById(subcatId);
+        if (subcatInCat) {
+          const res = {};
+          const subcatId = subcatInCat._id;
+          const subcatName = subcatInCat.subcategoryName;
+          const subcatProductQuantity = subcatInCat.productQuantity;
 
-                    const subRes = {};
-                    const subcategoryName = subcatInCat.subcategoryName;
-                    const subcategoryId = subcatInCat._id;
+          // response로 보내줄 객체 생성!!
+          res.categoryId = catInfo._id;
+          res.subcategoryId = subcatId;
+          res.categoryName = catInfo.categoryName;
+          res.subcategoryName = subcatName;
+          res.productQauntity = subcatProductQuantity;
 
-                    subRes.subcategoryName = subcategoryName;
-                    subRes.subcategoryId = subcategoryId;
-
-                    subResArr.push(subRes)
-                                     
-                }
-                res.subcategory = subResArr;  
-            }
-            AllCategory.push(res);
+          AllCategory.push(res);
         }
-
-        return AllCategory;
+      }
     }
 
-    async changeCat(changeInfo) {
-        const categoryId = changeInfo.categoryId;
-        const changeCategoryName = changeInfo.changeCategoryName;
-        const subcategoryId = changeInfo.subcategoryId;
-        const changeSubcategoryName = changeInfo.changeSubcategoryName;
+    return { AllCategory };
+  }
 
-        const catUpdate = await categoryModel.update(categoryId, { categoryName: changeCategoryName });
-        const subCatUpdate = await subcategoryModel.update(subcategoryId, { subcategoryName: changeSubcategoryName });
+  async getAllCategory() {
+    const allCatInfo = await categoryModel.findAll();
+    const AllCategory = [];
 
-        return { catUpdate, subCatUpdate }
+    for (const catInfo of allCatInfo) {
+      const res = {};
+      const subResArr = [];
+      const subCatIds = catInfo.subcategory;
+
+      res.categoryName = catInfo.categoryName;
+      res.categoryId = catInfo._id;
+
+      for (const subCatId of subCatIds) {
+        console.log("subCatId : ", subCatId);
+        const subcatInCat = await subcategoryModel.findById(subCatId);
+        console.log("subcatInCat : ", subcatInCat);
+        if (subcatInCat) {
+          const subRes = {};
+          const subcategoryName = subcatInCat.subcategoryName;
+          const subcategoryId = subcatInCat._id;
+
+          subRes.subcategoryName = subcategoryName;
+          subRes.subcategoryId = subcategoryId;
+
+          subResArr.push(subRes);
+        }
+        res.subcategory = subResArr;
+      }
+      AllCategory.push(res);
     }
 
-    async deleteSubCat(subcategoryId, categoryId) {
+    return AllCategory;
+  }
 
-        // 서브카테고리 삭제
-        const deleteSubCat = await subcategoryModel.deleteSubCat(subcategoryId);
-        // 서브카테고리Id에 의한 상품 삭제
-        const deleteAllSubCat = await productModel.deleteBySubCat(subcategoryId);
-        // 서브카테고리 삭제에 의한 카테고리 데이터 업데이트 
-        const updateCat = await categoryModel.updateSubCat(categoryId, subcategoryId);
-        
-        
-        
-        return { deleteSubCat, deleteAllSubCat, updateCat };
-    }
+  async changeCat(changeInfo) {
+    const categoryId = changeInfo.categoryId;
+    const changeCategoryName = changeInfo.changeCategoryName;
+    const subcategoryId = changeInfo.subcategoryId;
+    const changeSubcategoryName = changeInfo.changeSubcategoryName;
+
+    const catUpdate = await categoryModel.update(categoryId, {
+      categoryName: changeCategoryName,
+    });
+    const subCatUpdate = await subcategoryModel.update(subcategoryId, {
+      subcategoryName: changeSubcategoryName,
+    });
+
+    return { catUpdate, subCatUpdate };
+  }
+
+  async deleteSubCat(subcategoryId, categoryId) {
+    // 서브카테고리 삭제
+    const deleteSubCat = await subcategoryModel.deleteSubCat(subcategoryId);
+    // 서브카테고리Id에 의한 상품 삭제
+    const deleteAllSubCat = await productModel.deleteBySubCat(subcategoryId);
+    // 서브카테고리 삭제에 의한 카테고리 데이터 업데이트
+    const updateCat = await categoryModel.updateSubCat(
+      categoryId,
+      subcategoryId
+    );
+
+    return { deleteSubCat, deleteAllSubCat, updateCat };
+  }
 }
 
 const categoryService = new CategoryService();
