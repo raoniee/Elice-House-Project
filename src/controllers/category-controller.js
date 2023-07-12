@@ -76,7 +76,7 @@ const CategoryController = {
         subcategoryId,
       });
 
-      res.status(201).json(changeCat);
+      res.status(200).json(changeCat);
     } catch (error) {
       next(error);
     }
