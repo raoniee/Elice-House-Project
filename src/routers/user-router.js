@@ -10,12 +10,13 @@ userRouter.post("/register", UserController.createUser);
 userRouter.post("/login", UserController.login);
 
 // 사용자 정보 조회
-userRouter.get("/users/:userId", checkLogin, UserController.getInfo);
+userRouter.get("/users", checkLogin, UserController.getInfo);
+// userRouter.get("/users/:userId", UserController.getInfo);
 // 사용자 정보 수정
-userRouter.patch("/users/:userId", checkLogin, UserController.updateUser);
+userRouter.patch("/users", checkLogin, UserController.updateUser);
 // 사용자 정보 삭제(회원 탈퇴)
-userRouter.delete("/users/:userId", UserController.deleteUser);
-// 사용자 비밀번호 확인 
+userRouter.delete("/users", UserController.deleteUser);
+// 사용자 비밀번호 확인
 userRouter.post("/user/password/check/:userId", UserController.checkPassword);
 
 //관리자 모드
