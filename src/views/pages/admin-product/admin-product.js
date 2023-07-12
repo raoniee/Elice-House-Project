@@ -3,20 +3,13 @@ import {
   makeAdminNav,
   clickNavbar,
 } from "../../components/admin-nav/admin-nav.js";
+import * as apiUtil from "../../apiUtil.js";
+
 //admin navbar 생성
 makeAdminNav();
 clickNavbar();
 
 const listContainer = document.querySelector("#list-container");
-
-//db에서 임시 fetch >>> 추후 api.js 사용예정
-async function getProductData() {
-  let productData = await fetch("/api/admin/products").then((res) =>
-    res.json()
-  );
-
-  return productData;
-}
 
 // 상품 관리 테이블 생성 함수
 const makeProductList = async () => {
@@ -49,7 +42,7 @@ const makeProductList = async () => {
 
   // 데이터 정의
   // let data = productMockData.data;
-  let data = await getProductData();
+  let data = await apiUtil.get("/api/admin/products");
   console.log(data);
 
   for (let i = 0; i < data.length; i++) {
@@ -58,7 +51,7 @@ const makeProductList = async () => {
     // tr에 데이터 받아서 추가 >> tbody에 추가
     productTableBody.innerHTML = `
         <td>${data[i].categoryName}</td>
-        <td>${data[i].subCategoryName}</td>
+        <td>${data[i].subcategoryName}</td>
         <td>${data[i].productName}</td>
         <td>${data[i].brand}</td>
         <td>${data[i].price.toLocaleString("en")}원</td>

@@ -47,7 +47,7 @@ async function makeOrderBox() {
   <div><b>배송 상태</b>: ${data[i].state}</div>
   <label><b>배송상태변경</b></label>
   <select id="${data[i].orderId}"class="deliver-state-select">
-  <option>배송준비</option>
+  <option>배송준비중</option>
   <option>배송중</option>
   <option>배송완료</option>
   </select>
@@ -103,10 +103,11 @@ function changeDeliverState() {
   const orderStateSelects = document.querySelectorAll(".deliver-state-select");
   if (orderStateSelects && Array.from(orderStateSelects).length) {
     orderStateSelects.forEach((select) =>
-      select.addEventListener("change", () => {
-        const patchData = select.value;
-        console.log(select.id, select.value);
-        // await apiUtil.patch("/api/admin/orders", select.id, patchData);
+      select.addEventListener("change", async () => {
+        const patchData = { state: select.value };
+        console.log(select.id, patchData);
+        await apiUtil.patch("/api/admin/orders", select.id, patchData);
+        location.reload();
       })
     );
   }
