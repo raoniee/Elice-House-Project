@@ -8,7 +8,7 @@ drawHeaderMenu();
 insertHeaderCategoryData();
 
 //Footer 삽입
-drawFooter();
+drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 //Menubar 템플릿 삽입
 // drawMenubar();

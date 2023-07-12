@@ -7,7 +7,7 @@ drawHeaderMenu();
 insertHeaderCategoryData();
 
 //Footer 삽입
-drawFooter();
+drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 const searchAddressBtn = document.querySelector("#search-address-btn");
 searchAddressBtn.addEventListener("click", searchAddress);
