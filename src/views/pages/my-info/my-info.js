@@ -30,14 +30,13 @@ const res = await fetch("/api/admin/users", {
   },
 });
 
-const { result } = await res.json();
+try {
+  const key = process.env.KEY;
+  const jwtInfo = jwt.verify(token, key);
 
-if (result === "success") {
-  console.log("성공");
-} else {
-  alert("관리자 전용 페이지입니다.");
-
-  window.location.replace("/");
+  const isAdmin = jwtInfo.isAdmin;
+} catch (err) {
+  alert(`오류가 발생하였습니다: ${err}`);
 }
 
 let userData;
