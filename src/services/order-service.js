@@ -12,7 +12,7 @@ class OrderService {
       const productIds = newOrderitem.productIds;
       for (const productId of productIds) {
         const orderProduct = await productModel.getProdInfo(productId);
-        const productName = orderProduct.name;
+        const productName = orderProduct.productName;
         const productImg = orderProduct.imageUrl;
         const price = orderProduct.price;
 
@@ -50,13 +50,11 @@ class OrderService {
 
   async getOrder(userId) {
     const orders = await orderModel.getOrder(userId);
-    console.log(orders);
     const results = [];
     let result = new Object();
 
     for (const ord of orders) {
       const ordId = ord._id;
-      console.log(ordId);
 
       result.orderId = ordId;
       result.userPhoneNumber = ord.userPhoneNumber;
@@ -99,7 +97,6 @@ class OrderService {
     const results = [];
 
     for (const ord of orders) {
-      console.log("ord : ", ord);
       const result = {};
       const createdAt = ord.createdAt.toString();
       const ordId = ord._id;
@@ -117,17 +114,14 @@ class OrderService {
 
       if (ordId) {
         const ordItems = await orderitemModel.getOrderId(ordId);
-        console.log("11", ordItems);
         const productIds = [];
         const productNames = [];
         const productImgs = [];
         const quantitys = [];
         const prices = [];
 
-        console.log("ordItems : ", ordItems);
 
         for (const ordItem of ordItems) {
-          console.log("22", ordItem);
           productIds.push(ordItem.productId);
           productNames.push(ordItem.productName);
           productImgs.push(ordItem.productImg);

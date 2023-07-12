@@ -42,12 +42,10 @@ class UserService {
     }
 
     const key = process.env.KEY;
-    const token = jwt.sign(
-      { email, userId: user._id, isAdmin: user.isAdmin },
-      key
-    );
+    const token = jwt.sign({ email, userId: user._id }, key);
+    // 관리자 페이지 isAdmin: user.isAdmin
 
-    return { token };
+    return { token, isAdmin };
   }
 
   // UserId를 통해 DB에서 user객체를 찾고 삭제

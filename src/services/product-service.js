@@ -137,14 +137,16 @@ class ProductService {
   // 상품 정보 수정
   async updateInfo(productId, toUpdate) {
     const { categoryName, subcategoryName } = toUpdate;
-    const parentCat = await categoryModel.findByCat(categoryName);
-    if (!parentCat) {
-      throw new Error("존재하지 않는 카테고리입니다.");
-    }
+    if (categoryName && subcategoryName) {
+      const parentCat = await categoryModel.findByCat(categoryName);
+      if (!parentCat) {
+        throw new Error("존재하지 않는 카테고리입니다.");
+      }
 
-    const childCats = parentCat.subcategory;
-    const productSubCatId = await subcategoryModel.findByName(subcategoryName);
-
+      const childCats = parentCat.subcategory;
+      const productSubCatId = await subcategoryModel.findByName(
+        subcategoryName
+      );
     let isSubCategoryExist = false;
 
     for (const childCatId of childCats) {
@@ -161,7 +163,7 @@ class ProductService {
     if (!isSubCategoryExist) {
       throw new Error(`해당 카테고리에 존재하지 않는 서브카테고리입니다.`);
     }
-
+  }
     const checkUpdate = await productModel.update(productId, toUpdate);
 
     return checkUpdate;
