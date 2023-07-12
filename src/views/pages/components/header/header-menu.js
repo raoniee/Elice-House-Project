@@ -39,25 +39,27 @@ export const drawHeaderMenu = () => {
   // 로그인 상태에 따라 로그인/로그아웃 버튼 텍스트 변경
   const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-  // class: "header-nav-icon" 아이콘 mouseover시, alt 보이기
-  // 로그인 상태일 때는 '로그아웃', '마이페이지', '장바구니' alt 안 보임
-  const NAV_ICON = document.querySelectorAll(".header-nav-icon");
+  // // class: "header-nav-icon" 아이콘 mouseover시, alt 보이기
+  // // 로그인 상태일 때는 '로그아웃', '마이페이지', '장바구니' alt 안 보임
+  // const NAV_ICON = document.querySelectorAll(".header-nav-icon");
 
-  Array.from(NAV_ICON).forEach((icon) => {
-    icon.addEventListener("mouseover", () => {
-      const altTxt = icon.getAttribute("alt");
-      icon.setAttribute("title", altTxt);
-    });
+  // Array.from(NAV_ICON).forEach((icon) => {
+  //   icon.addEventListener("mouseover", () => {
+  //     const altTxt = icon.getAttribute("alt");
+  //     icon.setAttribute("title", altTxt);
+  //   });
 
-    icon.addEventListener("mouseout", () => {
-      icon.removeAttribute("title");
-    });
-  });
+  //   icon.addEventListener("mouseout", () => {
+  //     icon.removeAttribute("title");
+  //   });
+  // });
 
   // 로그인 상태일 때
   if (isLoggedIn) {
-    LOGIN.innerHTML = `<a href="" class="nav-link link-dark px-2"><img class="header-nav-icon" src="../public/assets/imgs/logout.png" alt="Logout" style="height: 2vh"/></a>`;
-    SIGNUP.innerHTML = `<a href="" class="nav-link link-dark px-2"><img class="header-nav-icon" src="../public/assets/imgs/myPage.png" alt="My Page" style="height: 2vh" /></a>`;
+    // LOGIN.innerHTML = `<a href="" class="nav-link link-dark px-2"><img class="header-nav-icon" src="../public/assets/imgs/logout.png" alt="Logout" style="height: 2vh"/></a>`;
+    // SIGNUP.innerHTML = `<a href="" class="nav-link link-dark px-2"><img class="header-nav-icon" src="../public/assets/imgs/myPage.png" alt="My Page" style="height: 2vh" /></a>`;
+    LOGIN.innerHTML = `<a href="" class="nav-link link-dark px-2">Logout</a>`;
+    SIGNUP.innerHTML = `<a href="" class="nav-link link-dark px-2">My Page</a>`;
 
     // Logout 버튼 클릭 -> 로그아웃 처리
     LOGIN.addEventListener("click", (event) => {
