@@ -1,6 +1,7 @@
 import { drawHeaderMenu } from "../../components/header/header-menu.js";
 import { insertHeaderCategoryData } from "../../components/header/header-category.js";
 import { drawFooter } from "../../components/footer/footer.js";
+import * as Api from "../../apiUtil";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 
 // Header 삽입
@@ -8,7 +9,7 @@ drawHeaderMenu();
 insertHeaderCategoryData();
 
 //Footer 삽입
-drawFooter();
+drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 // 마이페이지 사이드메뉴 템플릿 삽입
 drawMyNav();
