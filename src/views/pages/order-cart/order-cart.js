@@ -158,6 +158,7 @@ async function insertCartData() {
     trElem.remove();
     Products = Products.filter((p) => p.id !== id);
     saveProducts();
+    showAllCartPrice();
   }
 
   async function saveProducts() {
@@ -180,9 +181,14 @@ async function insertCartData() {
     cartContainer.innerHTML = "";
     Products = [];
     saveProducts();
+    showAllCartPrice();
   });
 
   nextstepBTN.addEventListener("click", () => {
-    location.href = `/order/progerss`;
+    if (Products.length === 0) {
+      alert("구매할 제품이 없습니다. 제품을 선택해 주세요.");
+    } else {
+      location.href = `/order/progerss`;
+    }
   });
 }

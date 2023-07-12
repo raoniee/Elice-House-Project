@@ -47,11 +47,11 @@ async function makeCategoryList() {
     <td>${data[i].categoryName}</td>
     <td>${data[i].subcategoryName}</td>
     <td>${data[i].productQauntity}</td>
-    <td>
-    <button type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
-    수정
-    </button>
-    <button id="${data[i].subcategoryId}"type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
+    <td id="${data[i].categoryId}">
+      <button type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
+      수정
+      </button>
+      <button id="${data[i].subcategoryId}"type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
     </td>
     `;
 
@@ -79,7 +79,9 @@ function deleteCategory() {
         const confirmRes = confirm("정말로 삭제하시겠습니까?");
         // confirm 응답이 true인 경우 삭제 api 실행
         if (confirmRes === true) {
-          await apiUtil.delete("/api/admin/categories", btn.id);
+          const deleteData = { categoryId: btn.parentElement.id };
+          console.log(typeof deleteData);
+          await apiUtil.delete("/api/admin/categories", btn.id, deleteData);
           // 삭제 후 새로고침으로 삭제확인
           location.reload();
         }
