@@ -1,5 +1,4 @@
 import * as API from "../apiUtil.js";
-// import { application } from "express";
 
 const REGISTER_CANCEL = document.getElementById("register-cancel");
 const REGISTER_FORM = document.getElementById("register-form");
