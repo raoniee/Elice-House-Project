@@ -7,7 +7,7 @@ drawHeaderMenu();
 insertHeaderCategoryData();
 
 //Footer 삽입
-drawFooter();
+drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 const cartContainer = document.querySelector(".cartContainer");
 const allcartPrice = document.querySelector(".total_order_price");

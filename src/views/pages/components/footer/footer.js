@@ -1,4 +1,4 @@
-export const drawFooter = () => {
+export const drawFooter = (img) => {
   let footerTemplate = `        <div class="border-top">
         <div class="container">
       <div class="row py-5">
@@ -7,7 +7,7 @@ export const drawFooter = () => {
             href="/"
             class="d-flex align-items-center mb-3 link-dark text-decoration-none"
           >
-            <img src="../public/assets/imgs/EliceHouse_logo.png" alt="엘리스 하우스 로고" style="height: 10vh" />
+            <img src="${img}" alt="엘리스 하우스 로고" style="height: 10vh" />
           </a>
           <p class="text-muted">&copy; 2022</p>
         </div>
