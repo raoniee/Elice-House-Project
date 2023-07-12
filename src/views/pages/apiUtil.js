@@ -6,7 +6,7 @@ async function get(endpoint, params = "") {
   const res = await fetch(apiUrl, {
     // JWT 토큰을 헤더에 담아 백엔드 서버에 보냄.
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
 
@@ -68,7 +68,7 @@ async function patch(endpoint, params = "", data) {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: bodyData,
   });

@@ -69,7 +69,7 @@ class UserService {
     const password = toUpdate.password;
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      toUpdate.passowrd = hashedPassword;
+      toUpdate.password = hashedPassword;
     }
 
     const checkUpdate = await userModel.update(userId, toUpdate);
@@ -91,7 +91,7 @@ class UserService {
   }
 
   async checkPassword(userId, passowrd) {
-    const userInfo = await userModel.findByUserId( userId );
+    const userInfo = await userModel.findByUserId(userId);
 
     const hashedPassword = userInfo.password;
     const checkPassword = await bcrypt.compare(passowrd, hashedPassword);
