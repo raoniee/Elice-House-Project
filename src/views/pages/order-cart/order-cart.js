@@ -158,6 +158,7 @@ async function insertCartData() {
     trElem.remove();
     Products = Products.filter((p) => p.id !== id);
     saveProducts();
+    showAllCartPrice();
   }
 
   async function saveProducts() {
@@ -180,6 +181,7 @@ async function insertCartData() {
     cartContainer.innerHTML = "";
     Products = [];
     saveProducts();
+    showAllCartPrice();
   });
 
   nextstepBTN.addEventListener("click", () => {
