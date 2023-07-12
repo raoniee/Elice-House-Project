@@ -121,8 +121,8 @@ function modifyCategory() {
             changeSubcategoryName: modSubCatInput.value,
             subcategoryId: btn.id,
           };
-          console.log(patchCatData);
-          console.log("cateID:", btn.parentElement.id);
+          // console.log(patchCatData);
+          // console.log("cateID:", btn.parentElement.id);
           await apiUtil.patch(
             "/api/admin/categories",
             btn.parentElement.id,

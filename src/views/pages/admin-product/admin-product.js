@@ -61,7 +61,9 @@ const makeProductList = async () => {
         <td>${data[i].saleStatus}</td>
         <td>${data[i].description}</td>
         <td>
-          <button type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
+          <button id="${
+            data[i]._id
+          }"type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
           수정
           </button>
           <button id="${
@@ -87,26 +89,43 @@ function addProduct() {
   const submitBtn = document.querySelector("#submitBtn");
   //모달 데이터 담을 object
 
-  submitBtn.addEventListener("click", () => {
-    const Form = document.getElementById("addProductForm");
-    const formData = new FormData(Form);
-    const productData = {};
+  submitBtn.addEventListener("click", async () => {
+    const addForm = document.getElementById("addProductForm");
+    const formData = new FormData(addForm);
+    const addProductData = {};
     for (let [key, value] of formData.entries()) {
-      productData[key] = value;
+      addProductData[key] = value;
     }
     // 모달 submit 클릭 확인
     console.log("submit clicked");
-    console.log(productData);
+    console.log(formData.entries());
+    // 정보 post
+    // await apiUtil.post("/api/admin/products", addProductData);
   });
 }
 
 // 상품 수정 함수
 function modifyProduct() {
   const modProductBtn = document.querySelectorAll(".mod-product-btn");
+  const submitModalBtn = document.querySelector("#submit-mod-product-btn");
+
+  // 상품 수정 list 존재 확인
   if (modProductBtn && Array.from(modProductBtn).length) {
     modProductBtn.forEach((btn) =>
       btn.addEventListener("click", () => {
         console.log("modProductBtn clicked");
+        // 모달 제출버튼 event
+        submitModalBtn.addEventListener("click", async () => {
+          // 상품 수정 모달의 input value 추출
+          const modForm = document.getElementById("modProductForm");
+          const formData = new FormData(modForm);
+          const modProductData = {};
+          for (let [key, value] of formData.entries()) {
+            modProductData[key] = value;
+          }
+          console.log(modProductData);
+          await apiUtil.patch("/api/admin/products", btn.id, modProductData);
+        });
       })
     );
   }
@@ -124,7 +143,7 @@ function deleteProduct() {
           // 삭제 함수 실행
           await apiUtil.delete("/api/admin/products", btn.id);
           // 삭제 후 새로고침으로 삭제확인
-          // location.reload();
+          location.reload();
         }
       })
     );

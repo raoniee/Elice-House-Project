@@ -133,10 +133,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="text"
+                          type="file"
                           class="form-control"
                           id="imageUrl"
-                          name="imageUrl"
+                          name="image"
                         />
                       </div>
                     </div>
@@ -149,7 +149,7 @@
                           type="text"
                           class="form-control"
                           id="saleStatus"
-                          id="slaeStatus"
+                          name="saleStatus"
                         />
                       </div>
                     </div>
@@ -214,16 +214,17 @@
                 </div>
                 <div class="modal-body">
                   <!-- 모달 내용 시작 -->
-                  <form>
+                  <form id="modProductForm">
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label for="categoryName" class="col-sm-3 col-form-label"
                         >카테고리</label
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="categoryName"
+                          name="categoryName"
                         />
                       </div>
                     </div>
@@ -233,9 +234,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="subcategoryName"
+                          name="subcategoryName"
                         />
                       </div>
                     </div>
@@ -245,9 +247,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="productName"
+                          name="productName"
                         />
                       </div>
                     </div>
@@ -257,9 +260,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="brand"
+                          name="brand"
                         />
                       </div>
                     </div>
@@ -269,9 +273,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="price"
+                          name="price"
                         />
                       </div>
                     </div>
@@ -281,9 +286,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="imageUrl"
+                          name="imageUrl"
                         />
                       </div>
                     </div>
@@ -293,9 +299,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="saleStatus"
+                          name="saleStatus"
                         />
                       </div>
                     </div>
@@ -306,9 +313,10 @@
                       >
                       <div class="col-sm-8">
                         <input
-                          type="email"
+                          type="text"
                           class="form-control"
-                          id="inputEmail3"
+                          id="description"
+                          name="description"
                         />
                       </div>
                     </div>
@@ -323,7 +331,11 @@
                   >
                     취소
                   </button>
-                  <button type="submit" class="btn btn-dark btn-sm">
+                  <button
+                    id="submit-mod-product-btn"
+                    type="submit"
+                    class="btn btn-dark btn-sm"
+                  >
                     수정
                   </button>
                 </div>
