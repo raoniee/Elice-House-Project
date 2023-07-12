@@ -23,16 +23,8 @@ class CategoryModel {
     const updateCat = await Category.findOneAndUpdate(
       { _id: categoryId }, // 카테고리의 ObjectId
       { $push: { subcategory: addSubcatId } },
-      { new: true }
-    )
-      .then((updatedCategory) => {
-        // 업데이트된 카테고리
-        console.log(updatedCategory);
-      })
-      .catch((error) => {
-        // 에러 처리
-        console.error(error);
-      });
+      { returnOriginal: false }
+    );
 
     return updateCat;
   }

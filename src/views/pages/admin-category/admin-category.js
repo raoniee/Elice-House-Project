@@ -79,7 +79,7 @@ function addCategory() {
       subcategoryName: addSubCatInput.value,
     };
     await apiUtil.post("/api/admin/categories", addCatData);
-    // location.reload();
+    location.reload();
   });
 }
 
