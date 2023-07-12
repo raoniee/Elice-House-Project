@@ -3,6 +3,7 @@ import { insertHeaderCategoryData } from "../../components/header/header-categor
 import { drawFooter } from "../../components/footer/footer.js";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 import * as Api from "../../apiUtil";
+import jwt from "../../../node_modules/jsonwebtoken";
 
 // Header 삽입
 drawHeaderMenu();
@@ -23,21 +24,18 @@ const password2Input = document.querySelector("#password2");
 const saveInfoChangeBtn = document.querySelector("#save-info-change-btn");
 const deleteInfoBtn = document.querySelector("#delete-info-btn");
 
-const res = await fetch("/api/admin/users", {
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: localStorage.getItem("token"),
-  },
-});
+// const res = await fetch("/api/admin/users", {
+//   headers: {
+//     "Content-Type": "application/json",
+//     Authorization: localStorage.getItem("token"),
+//   },
+// });
 
-try {
-  const key = process.env.KEY;
-  const jwtInfo = jwt.verify(token, key);
+const token = localStorage.getItem("token");
 
-  const isAdmin = jwtInfo.isAdmin;
-} catch (err) {
-  alert(`오류가 발생하였습니다: ${err}`);
-}
+const key = process.env.KEY;
+const jwtInfo = jwt.verify(token, key);
+console.log(jwtinfo.userId);
 
 let userData;
 // async function getUserData() {
