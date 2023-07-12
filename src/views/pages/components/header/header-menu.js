@@ -29,7 +29,7 @@ export const drawHeaderMenu = () => {
   //   `;
   // // .header 부분에 삽입
   // const header = document.querySelector(".header");
-  // header.append(headermenuTemplate);
+  // header.innnerHTML += headermenuTemplate;
 
   // header-menu의 nav 영역 이동 페이지 연결
   const LOGIN = document.getElementById("login");
