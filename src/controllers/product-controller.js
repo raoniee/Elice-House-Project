@@ -15,17 +15,19 @@ const ProductController = {
 
   // 상품 추가(admin)
   async createProduct(req, res, next) {
-    // categoryName, subcategoryName, productName, price, imageUrl ,brand, description
+    // categoryName, subcategoryName, productName, price ,brand, description
     try {
       const {
         categoryName,
         subcategoryName,
         productName,
         price,
-        imageUrl,
         brand,
         description,
       } = req.body;
+
+      const imageUrl = "/" + req.file.path;
+      console.log(imageUrl);
 
       const newProduct = await productService.addProduct({
         categoryName,

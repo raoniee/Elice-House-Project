@@ -7,23 +7,23 @@ const upload = multer({
   dest: "uploads/",
 });
 
-productRouter.post(
-  "/admin/image",
-  upload.single("image"),
-  async (req, res, next) => {
-    try {
-      console.log(req.file.path);
-      res.status(200).send("sucess!!");
-    } catch (error) {
-      next(error);
-    }
+productRouter.post("/image", upload.single("image"), async (req, res, next) => {
+  try {
+    req.body.imageUrl = req.file.path;
+    next();
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 // 전체 상품 조회(admin)
 productRouter.get("/admin/products", ProductController.getAllProducts);
 // 상품 추가(admin)
-productRouter.post("/admin/products", ProductController.createProduct);
+productRouter.post(
+  "/admin/products",
+  upload.single("image"),
+  ProductController.createProduct
+);
 // 상품 삭제(admin)
 productRouter.delete(
   "/admin/products/:productId",
