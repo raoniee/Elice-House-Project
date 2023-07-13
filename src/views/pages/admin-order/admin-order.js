@@ -24,9 +24,10 @@ async function makeOrderBox() {
 
     // 주문 정보 (주문 날짜, 주문 시간, 주문번호)
     const orderInfo = document.createElement("div");
+    orderInfo.className = "order-info";
 
     orderInfo.innerHTML = `
-  <p><b>주문 일자</b>: ${data[i].createdAt.slice(0, 10)}</p>
+  <p><b>주문 일자</b>: ${data[i].orderDate}</p>
   <p><b>주문 시간</b>: ${data[i].orderTime}</p>
   <p><b>주문 번호</b>: ${data[i].orderId}</p>
   <p><b>요청 사항</b>: ${data[i].deliReq}</p>`;

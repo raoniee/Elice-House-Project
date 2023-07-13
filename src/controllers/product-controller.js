@@ -22,12 +22,13 @@ const ProductController = {
         subcategoryName,
         productName,
         price,
+        imageUrl,
         brand,
         description,
       } = req.body;
 
-      const imageUrl = "/" + req.file.path;
-      console.log(imageUrl);
+      // const imageUrl = "/" + req.file.path;
+      // console.log(imageUrl);
 
       const newProduct = await productService.addProduct({
         categoryName,

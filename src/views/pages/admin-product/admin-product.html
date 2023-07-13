@@ -59,7 +59,12 @@
                 </div>
                 <div class="modal-body">
                   <!-- 모달 내용 시작 -->
-                  <form id="addProductForm">
+                  <form
+                    id="addProductForm"
+                    action="/api/admin/products"
+                    method="POST"
+                    enctype="multipart/form-data"
+                  >
                     <div class="row mb-3">
                       <label for="categoryName" class="col-sm-3 col-form-label"
                         >카테고리</label
@@ -128,15 +133,15 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="productImage" class="col-sm-3 col-form-label"
+                      <label for="imageUrl" class="col-sm-3 col-form-label"
                         >이미지</label
                       >
                       <div class="col-sm-8">
                         <input
-                          type="file"
+                          type="text"
                           class="form-control"
                           id="imageUrl"
-                          name="image"
+                          name="imageUrl"
                         />
                       </div>
                     </div>
@@ -172,6 +177,7 @@
                 </div>
                 <div class="modal-footer">
                   <button
+                    id="cancel-modal"
                     type="button"
                     class="btn btn-secondary btn-sm"
                     data-bs-dismiss="modal"
