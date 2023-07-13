@@ -5,6 +5,9 @@ import { categoryModel } from "../db/models/category-model.js";
 import { subcategoryModel } from "../db/models/subcategory-model.js";
 import { error } from "console";
 import { userModel } from "../db/models/user-model.js";
+import moment from "moment-timezone";
+
+
 
 class ProductService {
   // 각 상품에 카테고리 이름, 서브카테고리 이름 추가
@@ -97,6 +100,9 @@ class ProductService {
     }
 
     const addNewProduct = await productModel.create(ProductInfo);
+    // 로컬 Date 업데이트 
+    const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+    await productModel.update(addNewProduct._id, {date: postDate});
 
     // 누적 상품 판매 수 체크
     if (addNewProduct) {

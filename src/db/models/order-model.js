@@ -19,8 +19,8 @@ class OrderModel {
     return All;
   }
 
-  async update(_id, toUpdate) {
-    const updateInfo = await Order.findOneAndUpdate({ _id }, toUpdate, {
+  async update(orderId, toUpdate) {
+    const updateInfo = await Order.findOneAndUpdate({ _id: orderId }, toUpdate, {
       returnOriginal: false,
     });
     return updateInfo;

@@ -1,10 +1,16 @@
 import { productModel } from "../db/models/product-model.js";
 import { orderitemModel } from "../db/models/orderitem-model.js";
 import { orderModel } from "../db/models/order-model.js";
+import moment from "moment-timezone";
 
 class OrderService {
   async addOrder(newOrder, newOrderitem) {
     const createOrder = await orderModel.create(newOrder);
+
+    // 로컬 Date 업데이트 
+    const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+    await orderModel.update(createOrder._id, {date: postDate});
+
     let createOrderitems = [];
     let result = [];
     if (createOrder) {
@@ -34,6 +40,11 @@ class OrderService {
       for (const quantity of quantitys) {
         createOrderitems[cnt].quantity = quantity;
         const addOrderIfo = await orderitemModel.create(createOrderitems[cnt]);
+
+        // 로컬 Date 업데이트 
+        const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+        await orderitemModel.update(addOrderIfo._id, {date: postDate});
+
         if (addOrderIfo) {
           result.push(addOrderIfo);
         }

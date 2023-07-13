@@ -31,10 +31,8 @@ class UserModel {
   }
 
   // name 수정
-  async update(_id, toUpdate) {
-    console.log(toUpdate);
-
-    const updateInfo = await User.findOneAndUpdate({ _id }, toUpdate, {
+  async update(userId, toUpdate) {
+    const updateInfo = await User.findOneAndUpdate({ _id: userId }, toUpdate, {
       returnOriginal: false,
     });
     console.log(updateInfo);
