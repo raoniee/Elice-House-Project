@@ -55,28 +55,25 @@
                 </div>
                 <div class="modal-body">
                   <!-- 모달 내용 시작 -->
-                  <form
-                    id="addProductForm"
-                    action="/api/admin/products"
-                    method="POST"
-                    enctype="multipart/form-data"
-                  >
+                  <form id="addProductForm" enctype="multipart/form-data">
                     <div class="row mb-3">
-                      <label for="categoryName" class="col-sm-3 col-form-label"
+                      <label
+                        for="addCategoryName"
+                        class="col-sm-3 col-form-label"
                         >카테고리</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="categoryName"
+                          id="addCategoryName"
                           name="categoryName"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
                       <label
-                        for="subcategoryName"
+                        for="addSubcategoryName"
                         class="col-sm-3 col-form-label"
                         >세부카테고리</label
                       >
@@ -84,86 +81,77 @@
                         <input
                           type="text"
                           class="form-control"
-                          id="subcategoryName"
+                          id="addSubcategoryName"
                           name="subcategoryName"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="productName" class="col-sm-3 col-form-label"
+                      <label
+                        for="addProductName"
+                        class="col-sm-3 col-form-label"
                         >상품명</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="productName"
+                          id="addProductName"
                           name="productName"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="brand" class="col-sm-3 col-form-label"
+                      <label for="addBrand" class="col-sm-3 col-form-label"
                         >브랜드</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="brand"
+                          id="addBrand"
                           name="brand"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="price" class="col-sm-3 col-form-label"
+                      <label for="addPrice" class="col-sm-3 col-form-label"
                         >가격</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="price"
+                          id="addPrice"
                           name="price"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="imageUrl" class="col-sm-3 col-form-label"
+                      <label for="addImageUrl" class="col-sm-3 col-form-label"
                         >이미지</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="file"
                           class="form-control"
-                          id="imageUrl"
-                          name="imageUrl"
-                        />
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <label for="saleStatus" class="col-sm-3 col-form-label"
-                        >판매상태</label
-                      >
-                      <div class="col-sm-8">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="saleStatus"
-                          name="saleStatus"
+                          id="addImageUrl"
+                          name="image"
                         />
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="description" class="col-sm-3 col-form-label"
+                      <label
+                        for="addDescription"
+                        class="col-sm-3 col-form-label"
                         >상세내용</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="description"
+                          id="addDescription"
                           name="description"
                         />
                       </div>
@@ -212,106 +200,114 @@
                   <!-- 모달 내용 시작 -->
                   <form id="modProductForm">
                     <div class="row mb-3">
-                      <label for="categoryName" class="col-sm-3 col-form-label"
+                      <label
+                        for="modCategoryName"
+                        class="col-sm-3 col-form-label"
                         >카테고리</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="categoryName"
+                          id="modCategoryName"
                           name="categoryName"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label
+                        for="modSubcategoryName"
+                        class="col-sm-3 col-form-label"
                         >세부카테고리</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="subcategoryName"
+                          id="modSubcategoryName"
                           name="subcategoryName"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label
+                        for="modProductName"
+                        class="col-sm-3 col-form-label"
                         >상품명</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="productName"
+                          id="modProductName"
                           name="productName"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label for="modBrand" class="col-sm-3 col-form-label"
                         >브랜드</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="brand"
+                          id="modBrand"
                           name="brand"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label for="modPrice" class="col-sm-3 col-form-label"
                         >가격</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="price"
+                          id="modPrice"
                           name="price"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label for="modImageUrl" class="col-sm-3 col-form-label"
                         >이미지</label
                       >
                       <div class="col-sm-8">
                         <input
-                          type="text"
+                          type="file"
                           class="form-control"
-                          id="imageUrl"
+                          id="modImageUrl"
                           name="image"
                         />
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label for="modSaleStatus" class="col-sm-3 col-form-label"
                         >판매상태</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="saleStatus"
+                          id="modSaleStatus"
                           name="saleStatus"
                         />
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="inputEmail3" class="col-sm-3 col-form-label"
+                      <label
+                        for="modDescription"
+                        class="col-sm-3 col-form-label"
                         >상세내용</label
                       >
                       <div class="col-sm-8">
                         <input
                           type="text"
                           class="form-control"
-                          id="description"
+                          id="modDescription"
                           name="description"
                         />
                       </div>
