@@ -96,10 +96,12 @@ const ProductController = {
       productName,
       brand,
       price,
-      imageUrl,
       description,
       saleStatus,
     } = req.body;
+
+    const imageUrl = "/" + req.file.path;
+    console.log(imageUrl);
 
     const toUpdate = {
       ...(categoryName && { categoryName }),

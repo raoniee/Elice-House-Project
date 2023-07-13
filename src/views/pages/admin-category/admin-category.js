@@ -65,6 +65,7 @@ async function makeCategoryList() {
   deleteCategory();
   //수정 버튼 작동 함수
   modifyCategory();
+  clickCancelBtn();
 }
 
 // 카테고리 추가 함수
@@ -93,7 +94,6 @@ function deleteCategory() {
         // confirm 응답이 true인 경우 삭제 api 실행
         if (confirmRes === true) {
           const deleteData = { categoryId: btn.parentElement.id };
-          console.log(typeof deleteData);
           await apiUtil.delete("/api/admin/categories", btn.id, deleteData);
           // 삭제 후 새로고침으로 삭제확인
           location.reload();
@@ -133,6 +133,18 @@ function modifyCategory() {
       })
     );
   }
+}
+
+//Modal 취소 버튼 >>> input값 초기화
+function clickCancelBtn() {
+  const formObject = document.querySelector("#modCategoryForm");
+  const cancelBtns = document.querySelectorAll(".cancel-btn");
+  cancelBtns.forEach((btn) =>
+    btn.addEventListener("click", () => () => {
+      //추후 보충 예정
+      console.log("cancel btn clicked");
+    })
+  );
 }
 
 window.onload = makeCategoryList();

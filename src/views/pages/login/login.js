@@ -63,6 +63,7 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
     if (isAdmin) {
       localStorage.setItem("admin", "admin");
       alert("관리자 계정으로 로그인 되었습니다!");
+      window.location.href("/admin/main");
     } else {
       // localStorage.setItem("token", data.token);
       localStorage.setItem("token", token);
