@@ -30,8 +30,8 @@ const getHeaders = (isFile) => {
   return { "Contents-Type": "application/json" };
 };
 
-// api 로 POST 요청 (/endpoint 로, JSON 데이터 형태로 요청함)
-async function post(endpoint, data, isFile = false) {
+// api 로 Admin에서 POST 요청시 사용 (/endpoint 로, JSON 데이터 형태로 요청함)
+async function adminPost(endpoint, data, isFile = false) {
   const apiUrl = endpoint;
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
@@ -61,8 +61,39 @@ async function post(endpoint, data, isFile = false) {
   return result;
 }
 
-// api 로 PATCH 요청 (/endpoint/params 로, JSON 데이터 형태로 요청함)
-async function patch(endpoint, params = "", data, isFile = false) {
+// api 로 POST 요청 (/endpoint 로, JSON 데이터 형태로 요청함)
+async function post(endpoint, data) {
+  const apiUrl = endpoint;
+  // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
+  // 예시: {name: "Kim"} => {"name": "Kim"}
+  const bodyData = JSON.stringify(data);
+  console.log(`%cPOST 요청: ${apiUrl}`, "color: #296aba;");
+  console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
+
+  const res = await fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: bodyData,
+  });
+
+  // 응답 코드가 4XX 계열일 때 (400, 403 등)
+  if (!res.ok) {
+    const errorContent = await res.json();
+    const { reason } = errorContent;
+
+    throw new Error(reason);
+  }
+
+  const result = await res.json();
+
+  return result;
+}
+
+// api 로 Admin에서 PATCH 요청시 사용 (/endpoint/params 로, JSON 데이터 형태로 요청함)
+async function adminPatch(endpoint, params = "", data, isFile = false) {
   const apiUrl = `${endpoint}/${params}`;
 
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
@@ -75,6 +106,38 @@ async function patch(endpoint, params = "", data, isFile = false) {
     method: "PATCH",
     headers: {
       ...getHeaders(isFile),
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: bodyData,
+  });
+
+  // 응답 코드가 4XX 계열일 때 (400, 403 등)
+  if (!res.ok) {
+    const errorContent = await res.json();
+    const { reason } = errorContent;
+
+    throw new Error(reason);
+  }
+
+  const result = await res.json();
+
+  return result;
+}
+
+// api 로 PATCH 요청 (/endpoint/params 로, JSON 데이터 형태로 요청함)
+async function patch(endpoint, params = "", data) {
+  const apiUrl = `${endpoint}/${params}`;
+
+  // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
+  // 예시: {name: "Kim"} => {"name": "Kim"}
+  const bodyData = JSON.stringify(data);
+  console.log(`%cPATCH 요청: ${apiUrl}`, "color: #059c4b;");
+  console.log(`%cPATCH 요청 데이터: ${bodyData}`, "color: #059c4b;");
+
+  const res = await fetch(apiUrl, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: bodyData,
@@ -125,4 +188,4 @@ async function del(endpoint, params = "", data = {}) {
 }
 
 // 아래처럼 export하면, import * as Api 로 할 시 Api.get, Api.post 등으로 쓸 수 있음.
-export { get, post, patch, del as delete };
+export { get, post, patch, del as delete, adminPost, adminPatch };
