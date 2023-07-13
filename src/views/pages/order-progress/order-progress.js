@@ -21,6 +21,12 @@ const orderTotalElem = document.querySelector("#orderTotal");
 const checkoutButton = document.querySelector("#checkoutButton");
 const searchAddressBtn = document.querySelector("#search-address-btn");
 
+const requestOption = {
+  0: "선택 안 함",
+  1: "부재 시 문 앞에 놓아주세요",
+  2: "방문 전 연락 부탁드립니다",
+};
+
 const Products_KEY = "products";
 let Products = [];
 
@@ -87,7 +93,7 @@ async function doCheckout() {
   const addrNum = postalCodeInput.value;
   const roughAddr = roadAddressInput.value;
   const detailAddr = detailAddressInput.value;
-  const deliReq = requestSelectBox.value;
+  const deliReq = requestOption[requestSelectBox.value];
 
   const cartProducts = localStorage.getItem(Products_KEY);
   const parsedProducts = JSON.parse(cartProducts);
@@ -110,18 +116,7 @@ async function doCheckout() {
   }
 
   try {
-    // const orderDate = await Api.post("/api/orders",{
-    //   userName,
-    //   userPhoneNumber,
-    //   addrNum
-    //   roughAddr,
-    //   detailAddr,
-    //   deliReq,
-    //   productId,
-    //   quantity,
-    // };)
-
-    const orderDate = {
+    const orderDate = await Api.post("/api/orders", {
       userName,
       userPhoneNumber,
       addrNum,
@@ -130,7 +125,18 @@ async function doCheckout() {
       deliReq,
       productId,
       quantity,
-    };
+    });
+
+    // const orderDate = {
+    //   userName,
+    //   userPhoneNumber,
+    //   addrNum,
+    //   roughAddr,
+    //   detailAddr,
+    //   deliReq,
+    //   productId,
+    //   quantity,
+    // };
     console.log(orderDate);
 
     Products = [];
