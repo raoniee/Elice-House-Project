@@ -8,3 +8,13 @@ insertHeaderCategoryData();
 
 //Footer 삽입
 drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
+
+const MyOderBTN = document.querySelector("#my-order");
+const MainBTN = document.querySelector("#main");
+
+MyOderBTN.addEventListener("click", () => {
+  location.href = `/mypage/order`;
+});
+MainBTN.addEventListener("click", () => {
+  location.href = `/`;
+});
