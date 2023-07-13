@@ -87,8 +87,6 @@ const UserController = {
   async checkPassword(req, res, next) {
     try {
       const { userId, password } = req.body;
-      // const userId = req.params.userId;
-      // const password = req.body.password;
 
       const check = await userService.checkPassword(userId, password);
 

@@ -72,10 +72,10 @@ class UserService {
   // 사용자 정보 수정
   async updateInfo(userId, toUpdate) {
     const password = toUpdate.password;
-    delete toUpdate.password;
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    toUpdate.password = hashedPassword;
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      toUpdate.password = hashedPassword;
+    }
 
     const checkUpdate = await userModel.update(userId, toUpdate);
 

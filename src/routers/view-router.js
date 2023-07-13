@@ -1,9 +1,8 @@
 import express from "express";
 import path from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 
 const viewsRouter = express.Router();
 
@@ -20,8 +19,9 @@ viewsRouter.use("/admin/category", serveStatic("admin-category"));
 viewsRouter.use("/mypage/order", serveStatic("my-order"));
 viewsRouter.use("/mypage/info", serveStatic("my-info"));
 viewsRouter.use("/order/cart", serveStatic("order-cart"));
-viewsRouter.use("/order/progerss", serveStatic("order-progress"));
+viewsRouter.use("/order/progress", serveStatic("order-progress"));
 viewsRouter.use("/order/complete", serveStatic("order-complete"));
+viewsRouter.use("/apiUtil", serveStatic("apiUtil.js"));
 
 // views 폴더의 최상단 파일 (사진, favicon 등) 라우팅
 viewsRouter.use("/", serveStatic(""));

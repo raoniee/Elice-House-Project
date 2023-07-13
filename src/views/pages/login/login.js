@@ -1,9 +1,10 @@
-// import * as API from "../../api.js";
+import * as API from "../apiUtil.js";
 
 const INPUT_EMAIL = document.getElementById("input-email");
 const INPUT_PW = document.getElementById("input-password");
 const LOGIN_FORM = document.getElementById("login-form");
 const LOGIN_CANCEL = document.getElementById("login-cancel");
+const REGISTER_BTN = document.getElementById("move-register");
 
 // 주소창 url의 params를 객체로 만드는 함수
 // user/:userId -- ?userId 방식으로 다시 생각해보기
@@ -20,41 +21,13 @@ const getUrlParams = () => {
   return result;
 };
 
-// (일단) api.js의 post
-async function post(endpoint, data) {
-  console.log("data: ", data);
-  const apiUrl = endpoint;
-  // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
-  // 예시: {name: "Kim"} => {"name": "Kim"}
-  const bodyData = JSON.stringify(data);
-  console.log(`%cPOST 요청: ${apiUrl}`, "color: #296aba;");
-  console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
-
-  const res = await fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: bodyData,
-  });
-
-  // 응답 코드가 4XX 계열일 때 (400, 403 등)
-  if (!res.ok) {
-    // const errorContent = await res.json();
-    // const { reason } = errorContent;
-
-    throw new Error("로그인 실패");
-  }
-
-  const result = await res.json();
-
-  return result;
-}
-
 // 로그인 페이지 '취소' 버튼 클릭 -> 메인 페이지로 이동
 LOGIN_CANCEL.addEventListener("click", () => {
   window.location.href = "/";
+});
+// 로그인 페이지 '회원가입' 버튼 클릭 -> 회원가입 페이지로 이동
+REGISTER_BTN.addEventListener("click", () => {
+  window.location.href = "/register";
 });
 
 // 로그인
@@ -79,11 +52,10 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
 
   const email = INPUT_EMAIL.value;
   const password = INPUT_PW.value;
-  console.log("회원가입 버튼 클릭 + input_email_val " + email);
 
   const data = { email, password };
   try {
-    const response = await post("/api/login", data);
+    const response = await API.post("/api/login", data);
 
     const { token, isAdmin } = response;
 

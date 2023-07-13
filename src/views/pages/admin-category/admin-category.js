@@ -1,21 +1,17 @@
 // import * as catMockData from "./category-mockdata.js";
+import {
+  makeAdminNav,
+  clickNavbar,
+} from "../../components/admin-nav/admin-nav.js";
+import * as apiUtil from "../../apiUtil.js";
+
+//admin navbar 생성
+makeAdminNav();
+clickNavbar();
 
 const listContainer = document.querySelector("#list-container");
-const adminTitle = document.querySelector("#admin-title");
 
-// 메인 페이지 이동
-adminTitle.addEventListener("click", function () {
-  location.href = "/admin/main";
-});
-
-//db에서 임시 fetch >>> 추후 api.js 사용예정
-async function getCategoryData() {
-  let tempdata = await fetch("/api/admin/categories").then((res) => res.json());
-
-  return tempdata;
-}
-
-// 카테고리 관리창 생성 함수
+// 카테고리 관리 테이블 생성 함수
 async function makeCategoryList() {
   // 테이블 상단 만들기
   listContainer.innerHTML = `
@@ -39,10 +35,9 @@ async function makeCategoryList() {
   `;
 
   // 데이터 정의
-  let categoryObj = await getCategoryData();
+  const categoryObj = await apiUtil.get("/api/admin/categories");
   let data = categoryObj.AllCategory;
   console.log(data);
-  // mockData
   // const data = catMockData.data;
 
   for (let i = 0; i < data.length; i++) {
@@ -52,11 +47,11 @@ async function makeCategoryList() {
     <td>${data[i].categoryName}</td>
     <td>${data[i].subcategoryName}</td>
     <td>${data[i].productQauntity}</td>
-    <td>
-    <button type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
-    수정
-    </button>
-    <button type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
+    <td id="${data[i].categoryId}">
+      <button id="${data[i].subcategoryId}"type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
+      수정
+      </button>
+      <button id="${data[i].subcategoryId}"type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
     </td>
     `;
 
@@ -64,60 +59,80 @@ async function makeCategoryList() {
     temp.appendChild(categoryTableBody);
   }
 
-  //수정 버튼 작동 함수
-  modifyCategory();
+  //추가 버튼 작동 함수
+  addCategory();
   //삭제 버튼 작동 함수
   deleteCategory();
+  //수정 버튼 작동 함수
+  modifyCategory();
 }
 
-// 추가 버튼 함수
+// 카테고리 추가 함수
 function addCategory() {
-  // const addCategoryBtn = document.querySelector("#add-category");
+  const addCatBtn = document.querySelector("#add-category-btn");
+  const addCatInput = document.querySelector(".add-category-input");
+  const addSubCatInput = document.querySelector(".add-subcategory-input");
+
+  addCatBtn.addEventListener("click", async () => {
+    const addCatData = {
+      categoryName: addCatInput.value,
+      subcategoryName: addSubCatInput.value,
+    };
+    await apiUtil.post("/api/admin/categories", addCatData);
+    location.reload();
+  });
 }
 
-// 삭제 버튼 함수
+// 카테고리 삭제 함수
 function deleteCategory() {
   const delCategoryBtn = document.querySelectorAll(".del-category-btn");
   if (delCategoryBtn && Array.from(delCategoryBtn).length) {
     delCategoryBtn.forEach((btn) =>
-      btn.addEventListener("click", () => confirm("정말로 삭제하시겠습니까?"))
-    );
-    // confirm >> true/false 받아서 작업필요
-    // 추후 데이터 삭제 관련 로직 필요
-  }
-}
-
-// 수정 버튼 함수
-function modifyCategory() {
-  const modCategoryBtn = document.querySelectorAll(".mod-category-btn");
-  if (modCategoryBtn && Array.from(modCategoryBtn).length) {
-    modCategoryBtn.forEach((btn) =>
-      btn.addEventListener("click", () => {
-        console.log("modCategoryBtn clicked");
+      btn.addEventListener("click", async () => {
+        const confirmRes = confirm("정말로 삭제하시겠습니까?");
+        // confirm 응답이 true인 경우 삭제 api 실행
+        if (confirmRes === true) {
+          const deleteData = { categoryId: btn.parentElement.id };
+          console.log(typeof deleteData);
+          await apiUtil.delete("/api/admin/categories", btn.id, deleteData);
+          // 삭제 후 새로고침으로 삭제확인
+          location.reload();
+        }
       })
     );
   }
 }
 
-// navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
-function clickNavbar() {
-  const orderBtn = document.querySelector("#order-btn");
-  const productBtn = document.querySelector("#product-btn");
-  const categoryBtn = document.querySelector("#category-btn");
+// 카테고리 수정 함수
+function modifyCategory() {
+  const modCategoryBtn = document.querySelectorAll(".mod-category-btn");
+  const submitModalBtn = document.querySelector("#submit-mod-category-btn");
+  const modCatInput = document.querySelector(".mod-category-input");
+  const modSubCatInput = document.querySelector(".mod-subcategory-input");
 
-  orderBtn.addEventListener("click", function () {
-    location.href = "/admin/order";
-  });
-
-  productBtn.addEventListener("click", function () {
-    location.href = "/admin/product";
-  });
-
-  categoryBtn.addEventListener("click", function () {
-    location.href = "/admin/category";
-  });
+  if (modCategoryBtn && Array.from(modCategoryBtn).length) {
+    modCategoryBtn.forEach((btn) =>
+      btn.addEventListener("click", () => {
+        console.log("modCategoryBtn clicked");
+        // 모달 제출버튼 event
+        submitModalBtn.addEventListener("click", async () => {
+          const patchCatData = {
+            changeCategoryName: modCatInput.value,
+            changeSubcategoryName: modSubCatInput.value,
+            subcategoryId: btn.id,
+          };
+          // console.log(patchCatData);
+          // console.log("cateID:", btn.parentElement.id);
+          await apiUtil.patch(
+            "/api/admin/categories",
+            btn.parentElement.id,
+            patchCatData
+          );
+          location.reload();
+        });
+      })
+    );
+  }
 }
-// navbar 함수 실행
-clickNavbar();
 
 window.onload = makeCategoryList();

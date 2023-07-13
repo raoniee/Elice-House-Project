@@ -1,23 +1,17 @@
-import * as productMockData from "./product-mockdata.js";
+// import * as productMockData from "./product-mockdata.js";
+import {
+  makeAdminNav,
+  clickNavbar,
+} from "../../components/admin-nav/admin-nav.js";
+import * as apiUtil from "../../apiUtil.js";
+
+//admin navbar 생성
+makeAdminNav();
+clickNavbar();
 
 const listContainer = document.querySelector("#list-container");
-const adminTitle = document.querySelector("#admin-title");
 
-// 메인 페이지 이동
-adminTitle.addEventListener("click", function () {
-  location.href = "/admin/main";
-});
-
-//db에서 임시 fetch >>> 추후 api.js 사용예정
-async function getProductData() {
-  let productData = await fetch("/api/admin/products").then((res) =>
-    res.json()
-  );
-
-  return productData;
-}
-
-// 상품 관리창 생성 함수
+// 상품 관리 테이블 생성 함수
 const makeProductList = async () => {
   // 테이블 상단 만들기
   listContainer.innerHTML = `
@@ -48,7 +42,7 @@ const makeProductList = async () => {
 
   // 데이터 정의
   // let data = productMockData.data;
-  let data = await getProductData();
+  let data = await apiUtil.get("/api/admin/products");
   console.log(data);
 
   for (let i = 0; i < data.length; i++) {
@@ -57,7 +51,7 @@ const makeProductList = async () => {
     // tr에 데이터 받아서 추가 >> tbody에 추가
     productTableBody.innerHTML = `
         <td>${data[i].categoryName}</td>
-        <td>${data[i].subCategoryName}</td>
+        <td>${data[i].subcategoryName}</td>
         <td>${data[i].productName}</td>
         <td>${data[i].brand}</td>
         <td>${data[i].price.toLocaleString("en")}원</td>
@@ -67,7 +61,9 @@ const makeProductList = async () => {
         <td>${data[i].saleStatus}</td>
         <td>${data[i].description}</td>
         <td>
-          <button type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
+          <button id="${
+            data[i]._id
+          }"type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
           수정
           </button>
           <button id="${
@@ -92,52 +88,47 @@ const makeProductList = async () => {
 function addProduct() {
   const submitBtn = document.querySelector("#submitBtn");
   //모달 데이터 담을 object
-  const modalInputData = {};
-  submitBtn.addEventListener("click", () => {
+
+  submitBtn.addEventListener("click", async () => {
+    const addForm = document.getElementById("addProductForm");
+    const formData = new FormData(addForm);
+    const addProductData = {};
+    for (let [key, value] of formData.entries()) {
+      addProductData[key] = value;
+    }
     // 모달 submit 클릭 확인
     console.log("submit clicked");
+    console.log(formData.entries());
+    // 정보 post
+    // await apiUtil.post("/api/admin/products", addProductData);
   });
 }
 
 // 상품 수정 함수
 function modifyProduct() {
   const modProductBtn = document.querySelectorAll(".mod-product-btn");
+  const submitModalBtn = document.querySelector("#submit-mod-product-btn");
+
+  // 상품 수정 list 존재 확인
   if (modProductBtn && Array.from(modProductBtn).length) {
     modProductBtn.forEach((btn) =>
       btn.addEventListener("click", () => {
         console.log("modProductBtn clicked");
+        // 모달 제출버튼 event
+        submitModalBtn.addEventListener("click", async () => {
+          // 상품 수정 모달의 input value 추출
+          const modForm = document.getElementById("modProductForm");
+          const formData = new FormData(modForm);
+          const modProductData = {};
+          for (let [key, value] of formData.entries()) {
+            modProductData[key] = value;
+          }
+          console.log(modProductData);
+          await apiUtil.patch("/api/admin/products", btn.id, modProductData);
+        });
       })
     );
   }
-}
-// Api.del 임시구현 (추후 삭제 예정)
-async function del(endpoint, params = "", data = {}) {
-  const apiUrl = `${endpoint}/${params}`;
-  const bodyData = JSON.stringify(data);
-
-  console.log(`DELETE 요청 ${apiUrl}`);
-  console.log(`DELETE 요청 데이터: ${bodyData}`);
-
-  const res = await fetch(apiUrl, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-    body: bodyData,
-  });
-
-  // 응답 코드가 4XX 계열일 때 (400, 403 등)
-  if (!res.ok) {
-    const errorContent = await res.json();
-    const { reason } = errorContent;
-
-    throw new Error(reason);
-  }
-
-  const result = await res.json();
-
-  return result;
 }
 
 // 상품 삭제 함수
@@ -150,7 +141,7 @@ function deleteProduct() {
         // confirm 응답이 true인 경우 삭제 api 실행
         if (confirmRes === true) {
           // 삭제 함수 실행
-          await del("/api/admin/products", btn.id);
+          await apiUtil.delete("/api/admin/products", btn.id);
           // 삭제 후 새로고침으로 삭제확인
           location.reload();
         }
@@ -158,26 +149,5 @@ function deleteProduct() {
     );
   }
 }
-
-// navbar 메뉴 클릭시 이동 함수 >>> 추후 component 이동 예정
-function clickNavbar() {
-  const orderBtn = document.querySelector("#order-btn");
-  const productBtn = document.querySelector("#product-btn");
-  const categoryBtn = document.querySelector("#category-btn");
-
-  orderBtn.addEventListener("click", function () {
-    location.href = "/admin/order";
-  });
-
-  productBtn.addEventListener("click", function () {
-    location.href = "/admin/product";
-  });
-
-  categoryBtn.addEventListener("click", function () {
-    location.href = "/admin/category";
-  });
-}
-// navbar 함수 실행
-clickNavbar();
 
 window.onload = makeProductList();
