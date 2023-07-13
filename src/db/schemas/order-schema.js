@@ -24,27 +24,26 @@ const orderSchema = new Schema(
     },
     // 도로명 주소
     roughAddr: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     // 상세 주소
     detailAddr: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     //배송 상태
     state: {
-        type: String,
-        required: true,
-        default: "배송준비중",
+      type: String,
+      required: true,
+      default: "배송준비중",
     },
     //배송 요청사항
     deliReq: {
       type: String,
       required: true,
-      default: "선택 안함",
-    }
-
+      default: "선택 안 함",
+    },
   },
   {
     collection: "orders",

@@ -31,10 +31,13 @@ class UserModel {
   }
 
   // name 수정
-  async update(userId, toUpdate) {
-    const updateInfo = await User.findOneAndUpdate({ userId }, toUpdate, {
+  async update(_id, toUpdate) {
+    console.log(toUpdate);
+
+    const updateInfo = await User.findOneAndUpdate({ _id }, toUpdate, {
       returnOriginal: false,
     });
+    console.log(updateInfo);
     return updateInfo;
   }
 }
