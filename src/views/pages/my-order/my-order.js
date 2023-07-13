@@ -1,15 +1,15 @@
-// import { drawHeaderMenu } from "../../components/header/header-menu.js";
-// import { insertHeaderCategoryData } from "../../components/header/header-category.js";
-// import { drawFooter } from "../../components/footer/footer.js";
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
+import { insertHeaderCategoryData } from "../../components/header/header-category.js";
+import { drawFooter } from "../../components/footer/footer.js";
 import * as Api from "../../apiUtil";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 
 // Header 삽입
-// drawHeaderMenu();
-// insertHeaderCategoryData();
+drawHeaderMenu();
+insertHeaderCategoryData();
 
-// //Footer 삽입
-// drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
+//Footer 삽입
+drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 // 마이페이지 사이드메뉴 템플릿 삽입
 drawMyNav();
@@ -23,14 +23,16 @@ const phoneNumberInput = document.querySelector("#phone-number");
 const postcodeInput = document.querySelector("#postcode");
 const roadAddressInput = document.querySelector("#roadAddress");
 const detailAddressInput = document.querySelector("#detailAddress");
-const deliveryRequestSelect = document.querySelector("#delivery-request");
 const searchAddressBtn = document.querySelector("#search-address-btn");
+const deliveryRequestSelect = document.querySelector("#delivery-request");
 
 searchAddressBtn.addEventListener("click", searchAddress);
 
-let orderIdToDelete;
 async function getOrders() {
+  //주문 데이터 가져오기
   const orders = await Api.get("/api/orders");
+
+  //주문 내역 리스트, 주문 수정 창에 기존 데이터 입력
   for (const order of orders) {
     const {
       orderDate,
@@ -64,28 +66,28 @@ async function getOrders() {
     orderContainer.insertAdjacentHTML(
       "afterbegin",
       `
-          <tr id="${orderId}-box">
-            <td class="py-3 col-2 align-middle">
-              ${orderDate.slice(4)}
-            </td>
-            <td class="py-3 col-4 align-middle">
-              ${productList}
-            </td>
-            <td class="py-3 align-middle">
-              ${orderPrice.toLocaleString("ko-KR")}원
-            </td>
-            <td class="py-3 align-middle">
-            ${state}
-            </td>
-            <td class="py-3 align-middle">
-              <div style="display:none" class="changeable-order">
-                <button type="button" class="btn btn-outline-primary btn-sm change-order-btn" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
-                <button type="button" id="${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
-              </div>
-              <span style="display:none" class="unchangeable-order">변경 불가</span>
-            </td>
-          </tr>
-          `
+            <tr>
+              <td class="py-3 col-2 align-middle">
+                ${orderDate.slice(0, 11)}
+              </td>
+              <td class="py-3 col-4 align-middle">
+                ${productList}
+              </td>
+              <td class="py-3 align-middle">
+                ${orderPrice.toLocaleString("ko-KR")}원
+              </td>
+              <td class="py-3 align-middle">
+              ${state}
+              </td>
+              <td class="py-3 align-middle">
+                <div style="display:none" class="changeable-order">
+                  <button type="button" id="change-${orderId}" class="btn btn-outline-primary btn-sm change-order-btn">주문 수정</button>
+                  <button type="button" id="${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
+                </div>
+                <span style="display:none" class="unchangeable-order">변경 불가</span>
+              </td>
+            </tr>
+            `
     );
 
     if (state === "배송준비중") {
@@ -95,17 +97,13 @@ async function getOrders() {
     }
 
     //주문 수정창 : 수정 가능 데이터 삽입
-    const changeOrderBtn = document.querySelector(".change-order-btn");
+    const changeOrderBtn = document.querySelector(`#change-${orderId}`);
     const deliveryRequest = deliveryRequestSelect;
-    // let isRun = false;
+
     changeOrderBtn.addEventListener("click", changeOrder);
     function changeOrder(e) {
       e.preventDefault();
-
-      //클릭이벤트 중복 방지
-      // if (isRun === true) {
-      //   return false;
-      // }
+      openModal();
 
       phoneNumberInput.value = userPhoneNumber;
       postcodeInput.value = addrNum;
@@ -113,56 +111,86 @@ async function getOrders() {
       detailAddressInput.value = detailAddr;
       deliveryRequestSelect.value = deliReq;
 
-      // isRun === true;
+      let changedOrder = {
+        orderId: this.id.slice(7),
+        userPhoneNumber,
+        addrNum,
+        roughAddr,
+        detailAddr,
+        deliReq,
+      };
+
+      return saveOrderChange(changedOrder);
     }
+
+    //주문 취소 실행
     cancelOrder();
   }
 
-  //주문 수정 저장
-  // const saveOrderChangeBtn = document.querySelector("#save-order-change-btn");
-  // saveOrderChangeBtn.addEventListener("click", saveOrderChange);
-  // async function saveOrderChange(e) {
-  //   e.preventDefault();
+  //주문 수정 사항 저장
+  const saveOrderChangeBtn = document.querySelector("#save-order-change-btn");
+  const cancelChangeBtn = document.querySelector("#cancel-change-btn");
+  async function saveOrderChange(changedOrder) {
+    const {
+      orderId,
+      userPhoneNumber,
+      addrNum,
+      roughAddr,
+      detailAddr,
+      deliReq,
+    } = changedOrder;
 
-  //   const changedData = {};
-  //   const phoneNumber = phoneNumberInput.value;
-  //   const postcode = postcodeInput.value;
-  //   const roadAddress = roadAddressInput.value;
-  //   const detailAddress = detailAddressInput.value;
-  //   const deliveryRequest = deliveryRequestSelect.value;
+    saveOrderChangeBtn.addEventListener("click", async () => {
+      const changedData = {};
+      const newPhoneNumber = phoneNumberInput.value;
+      const newPostcode = postcodeInput.value;
+      const newRoadAddress = roadAddressInput.value;
+      const newDetailAddress = detailAddressInput.value;
+      const newDeliveryRequest = deliveryRequestSelect.value;
 
-  //   if (phoneNumber !== userPhoneNumber) {
-  //     changedData.userPhoneNumber = phoneNumber;
-  //   }
+      if (!newPhoneNumber || !newDetailAddress) {
+        return alert("배송지 정보를 모두 입력해 주세요.");
+      }
 
-  //   if (postcode !== addrNum) {
-  //     changedData.addrNum = postcode;
-  //   }
-  //   if (roadAddress !== roughAddr) {
-  //     changedData.roughAddr = roadAddress;
-  //   }
-  //   if (detailAddress !== detailAddr) {
-  //     changedData.detailAddr = detailAddress;
-  //   }
-  //   if (deliveryRequest !== deliReq) {
-  //     changedData.deliReq = deliveryRequest;
-  //   }
+      if (!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(newPhoneNumber)) {
+        return alert("유효하지 않은 전화번호입니다.");
+      }
 
-  //   if (Object.keys(changedData).length === 0) {
-  //     return alert("수정된 정보가 없습니다");
-  //     window.location.reload();
-  //   }
+      if (newPhoneNumber !== userPhoneNumber) {
+        changedData.userPhoneNumber = newPhoneNumber;
+      }
 
-  //   // 수정 사항 업데이트
-  //   try {
-  //     await Api.patch("/api/orders", orderId, changedData);
-  //     alert("수정 사항이 저장되었습니다.");
-  //     window.location.reload();
-  //   } catch (err) {
-  //     alert(`오류가 발생하였습니다: ${err}`);
-  //   }
-  // }
+      if (newPostcode !== addrNum) {
+        changedData.addrNum = newPostcode;
+      }
+      if (newRoadAddress !== roughAddr) {
+        changedData.roughAddr = newRoadAddress;
+      }
+      if (newDetailAddress !== detailAddr) {
+        changedData.detailAddr = newDetailAddress;
+      }
 
+      if (newDeliveryRequest !== deliReq) {
+        changedData.deliReq = newDeliveryRequest;
+      }
+
+      if (Object.keys(changedData).length === 0) {
+        alert("수정된 정보가 없습니다");
+        window.location.reload();
+      } else {
+        await Api.patch("/api/orders", orderId, changedData);
+        alert("수정 사항이 저장되었습니다.");
+        window.location.reload();
+      }
+    });
+
+    cancelChangeBtn.addEventListener("click", async () => {
+      closeModal();
+      window.location.reload();
+    });
+  }
+
+  //주문 취소
   function cancelOrder() {
     // 버튼을 누르면 데이터 삭제
     const deleteOrderBtns = document.querySelectorAll(".del-order-btn");
@@ -176,14 +204,23 @@ async function getOrders() {
             await Api.delete("/api/orders", btn.id);
             alert("주문이 취소되었습니다.");
             // 삭제 후 새로고침으로 삭제확인
-            location.reload();
+            window.location.reload();
           } else {
-            console.log("뒤로가기");
+            window.location.reload();
           }
         })
       );
     }
   }
+}
+
+function openModal() {
+  document.querySelector("#changeOrderModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeModal() {
+  document.querySelector("#changeOrderModal").style.display = "none";
+  document.body.style.overflow = "auto";
 }
 
 //주소 찾기

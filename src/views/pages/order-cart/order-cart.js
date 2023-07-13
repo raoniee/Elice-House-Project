@@ -23,7 +23,6 @@ async function insertCartData() {
   const cartProducts = localStorage.getItem(Products_KEY);
   const parsedProducts = JSON.parse(cartProducts);
   Products = parsedProducts;
-  //console.log(Products);
 
   Products.forEach((product) => {
     const { id, productImg, productName, productPrice, productQuantity } =
@@ -38,9 +37,9 @@ async function insertCartData() {
               <p>${productName}</p>
             </td>
             <td class="py-3 col-2 align-middle ee">
-              <button class="minus_${id}">-</button>
-              <input type="number" class="col-3 item_detail_quantity_input_${id}" value="${productQuantity}" readonly/>
-              <button class="plus_${id}">+</button>
+              <button class="btn btn-secondary minus_${id}">-</button>
+              <input type="number" class="col-3 border border-2 rounded item_detail_quantity_input_${id}" value="${productQuantity}" readonly style="height: 36px;"/>
+              <button class="btn btn-secondary plus_${id}">+</button>
             </td>
             <td class="py-3 align-middle item_detail_totalprice_${id}">
             ${(productQuantity * productPrice).toLocaleString()}원</td>
@@ -166,7 +165,6 @@ async function insertCartData() {
   }
 
   async function showAllCartPrice() {
-    //총 주문금액 쓰기
     const price = Products.map((p) => p.productTotalPrice);
     let sum = 0;
 

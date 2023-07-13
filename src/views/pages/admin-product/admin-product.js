@@ -63,7 +63,7 @@ const makeProductList = async () => {
         <td>
           <button id="${
             data[i]._id
-          }"type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
+          }"type="button" class="btn btn-dark btn-sm mod-product-btn mb-1" data-bs-toggle="modal" data-bs-target="#modProductModal">
           수정
           </button>
           <button id="${
@@ -87,44 +87,89 @@ const makeProductList = async () => {
 // 상품 추가 함수
 function addProduct() {
   const submitBtn = document.querySelector("#submitBtn");
-  //모달 데이터 담을 object
 
-  submitBtn.addEventListener("click", async () => {
-    const addForm = document.getElementById("addProductForm");
-    const formData = new FormData(addForm);
-    const addProductData = {};
-    for (let [key, value] of formData.entries()) {
-      addProductData[key] = value;
-    }
-    // 모달 submit 클릭 확인
-    console.log("submit clicked");
-    console.log(formData.entries());
+  submitBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    // input value 변수 정의
+    const categoryName = document.querySelector("#addCategoryName").value;
+    const subcategoryName = document.querySelector("#addSubcategoryName").value;
+    const productName = document.querySelector("#addProductName").value;
+    const brandName = document.querySelector("#addBrand").value;
+    const price = document.querySelector("#addPrice").value;
+    const imageFile = document.querySelector("#addImageUrl").files[0];
+    const description = document.querySelector("#addDescription").value;
+
+    //FormData 생성
+    const formData = new FormData();
+
+    //modal input data를 formData에 추가
+    formData.append("categoryName", categoryName);
+    formData.append("subcategoryName", subcategoryName);
+    formData.append("productName", productName);
+    formData.append("brand", brandName);
+    formData.append("price", price);
+    formData.append("image", imageFile);
+    formData.append("description", description);
+
+    // 모달 formData 확인
+    console.log(Array.from(formData.values()));
     // 정보 post
-    // await apiUtil.post("/api/admin/products", addProductData);
+    const result = await apiUtil.post("/api/admin/products", formData, true);
+    console.log(result);
+    // 새로고침
+    location.reload();
   });
 }
 
 // 상품 수정 함수
 function modifyProduct() {
-  const modProductBtn = document.querySelectorAll(".mod-product-btn");
+  const modProductBtns = document.querySelectorAll(".mod-product-btn");
   const submitModalBtn = document.querySelector("#submit-mod-product-btn");
 
   // 상품 수정 list 존재 확인
-  if (modProductBtn && Array.from(modProductBtn).length) {
-    modProductBtn.forEach((btn) =>
+  if (modProductBtns && Array.from(modProductBtns).length) {
+    modProductBtns.forEach((btn) =>
       btn.addEventListener("click", () => {
         console.log("modProductBtn clicked");
         // 모달 제출버튼 event
-        submitModalBtn.addEventListener("click", async () => {
-          // 상품 수정 모달의 input value 추출
-          const modForm = document.getElementById("modProductForm");
-          const formData = new FormData(modForm);
-          const modProductData = {};
-          for (let [key, value] of formData.entries()) {
-            modProductData[key] = value;
-          }
-          console.log(modProductData);
-          await apiUtil.patch("/api/admin/products", btn.id, modProductData);
+        submitModalBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          // input value 변수 정의
+          const categoryName = document.querySelector("#modCategoryName").value;
+          const subcategoryName = document.querySelector(
+            "#modSubcategoryName"
+          ).value;
+          const productName = document.querySelector("#modProductName").value;
+          const brandName = document.querySelector("#modBrand").value;
+          const price = document.querySelector("#modPrice").value;
+          const imageFile = document.querySelector("#modImageUrl").files[0];
+          const saleStatus = document.querySelector("#modSaleStatus").value;
+          const description = document.querySelector("#modDescription").value;
+
+          //FormData 생성
+          const formData = new FormData();
+
+          //modal input data를 formData에 추가
+          formData.append("categoryName", categoryName);
+          formData.append("subcategoryName", subcategoryName);
+          formData.append("productName", productName);
+          formData.append("brand", brandName);
+          formData.append("price", price);
+          formData.append("image", imageFile);
+          formData.append("saleStatus", saleStatus);
+          formData.append("description", description);
+
+          // 모달 formData 확인
+          console.log(Array.from(formData.values()));
+          // 정보 post
+          const result = await apiUtil.patch(
+            "/api/admin/products",
+            btn.id,
+            formData,
+            true
+          );
+          console.log(result);
+          // location.reload();
         });
       })
     );

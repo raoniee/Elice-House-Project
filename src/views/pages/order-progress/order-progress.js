@@ -21,6 +21,12 @@ const orderTotalElem = document.querySelector("#orderTotal");
 const checkoutButton = document.querySelector("#checkoutButton");
 const searchAddressBtn = document.querySelector("#search-address-btn");
 
+const requestOption = {
+  0: "선택 안 함",
+  1: "부재 시 문 앞에 놓아주세요",
+  2: "방문 전 연락 부탁드립니다",
+};
+
 const Products_KEY = "products";
 let Products = [];
 
@@ -31,11 +37,9 @@ addAllEvents();
 function checkLogin() {
   const token = localStorage.getItem("token");
   if (!token) {
-    // 현재 페이지의 url 주소 추출하기
     const pathname = window.location.pathname;
     const search = window.location.search;
 
-    // 로그인 후 다시 지금 페이지로 자동으로 돌아가도록 하기 위한 준비작업임.
     window.location.replace(`/login?previouspage=${pathname + search}`);
   }
 }
@@ -87,7 +91,7 @@ async function doCheckout() {
   const addrNum = postalCodeInput.value;
   const roughAddr = roadAddressInput.value;
   const detailAddr = detailAddressInput.value;
-  const deliReq = requestSelectBox.value;
+  const deliReq = requestOption[requestSelectBox.value];
 
   const cartProducts = localStorage.getItem(Products_KEY);
   const parsedProducts = JSON.parse(cartProducts);
@@ -110,18 +114,7 @@ async function doCheckout() {
   }
 
   try {
-    // const orderDate = await Api.post("/api/orders",{
-    //   userName,
-    //   userPhoneNumber,
-    //   addrNum
-    //   roughAddr,
-    //   detailAddr,
-    //   deliReq,
-    //   productId,
-    //   quantity,
-    // };)
-
-    const orderDate = {
+    const orderDate = await Api.post("/api/orders", {
       userName,
       userPhoneNumber,
       addrNum,
@@ -130,8 +123,7 @@ async function doCheckout() {
       deliReq,
       productId,
       quantity,
-    };
-    console.log(orderDate);
+    });
 
     Products = [];
     localStorage.setItem(Products_KEY, JSON.stringify(Products));

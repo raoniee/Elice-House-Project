@@ -22,20 +22,27 @@ async function get(endpoint, params = "") {
 
   return result;
 }
+// imageFile Post 이용시 활용
+const getHeaders = (isFile) => {
+  if (isFile) {
+    return {};
+  }
+  return { "Contents-Type": "application/json" };
+};
 
 // api 로 POST 요청 (/endpoint 로, JSON 데이터 형태로 요청함)
-async function post(endpoint, data) {
+async function post(endpoint, data, isFile = false) {
   const apiUrl = endpoint;
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
-  const bodyData = JSON.stringify(data);
+  const bodyData = isFile ? data : JSON.stringify(data);
   console.log(`%cPOST 요청: ${apiUrl}`, "color: #296aba;");
   console.log(`%cPOST 요청 데이터: ${bodyData}`, "color: #296aba;");
 
   const res = await fetch(apiUrl, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      ...getHeaders(isFile),
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: bodyData,
@@ -55,19 +62,19 @@ async function post(endpoint, data) {
 }
 
 // api 로 PATCH 요청 (/endpoint/params 로, JSON 데이터 형태로 요청함)
-async function patch(endpoint, params = "", data) {
+async function patch(endpoint, params = "", data, isFile = false) {
   const apiUrl = `${endpoint}/${params}`;
 
   // JSON.stringify 함수: Javascript 객체를 JSON 형태로 변환함.
   // 예시: {name: "Kim"} => {"name": "Kim"}
-  const bodyData = JSON.stringify(data);
+  const bodyData = isFile ? data : JSON.stringify(data);
   console.log(`%cPATCH 요청: ${apiUrl}`, "color: #059c4b;");
   console.log(`%cPATCH 요청 데이터: ${bodyData}`, "color: #059c4b;");
 
   const res = await fetch(apiUrl, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json",
+      ...getHeaders(isFile),
       authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: bodyData,

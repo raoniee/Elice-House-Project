@@ -1,11 +1,15 @@
 import { drawHeaderMenu } from "../../components/header/header-menu.js";
 import { insertHeaderCategoryData } from "../../components/header/header-category.js";
+import { drawMenubar } from "../../components/menu-bar/menu-bar.js";
 import { drawFooter } from "../../components/footer/footer.js";
 import * as Api from "../../apiUtil";
 
 // Header 삽입
 drawHeaderMenu();
 insertHeaderCategoryData();
+
+// Menubar 삽입
+drawMenubar();
 
 //Footer 삽입
 drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
@@ -16,7 +20,8 @@ addProductItemsToContainer();
 
 async function addProductItemsToContainer() {
   const params = new URLSearchParams(location.search);
-  const subcategoryId = params.get("categoryId");
+  const categoryId = params.get("CategoryId");
+  const subcategoryId = params.get("SubCategoryId");
   const products = await Api.get(`/api/products/${subcategoryId}`);
 
   products.forEach(async (product) => {
@@ -42,8 +47,7 @@ async function addProductItemsToContainer() {
     );
     const ItemListCard = document.querySelector(`#a${_id}`);
     ItemListCard.addEventListener("click", () => {
-      console.log("아이템클릭하기");
-      location.href = `/product/detail?id=${_id}`;
+      location.href = `/product/detail?CategoryId=${categoryId}&&SubCategoryId=${subcategoryId}&&id=${_id}`;
     });
   });
 }

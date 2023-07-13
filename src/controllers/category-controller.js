@@ -7,7 +7,7 @@ const CategoryController = {
       const getAllCat = await categoryService.getAllCatService();
 
       res.status(200).json(getAllCat);
-        } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
