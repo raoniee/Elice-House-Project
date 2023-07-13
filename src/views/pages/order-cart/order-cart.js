@@ -23,7 +23,6 @@ async function insertCartData() {
   const cartProducts = localStorage.getItem(Products_KEY);
   const parsedProducts = JSON.parse(cartProducts);
   Products = parsedProducts;
-  //console.log(Products);
 
   Products.forEach((product) => {
     const { id, productImg, productName, productPrice, productQuantity } =
@@ -166,7 +165,6 @@ async function insertCartData() {
   }
 
   async function showAllCartPrice() {
-    //총 주문금액 쓰기
     const price = Products.map((p) => p.productTotalPrice);
     let sum = 0;
 

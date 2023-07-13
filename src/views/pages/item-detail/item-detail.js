@@ -31,9 +31,6 @@ const ItemTotalPrice = document.querySelector(".item_detail_totalprice");
 const addToCartButton = document.querySelector(".cart");
 const purchaseButton = document.querySelector(".purchase");
 
-// const Products_KEY = "products";
-// let Products = [];
-
 insertProductData();
 
 async function insertProductData() {
@@ -87,7 +84,6 @@ async function insertProductData() {
   addToCartButton.addEventListener("click", () => {
     getProducts();
     if (Products.map((p) => p.id).includes(product._id)) {
-      // 로컬스토리지에 해당 상품이 포함되어 있다면
       alert("이미 장바구니에 추가되어 있습니다.");
     } else {
       const newProductObj = {
@@ -102,17 +98,14 @@ async function insertProductData() {
       Products.push(newProductObj);
       saveProducts();
       alert("장바구니에 추가되었습니다!");
-      //console.log(Products);
     }
   });
 
   purchaseButton.addEventListener("click", () => {
     getProducts();
     if (Products.map((p) => p.id).includes(product._id)) {
-      // 이미 로컬스토리지에 담겨있다면 바로 구매페이지로 이동
       window.location.href = "/order/progress";
     } else {
-      // 아니라면 로컬스토리지에 담고 구매페이지로 이동
       function saveProducts() {
         localStorage.setItem(Products_KEY, JSON.stringify(Products));
       }
