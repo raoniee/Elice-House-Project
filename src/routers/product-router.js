@@ -4,18 +4,17 @@ import { ProductController } from "../controllers/product-controller.js";
 
 const productRouter = Router();
 const upload = multer({
-  dest: "uploads/",
-});
-
-productRouter.post("/admin/image", upload.single("image"), (req, res, next) => {
-  console.log(req.file);
-  res.status(200).send(util.success(200, "요청성공!!", image));
+  dest: "src/db/image",
 });
 
 // 전체 상품 조회(admin)
 productRouter.get("/admin/products", ProductController.getAllProducts);
 // 상품 추가(admin)
-productRouter.post("/admin/products", ProductController.createProduct);
+productRouter.post(
+  "/admin/products",
+  upload.single("image"),
+  ProductController.createProduct
+);
 // 상품 삭제(admin)
 productRouter.delete(
   "/admin/products/:productId",

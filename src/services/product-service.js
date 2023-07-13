@@ -5,6 +5,9 @@ import { categoryModel } from "../db/models/category-model.js";
 import { subcategoryModel } from "../db/models/subcategory-model.js";
 import { error } from "console";
 import { userModel } from "../db/models/user-model.js";
+import moment from "moment-timezone";
+
+
 
 class ProductService {
   // 각 상품에 카테고리 이름, 서브카테고리 이름 추가
@@ -97,6 +100,9 @@ class ProductService {
     }
 
     const addNewProduct = await productModel.create(ProductInfo);
+    // 로컬 Date 업데이트 
+    const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+    await productModel.update(addNewProduct._id, {date: postDate});
 
     // 누적 상품 판매 수 체크
     if (addNewProduct) {
@@ -137,31 +143,33 @@ class ProductService {
   // 상품 정보 수정
   async updateInfo(productId, toUpdate) {
     const { categoryName, subcategoryName } = toUpdate;
-    const parentCat = await categoryModel.findByCat(categoryName);
-    if (!parentCat) {
-      throw new Error("존재하지 않는 카테고리입니다.");
-    }
+    if (categoryName && subcategoryName) {
+      const parentCat = await categoryModel.findByCat(categoryName);
+      if (!parentCat) {
+        throw new Error("존재하지 않는 카테고리입니다.");
+      }
 
-    const childCats = parentCat.subcategory;
-    const productSubCatId = await subcategoryModel.findByName(subcategoryName);
+      const childCats = parentCat.subcategory;
+      const productSubCatId = await subcategoryModel.findByName(
+        subcategoryName
+      );
+      let isSubCategoryExist = false;
 
-    let isSubCategoryExist = false;
+      for (const childCatId of childCats) {
+        if (childCatId.toString() == productSubCatId._id.toString()) {
+          isSubCategoryExist = true;
+          break;
+        }
+      }
 
-    for (const childCatId of childCats) {
-      if (childCatId.toString() == productSubCatId._id.toString()) {
-        isSubCategoryExist = true;
-        break;
+      toUpdate.categoryId = parentCat._id;
+      toUpdate.subcategoryId = productSubCatId._id;
+
+      // 카테고리가 존재하는지 확인
+      if (!isSubCategoryExist) {
+        throw new Error(`해당 카테고리에 존재하지 않는 서브카테고리입니다.`);
       }
     }
-
-    toUpdate.categoryId = parentCat._id;
-    toUpdate.subcategoryId = productSubCatId._id;
-
-    // 카테고리가 존재하는지 확인
-    if (!isSubCategoryExist) {
-      throw new Error(`해당 카테고리에 존재하지 않는 서브카테고리입니다.`);
-    }
-
     const checkUpdate = await productModel.update(productId, toUpdate);
 
     return checkUpdate;

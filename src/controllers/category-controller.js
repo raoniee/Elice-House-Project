@@ -6,8 +6,8 @@ const CategoryController = {
     try {
       const getAllCat = await categoryService.getAllCatService();
 
-      res.status(200).json(getAllCat);
-    } catch (error) {
+      res.status(200).json(getAllCat);s
+        } catch(error) {
       next(error);
     }
   },
@@ -38,22 +38,6 @@ const CategoryController = {
     }
   },
 
-  // 카테고리 생성
-  async createCat(req, res, next) {
-    try {
-      const { categoryName, subcategoryName } = req.body;
-
-      const newCat = await categoryService.addCat({
-        categoryName,
-        subcategoryName,
-      });
-
-      res.status(200).json(newCat);
-    } catch (error) {
-      next(error);
-    }
-  },
-
   // 카테고리 수정
   async updateCat(req, res, next) {
     try {
@@ -76,7 +60,7 @@ const CategoryController = {
         subcategoryId,
       });
 
-      res.status(200).json(changeCat);
+      res.status(201).json(changeCat);
     } catch (error) {
       next(error);
     }
@@ -89,8 +73,6 @@ const CategoryController = {
       const deleteSubCat = await categoryService.deleteSubCat(subCatId, catId);
 
       res.status(204).json(deleteSubCat);
-
-      res.status(200).json(getAllCat);
     } catch (error) {
       next(error);
     }

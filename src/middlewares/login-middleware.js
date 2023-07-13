@@ -12,7 +12,7 @@ function checkLogin(req, res, next) {
   }
   const key = process.env.KEY;
   const jwtInfo = jwt.verify(token, key);
-  console.log("haha");
+
   req.body.userId = jwtInfo.userId;
   next();
 }

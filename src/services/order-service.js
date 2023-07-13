@@ -1,10 +1,16 @@
 import { productModel } from "../db/models/product-model.js";
 import { orderitemModel } from "../db/models/orderitem-model.js";
 import { orderModel } from "../db/models/order-model.js";
+import moment from "moment-timezone";
 
 class OrderService {
   async addOrder(newOrder, newOrderitem) {
     const createOrder = await orderModel.create(newOrder);
+
+    // 로컬 Date 업데이트 
+    const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+    await orderModel.update(createOrder._id, {date: postDate});
+
     let createOrderitems = [];
     let result = [];
     if (createOrder) {
@@ -12,7 +18,7 @@ class OrderService {
       const productIds = newOrderitem.productIds;
       for (const productId of productIds) {
         const orderProduct = await productModel.getProdInfo(productId);
-        const productName = orderProduct.name;
+        const productName = orderProduct.productName;
         const productImg = orderProduct.imageUrl;
         const price = orderProduct.price;
 
@@ -34,6 +40,11 @@ class OrderService {
       for (const quantity of quantitys) {
         createOrderitems[cnt].quantity = quantity;
         const addOrderIfo = await orderitemModel.create(createOrderitems[cnt]);
+
+        // 로컬 Date 업데이트 
+        const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+        await orderitemModel.update(addOrderIfo._id, {date: postDate});
+
         if (addOrderIfo) {
           result.push(addOrderIfo);
         }
@@ -50,13 +61,14 @@ class OrderService {
 
   async getOrder(userId) {
     const orders = await orderModel.getOrder(userId);
-    console.log(orders);
+    // console.log("orders :", orders);
     const results = [];
-    let result = new Object;
+  
 
     for (const ord of orders) {
       const ordId = ord._id;
-      console.log(ordId);
+      let result = {};
+      console.log("ordId : ", ordId)
 
       result.orderId = ordId;
       result.userPhoneNumber = ord.userPhoneNumber;
@@ -99,7 +111,6 @@ class OrderService {
     const results = [];
 
     for (const ord of orders) {
-      console.log("ord : ", ord);
       const result = {};
       const createdAt = ord.createdAt.toString();
       const ordId = ord._id;
@@ -117,17 +128,14 @@ class OrderService {
 
       if (ordId) {
         const ordItems = await orderitemModel.getOrderId(ordId);
-        console.log("11", ordItems);
         const productIds = [];
         const productNames = [];
         const productImgs = [];
         const quantitys = [];
         const prices = [];
 
-        console.log("ordItems : ", ordItems);
 
         for (const ordItem of ordItems) {
-          console.log("22", ordItem);
           productIds.push(ordItem.productId);
           productNames.push(ordItem.productName);
           productImgs.push(ordItem.productImg);

@@ -23,8 +23,8 @@ class CategoryModel {
     const updateCat = await Category.findOneAndUpdate(
       { _id: categoryId }, // 카테고리의 ObjectId
       { $push: { subcategory: addSubcatId } },
-      { returnOriginal: false }
-    );
+      { returnOriginal: false, }
+    )
 
     return updateCat;
   }
@@ -35,12 +35,6 @@ class CategoryModel {
 
     return cat;
   }
-
-  // // 카테고리 내부에서 서브 카테고리 찾기
-  // async findBySubcat(addSubcatId) {
-  //     const subcat = await Category.findOne({ subcategory: { subcategory: addSubcatId } });
-  //     return subcat;
-  // }
 
   // 카테고리 수정
   async update(catId, toUpdate) {
@@ -82,6 +76,7 @@ class CategoryModel {
 
     return updateSubId;
   }
+
   async findById(_id) {
     const allCat = await Category.findById({ _id });
     return allCat;
