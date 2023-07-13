@@ -114,7 +114,11 @@ function addProduct() {
     // 모달 formData 확인
     console.log(Array.from(formData.values()));
     // 정보 post
-    const result = await apiUtil.post("/api/admin/products", formData, true);
+    const result = await apiUtil.adminPost(
+      "/api/admin/products",
+      formData,
+      true
+    );
     console.log(result);
     // 새로고침
     location.reload();
@@ -162,14 +166,14 @@ function modifyProduct() {
           // 모달 formData 확인
           console.log(Array.from(formData.values()));
           // 정보 post
-          const result = await apiUtil.patch(
+          const result = await apiUtil.adminPatch(
             "/api/admin/products",
             btn.id,
             formData,
             true
           );
           console.log(result);
-          // location.reload();
+          location.reload();
         });
       })
     );
