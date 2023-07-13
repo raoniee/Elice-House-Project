@@ -1,6 +1,51 @@
 import { model } from "mongoose";
-import { orderItemSchema } from "../schemas/orderitem-schema";
+import { orderItemSchema } from "../schemas/orderitem-schema.js";
 
-const Orderitem = model("orderItems", orderItemSchema);
+const OrderItem = model("orderItems", orderItemSchema);
 
-export { Orderitem };
+class OrderitemModel {
+  async create(newOrderitem) {
+    const createOrderitem = await OrderItem.create(newOrderitem);
+    return createOrderitem;
+  }
+
+  async getOrderItem(userId) {
+    const orderItemInfo = await OrderItem.find({ userId });
+    return orderItemInfo;
+  }
+  async getOrderId(orderId) {
+    const orderOneInfo = await OrderItem.find({ orderId });
+    return orderOneInfo;
+  }
+
+  async getAll() {
+    const All = await OrderItem.find({});
+    return All;
+  }
+
+  async getOrderOne(orderId) {
+    const orderOneInfo = await OrderItem.findOne({ orderId });
+    return orderOneInfo;
+  }
+
+  // orderId를 가지고 orderItem들 삭제
+  async deleteByOrderId(orderId) {
+    const deleteData = await OrderItem.deleteMany({ orderId });
+    return deleteData;
+  }
+
+  async update(orderItemId, toUpdate) {
+    const updateInfo = await OrderItem.findOneAndUpdate(
+      { _id: orderItemId },
+      toUpdate,
+      {
+        returnOriginal: false,
+      }
+    );
+    return updateInfo;
+  }
+}
+
+const orderitemModel = new OrderitemModel();
+
+export { orderitemModel };

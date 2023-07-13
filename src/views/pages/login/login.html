@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Elice-House</title>
+    <!-- 파비콘 -->
+    <link rel="icon" href="../public/assets/imgs/sofa.ico">
     <link rel="stylesheet" href="login.css" />
     <!-- Bootstrap CSS, JS CDN(콘텐츠 전송 네트워크) -->
     <link
@@ -19,7 +21,7 @@
       crossorigin="anonymous"
     ></script>
     <!-- 유효성 검사 -->
-    <script src="./login.js"></script>
+    <script defer src="./login.js" type="module"></script>
   </head>
   <body>
     <!-- 최상위 컨테이너 -->
@@ -28,40 +30,44 @@
       <div class="login-container">
         <h2 id="login-head">로그인</h2>
         <!-- 로그인 폼 -->
-        <form id="login-form" class="row g-3" onsubmit="validateLogin()">
-          <div class="col-12">
-            <label for="input-email" class="col-sm-2 col-form-label"
-              >이메일</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              id="input-email"
-              placeholder="이메일을 입력해주세요."
-            />
-          </div>
-          <div class="col-12">
-            <label for="input-password" class="col-sm-2 col-form-label"
-              >비밀번호</label
-            >
-            <input
-              type="password"
-              class="form-control"
-              id="input-password"
-              placeholder="비밀번호를 입력해주세요."
-              autocomplete="off"
-            />
+        <!-- <form id="login-form" class="row g-3" onsubmit="validateLogin()"> -->
+        <form id="login-form" class="row g-3">
+          <div class="form-input-container">
+            <div class="col-12">
+              <label for="input-email" class="col-sm-2 col-form-label"
+                >이메일</label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="input-email"
+                placeholder="이메일을 입력해주세요."
+              />
+            </div>
+            <div class="col-12">
+              <label for="input-password" class="col-sm-3 col-form-label"
+                >비밀번호</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="input-password"
+                placeholder="비밀번호를 입력해주세요."
+                autocomplete="off"
+              />
+            </div>
           </div>
 
-          <div id="form-btn-group" class="d-grid gap-3 col-6 mx-auto">
-            <button id=login-submit" type="submit" class="btn btn-lg btn-primary">로그인</button>
-            <button type="submit" class="btn btn-lg btn-primary"><a href="../main/main.html">취소</a></button>
+          <div id="btn-login-div" style="padding: 0">
+            <button id=login-submit" type="submit" class="btn btn-primary" style="width: 180px; margin: 0 auto;">로그인</button>
           </div>
         </form>
-
+        <div id="btn-cancel-div" >
+          <button id="login-cancel" type="submit" class="btn btn-primary"style="width: 180px;">취소</button>
+        </div>
         <div id="move-to-register-container" class="row">
           <p>아직 회원이 아니신가요?</p>
-          <button id="move-register" class="btn btn-lg btn-primary col-5 mx-auto"><a href="../register/register.html" target="_self">회원가입</a></button>
+          <button id="move-register" class="btn btn-primary col-5" style="width: 180px;">회원가입</button>
         </div>
       </div>
     </div>

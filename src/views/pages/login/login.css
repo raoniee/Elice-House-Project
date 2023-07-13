@@ -9,41 +9,58 @@
   font-size: 10px;
 }
 
-#form-btn-group {
-  margin-top: 5.5vh;
+.login-container {
+  display: inline-block;
+  justify-content: center;
+  width: 32vh;
+  margin-top: 22vh;
+}
+
+#login-head {
+  margin-bottom: 4vh;
+  text-align: center;
+}
+
+#login-form {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.form-input-container {
+  margin-bottom: 3em;
 }
 
 .col-12 > label {
   font-size: 1.5em;
 }
 
-.login-container {
-  width: 37vh;
-  margin-top: 22vh;
+#btn-login-div {
+  display: flex;
+  justify-content: center;
+}
+#login-submit {
+  margin-top: 30em;
 }
 
-#login-head {
-  margin-bottom: 4.8vh;
-  text-align: center;
+#btn-cancel-div {
+  display: flex;
+  justify-content: center;
 }
-
-#login-form {
-  margin: 0;
+#login-cancel {
+  margin-top: 0.5em;
 }
 
 #move-to-register-container {
+  display: flex;
+  justify-content: center;
+  width: inherit;
+  margin-left: 0;
   margin-top: 3.5em;
 }
-
 #move-to-register-container > p {
   margin: 0;
   margin-bottom: 1em;
   font-size: 1.5em;
   text-align: center;
-}
-
-#form-btn-group a,
-#move-register a {
-  text-decoration: none;
-  color: #fff;
 }

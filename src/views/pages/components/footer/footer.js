@@ -1,4 +1,4 @@
-export const drawFooter = () => {
+export const drawFooter = (img) => {
   let footerTemplate = `        <div class="border-top">
         <div class="container">
       <div class="row py-5">
@@ -7,9 +7,9 @@ export const drawFooter = () => {
             href="/"
             class="d-flex align-items-center mb-3 link-dark text-decoration-none"
           >
-            로고
+            <img src="${img}" alt="엘리스 하우스 로고" style="height: 10vh" />
           </a>
-          <p class="text-muted">&copy; 2022</p>
+          <p class="text-muted">&copy; 2023</p>
         </div>
 
         <div class="col mb-3"></div>
@@ -26,19 +26,19 @@ export const drawFooter = () => {
 
         <div class="col mb-3">
           <ul class="nav flex-column">
-            <li class="nav-item mb-2">상호명 : (주)신세계까사</li>
-            <li class="nav-item mb-2">대표이사 : 김홍극</li>
+            <li class="nav-item mb-2">상호명 : (주)Elice House</li>
+            <li class="nav-item mb-2">대표 : 일단 13팀</li>
             <li class="nav-item mb-2">
-              주소 : 서울시 중구 남대문시장10길2 메사빌딩 5-6층
+              주소 : 서울 성동구 아차산로17길 48 성수낙낙 2층 엘리스랩
             </li>
           </ul>
         </div>
 
         <div class="col mb-3">
           <ul class="nav flex-column">
-            <li class="nav-item mb-2">사업자등록번호 : 120-81-11794</li>
-            <li class="nav-item mb-2">통신판매업 신고:2021-서울중구</li>
-            <li class="nav-item mb-2">개인정보보호책임자 : 김찬후</li>
+            <li class="nav-item mb-2">사업자등록번호 : 123-45-67890</li>
+            <li class="nav-item mb-2">통신판매업 신고:2023-서울중구</li>
+            <li class="nav-item mb-2">개인정보보호책임자 : 김엘리스</li>
             <li class="nav-item mb-2">사업자 정보확인</li>
           </ul>
         </div>
@@ -46,27 +46,8 @@ export const drawFooter = () => {
       <div
         class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top"
       >
-        <p>&copy; 2022 Company, Inc. All rights reserved.</p>
-        <ul class="list-unstyled d-flex">
-          <li class="ms-3">
-            <a class="link-dark" href="#"
-              ><svg class="bi" width="24" height="24">
-                <use xlink:href="#twitter" /></svg
-            ></a>
-          </li>
-          <li class="ms-3">
-            <a class="link-dark" href="#"
-              ><svg class="bi" width="24" height="24">
-                <use xlink:href="#instagram" /></svg
-            ></a>
-          </li>
-          <li class="ms-3">
-            <a class="link-dark" href="#"
-              ><svg class="bi" width="24" height="24">
-                <use xlink:href="#facebook" /></svg
-            ></a>
-          </li>
-        </ul>
+        <p>&copy; 2023 Company, Inc. All rights reserved.</p>
+
       </div>
     </div>
     

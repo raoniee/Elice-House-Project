@@ -9,19 +9,6 @@
   font-size: 10px;
 }
 
-#form-btn-group {
-  margin-top: 5.5vh;
-}
-
-#form-btn-group a {
-  text-decoration: none;
-  color: #fff;
-}
-
-.col-12 > label {
-  font-size: 1.5em;
-}
-
 .register-container {
   width: 40vh;
   margin-top: 20vh;
@@ -34,4 +21,21 @@
 
 #register-form {
   margin: 0;
+}
+
+.form-input-container {
+  margin-bottom: 2em;
+}
+
+.col-12 > label {
+  font-size: 1.5em;
+}
+
+#register-submit {
+  width: 9em;
+}
+
+#register-cancel {
+  margin-top: 0.5em;
+  width: 9em;
 }

@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { error } from "console";
+import moment from "moment-timezone";
 
 class UserService {
   async addUser(userRegist) {
@@ -21,13 +22,16 @@ class UserService {
     const UserInfo = { name, email, password: hashedPassword };
     const addNewUser = await userModel.create(UserInfo);
 
+    // 로컬 Date 업데이트 
+    const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+    await userModel.update(addNewUser._id, {date: postDate});
+
     return addNewUser;
   }
 
   // 로그인 아이디 비밀번호 확인 및 jwt 토큰 생성
   async giveToken(userIdPass) {
-    const email = userIdPass.email;
-    const password = userIdPass.password;
+    const { email, password, isAdmin } = userIdPass;
 
     const user = await userModel.findByEmail({ email });
 
@@ -43,9 +47,12 @@ class UserService {
     }
 
     const key = process.env.KEY;
-    const token = jwt.sign({ email, userId: user._id }, key);
+    const token = jwt.sign(
+      { email, userId: user._id, isAdmin: user.isAdmin },
+      key
+    );
 
-    return { token, isAdmin: user.isAdmin };
+    return { token, isAdmin };
   }
 
   // UserId를 통해 DB에서 user객체를 찾고 삭제
@@ -67,7 +74,7 @@ class UserService {
     const password = toUpdate.password;
     if (password) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      toUpdate.passowrd = hashedPassword;
+      toUpdate.password = hashedPassword;
     }
 
     const checkUpdate = await userModel.update(userId, toUpdate);
@@ -86,6 +93,19 @@ class UserService {
     const userInfo = await userModel.findByUserId(userId);
 
     return userInfo;
+  }
+
+  async checkPassword(userId, passowrd) {
+    const userInfo = await userModel.findByUserId(userId);
+
+    const hashedPassword = userInfo.password;
+    const checkPassword = await bcrypt.compare(passowrd, hashedPassword);
+
+    if (!checkPassword) {
+      throw new Error("비밀번호 확인 필요");
+    }
+
+    return true;
   }
 }
 

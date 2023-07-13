@@ -7,13 +7,22 @@ const subcategorySchema = new Schema(
       type: String,
       required: true,
     },
+    // 카테고리 내부 상품 총 갯수
+    productQuantity: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    // 로컬 Date 저장
+    date: {
+      type: String,
+      required: false,
+    }
   },
   {
     collection: "subcategories",
-    timestamp: true,
+    timestamps: true,
   }
 );
 
 export { subcategorySchema };
-
-// 삭제하면됨(코치님)

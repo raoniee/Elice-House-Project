@@ -1,120 +1,152 @@
-import { drawHeader } from "../../components/header/header.js";
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
+import { insertHeaderCategoryData } from "../../components/header/header-category.js";
 import { drawFooter } from "../../components/footer/footer.js";
+import * as Api from "../../apiUtil";
 
-// Header, Footer 템플릿 삽입
-drawHeader();
-drawFooter();
+// Header 삽입
+drawHeaderMenu();
+insertHeaderCategoryData();
 
+//Footer 삽입
+drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
+
+const receiverNameInput = document.querySelector("#user-name");
+const receiverPhoneNumberInput = document.querySelector("#phone-number");
+const postalCodeInput = document.querySelector("#postcode");
+const roadAddressInput = document.querySelector("#roadAddress");
+const detailAddressInput = document.querySelector("#detailAddress");
+const requestSelectBox = document.querySelector("#requestSelectBox");
+const productsTitleElem = document.querySelector("#productsTitle");
+const orderTotalElem = document.querySelector("#orderTotal");
+const checkoutButton = document.querySelector("#checkoutButton");
 const searchAddressBtn = document.querySelector("#search-address-btn");
-searchAddressBtn.addEventListener("click", searchAddress);
 
-// 다음 주소 찾기
-// function searchAddress() {
-//   new daum.Postcode({
-//     oncomplete: function (data) {
-//       // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+const requestOption = {
+  0: "선택 안 함",
+  1: "부재 시 문 앞에 놓아주세요",
+  2: "방문 전 연락 부탁드립니다",
+};
 
-//       // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-//       // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-//       var roadAddr = data.roadAddress; // 도로명 주소 변수
-//       var extraRoadAddr = ""; // 참고 항목 변수
+const Products_KEY = "products";
+let Products = [];
 
-//       // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-//       // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-//       if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-//         extraRoadAddr += data.bname;
-//       }
-//       // 건물명이 있고, 공동주택일 경우 추가한다.
-//       if (data.buildingName !== "" && data.apartment === "Y") {
-//         extraRoadAddr +=
-//           extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
-//       }
-//       // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-//       if (extraRoadAddr !== "") {
-//         extraRoadAddr = " (" + extraRoadAddr + ")";
-//       }
+checkLogin();
+addAllElements();
+addAllEvents();
 
-//       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-//       document.getElementById("postcode").value = data.zonecode;
-//       document.getElementById("roadAddress").value = roadAddr;
-//       document.getElementById("jibunAddress").value = data.jibunAddress;
+function checkLogin() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    const pathname = window.location.pathname;
+    const search = window.location.search;
 
-//       // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-//       if (roadAddr !== "") {
-//         document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-//       } else {
-//         document.getElementById("sample4_extraAddress").value = "";
-//       }
+    window.location.replace(`/login?previouspage=${pathname + search}`);
+  }
+}
 
-//       var guideTextBox = document.getElementById("guide");
-//       // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-//       if (data.autoRoadAddress) {
-//         var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-//         guideTextBox.innerHTML = "(예상 도로명 주소 : " + expRoadAddr + ")";
-//         guideTextBox.style.display = "block";
-//       } else if (data.autoJibunAddress) {
-//         var expJibunAddr = data.autoJibunAddress;
-//         guideTextBox.innerHTML = "(예상 지번 주소 : " + expJibunAddr + ")";
-//         guideTextBox.style.display = "block";
-//       } else {
-//         guideTextBox.innerHTML = "";
-//         guideTextBox.style.display = "none";
-//       }
-//     },
-//   }).open();
-// }
+function addAllElements() {
+  insertOrderSummary();
+}
 
+function addAllEvents() {
+  checkoutButton.addEventListener("click", doCheckout);
+  searchAddressBtn.addEventListener("click", searchAddress);
+}
+
+async function insertOrderSummary() {
+  const cartProducts = localStorage.getItem(Products_KEY);
+  const parsedProducts = JSON.parse(cartProducts);
+  Products = parsedProducts;
+
+  if (Products.length === 0) {
+    alert(`구매할 제품이 없습니다. 제품을 선택해 주세요.`);
+
+    return window.location.replace(`/`);
+  }
+
+  Products.forEach((product) => {
+    const { productName, productQuantity } = product;
+
+    productsTitleElem.insertAdjacentHTML(
+      "beforeend",
+      `${productName} / ${productQuantity}<br/>`
+    );
+  });
+
+  const price = Products.map((p) => p.productTotalPrice);
+  let sum = 0;
+
+  price.forEach((p) => {
+    sum += p;
+  });
+
+  orderTotalElem.innerText = `${sum.toLocaleString()}원`;
+
+  receiverNameInput.focus();
+}
+
+async function doCheckout() {
+  const userName = receiverNameInput.value;
+  const userPhoneNumber = receiverPhoneNumberInput.value;
+  const addrNum = postalCodeInput.value;
+  const roughAddr = roadAddressInput.value;
+  const detailAddr = detailAddressInput.value;
+  const deliReq = requestOption[requestSelectBox.value];
+
+  const cartProducts = localStorage.getItem(Products_KEY);
+  const parsedProducts = JSON.parse(cartProducts);
+  Products = parsedProducts;
+  let productId = [];
+  let quantity = [];
+  Products.forEach((product) => {
+    const { id, productQuantity } = product;
+    productId.push(id);
+    quantity.push(productQuantity);
+  });
+
+  if (!userName || !userPhoneNumber || !detailAddr) {
+    return alert("배송지 정보를 모두 입력해 주세요.");
+  }
+
+  if (!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(userPhoneNumber)) {
+    alert("유효하지 않는 전화번호입니다.");
+    return receiverPhoneNumberInput.focus();
+  }
+
+  try {
+    const orderDate = await Api.post("/api/orders", {
+      userName,
+      userPhoneNumber,
+      addrNum,
+      roughAddr,
+      detailAddr,
+      deliReq,
+      productId,
+      quantity,
+    });
+
+    Products = [];
+    localStorage.setItem(Products_KEY, JSON.stringify(Products));
+
+    alert("결제 및 주문이 정상적으로 완료되었습니다.\n감사합니다.");
+    window.location.href = "/order/complete";
+  } catch (err) {
+    console.log(err);
+    alert(`결제 중 문제가 발생하였습니다: ${err.message}`);
+  }
+}
+
+//주소 찾기
 function searchAddress() {
   new daum.Postcode({
     oncomplete: function (data) {
-      // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
       // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-      // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-      var roadAddr = data.roadAddress; // 도로명 주소 변수
-      var extraRoadAddr = ""; // 참고 항목 변수
-
-      // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-      // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-      if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-        extraRoadAddr += data.bname;
-      }
-      // 건물명이 있고, 공동주택일 경우 추가한다.
-      if (data.buildingName !== "" && data.apartment === "Y") {
-        extraRoadAddr +=
-          extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
-      }
-      // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-      if (extraRoadAddr !== "") {
-        extraRoadAddr = " (" + extraRoadAddr + ")";
-      }
+      const { roadAddress: roadAddr } = data; // 도로명 주소 변수
 
       // 우편번호와 주소 정보를 해당 필드에 넣는다.
       document.getElementById("postcode").value = data.zonecode;
       document.getElementById("roadAddress").value = roadAddr;
-      document.getElementById("jibunAddress").value = data.jibunAddress;
-
-      // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-      if (roadAddr !== "") {
-        document.getElementById("extraAddress").value = extraRoadAddr;
-      } else {
-        document.getElementById("extraAddress").value = "";
-      }
-
-      var guideTextBox = document.getElementById("guide");
-      // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-      if (data.autoRoadAddress) {
-        var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-        guideTextBox.innerHTML = "(예상 도로명 주소 : " + expRoadAddr + ")";
-        guideTextBox.style.display = "block";
-      } else if (data.autoJibunAddress) {
-        var expJibunAddr = data.autoJibunAddress;
-        guideTextBox.innerHTML = "(예상 지번 주소 : " + expJibunAddr + ")";
-        guideTextBox.style.display = "block";
-      } else {
-        guideTextBox.innerHTML = "";
-        guideTextBox.style.display = "none";
-      }
+      document.querySelector("#detailAddress").value = "";
     },
   }).open();
 }
