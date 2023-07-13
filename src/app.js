@@ -1,5 +1,6 @@
 import cors from "cors";
 import express from "express";
+import bodyParser from "body-parser";
 
 import { userRouter } from "./routers/user-router.js";
 import { categoryRouter } from "./routers/category-router.js";
@@ -16,7 +17,8 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: false }));
 
-// app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");

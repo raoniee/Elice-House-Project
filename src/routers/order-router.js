@@ -6,7 +6,7 @@ import { ifAdminDeny } from "../middlewares/admin-middleware.js";
 const orderRouter = Router();
 
 // 주문 추가
-orderRouter.post("/orders", ifAdminDeny, OrderController.createOrder);
+orderRouter.post("/orders", ifAdminDeny, checkLogin, OrderController.createOrder);
 
 // 전체 주문 조회
 orderRouter.get("/orders/", checkLogin, OrderController.getUserOrder);

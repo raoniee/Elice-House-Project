@@ -6,7 +6,7 @@ const CategoryController = {
     try {
       const getAllCat = await categoryService.getAllCatService();
 
-      res.status(200).json(getAllCat);s
+      res.status(200).json(getAllCat);
         } catch(error) {
       next(error);
     }
