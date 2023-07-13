@@ -40,9 +40,8 @@ const OrderController = {
   async getUserOrder(req, res, next) {
     try {
       const userId = req.body.userId;
-      console.log(userId);
-
       const userOrderInfo = await orderService.getOrder(userId);
+      // console.log("userOrderInfo : ", userOrderInfo);
 
       res.status(200).json(userOrderInfo);
     } catch (error) {

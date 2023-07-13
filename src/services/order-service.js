@@ -50,11 +50,14 @@ class OrderService {
 
   async getOrder(userId) {
     const orders = await orderModel.getOrder(userId);
+    // console.log("orders :", orders);
     const results = [];
-    let result = new Object();
+  
 
     for (const ord of orders) {
       const ordId = ord._id;
+      let result = {};
+      console.log("ordId : ", ordId)
 
       result.orderId = ordId;
       result.userPhoneNumber = ord.userPhoneNumber;
