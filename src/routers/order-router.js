@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { OrderController } from "../controllers/order-controller.js";
+import { checkLogin } from "../middlewares/login-middleware.js";
 
 const orderRouter = Router();
 
@@ -7,7 +8,7 @@ const orderRouter = Router();
 orderRouter.post("/orders", OrderController.createOrder);
 
 // 전체 주문 조회
-orderRouter.get("/orders/:userId", OrderController.getUserOrder);
+orderRouter.get("/orders", checkLogin, OrderController.getUserOrder);
 
 //관리자 모드 
 //전체 주문 조회

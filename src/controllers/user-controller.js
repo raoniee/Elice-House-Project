@@ -39,7 +39,7 @@ const UserController = {
   // 사용자가 User 정보 조회
   async getInfo(req, res, next) {
     try {
-      const userId = req.params.userId;
+      const userId = req.body.userId;
       console.log(`유저 아이디 ${userId}`);
 
       const findUserOne = await userService.findByUserId({ _id: userId });
@@ -56,7 +56,7 @@ const UserController = {
   //회원 삭제
   async deleteUser(req, res, next) {
     try {
-      const userId = req.params.userId;
+      const userId = req.body.userId;
       console.log(`유저 아이디 ${userId}`);
 
       const deleteUserInfo = await userService.deleteById({ _id: userId });
@@ -70,7 +70,7 @@ const UserController = {
   // 사용자 정보 수정
   async updateUser(req, res, next) {
     try {
-      const userId = req.params._id;
+      const userId = req.body._id;
       const { name, newPassword } = req.body;
 
       const toUpdate = {
@@ -89,7 +89,7 @@ const UserController = {
   // 비밀번호 확인
   async checkPassword(req, res, next) {
     try{
-      const userId = req.params.userId;
+      const userId = req.body.userId;
       const password = req.body.password;
 
       const check = await userService.checkPassword(userId, password);

@@ -42,7 +42,7 @@ const orderSchema = new Schema(
     deliReq: {
       type: String,
       required: true,
-      default: "선택 없음",
+      default: "선택 안함",
     }
 
   },
