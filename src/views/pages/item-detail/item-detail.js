@@ -1,5 +1,6 @@
 import { drawHeaderMenu } from "../../components/header/header-menu.js";
 import { insertHeaderCategoryData } from "../../components/header/header-category.js";
+import { drawMenubar } from "../../components/menu-bar/menu-bar.js";
 import { drawFooter } from "../../components/footer/footer.js";
 import * as Api from "../../apiUtil";
 
@@ -7,11 +8,14 @@ import * as Api from "../../apiUtil";
 drawHeaderMenu();
 insertHeaderCategoryData();
 
+// Menubar 삽입
+drawMenubar();
+
 //Footer 삽입
 drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 //Menubar 템플릿 삽입
-// drawMenubar();
+drawMenubar();
 
 const ItemImg = document.querySelector(".item_detail_img");
 const ItemName = document.querySelector(".item_detail_name");
