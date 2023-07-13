@@ -1,15 +1,15 @@
-// import { drawHeaderMenu } from "../../components/header/header-menu.js";
-// import { insertHeaderCategoryData } from "../../components/header/header-category.js";
-// import { drawFooter } from "../../components/footer/footer.js";
+import { drawHeaderMenu } from "../../components/header/header-menu.js";
+import { insertHeaderCategoryData } from "../../components/header/header-category.js";
+import { drawFooter } from "../../components/footer/footer.js";
 import * as Api from "../../apiUtil";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 
 // Header 삽입
-// drawHeaderMenu();
-// insertHeaderCategoryData();
+drawHeaderMenu();
+insertHeaderCategoryData();
 
-// //Footer 삽입
-// drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
+//Footer 삽입
+drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 // 마이페이지 사이드메뉴 템플릿 삽입
 drawMyNav();
@@ -66,6 +66,7 @@ async function getUserData() {
       await Api.patch("/api/users", "", changedData);
       console.log(`수정사항: ${changedData}`);
       alert("수정된 정보가 저장되었습니다.");
+      location.reload();
     } catch (err) {
       alert(`오류가 발생하였습니다: ${err}`);
     }
