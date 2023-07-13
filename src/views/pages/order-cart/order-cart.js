@@ -188,7 +188,7 @@ async function insertCartData() {
     if (Products.length === 0) {
       alert("구매할 제품이 없습니다. 제품을 선택해 주세요.");
     } else {
-      location.href = `/order/progerss`;
+      location.href = `/order/progress`;
     }
   });
 }

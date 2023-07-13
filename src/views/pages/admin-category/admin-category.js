@@ -48,7 +48,7 @@ async function makeCategoryList() {
     <td>${data[i].subcategoryName}</td>
     <td>${data[i].productQauntity}</td>
     <td id="${data[i].categoryId}">
-      <button type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
+      <button id="${data[i].subcategoryId}"type="button" class="btn btn-dark btn-sm mod-category-btn" data-bs-toggle="modal" data-bs-target="#modCategoryModal">
       수정
       </button>
       <button id="${data[i].subcategoryId}"type="button" class="btn btn-dark btn-sm del-category-btn">삭제</button>
@@ -59,15 +59,28 @@ async function makeCategoryList() {
     temp.appendChild(categoryTableBody);
   }
 
-  //수정 버튼 작동 함수
-  modifyCategory();
+  //추가 버튼 작동 함수
+  addCategory();
   //삭제 버튼 작동 함수
   deleteCategory();
+  //수정 버튼 작동 함수
+  modifyCategory();
 }
 
 // 카테고리 추가 함수
 function addCategory() {
-  // const addCategoryBtn = document.querySelector("#add-category");
+  const addCatBtn = document.querySelector("#add-category-btn");
+  const addCatInput = document.querySelector(".add-category-input");
+  const addSubCatInput = document.querySelector(".add-subcategory-input");
+
+  addCatBtn.addEventListener("click", async () => {
+    const addCatData = {
+      categoryName: addCatInput.value,
+      subcategoryName: addSubCatInput.value,
+    };
+    await apiUtil.post("/api/admin/categories", addCatData);
+    location.reload();
+  });
 }
 
 // 카테고리 삭제 함수
@@ -87,18 +100,36 @@ function deleteCategory() {
         }
       })
     );
-    // confirm >> true/false 받아서 작업필요
-    // 추후 데이터 삭제 관련 로직 필요
   }
 }
 
 // 카테고리 수정 함수
 function modifyCategory() {
   const modCategoryBtn = document.querySelectorAll(".mod-category-btn");
+  const submitModalBtn = document.querySelector("#submit-mod-category-btn");
+  const modCatInput = document.querySelector(".mod-category-input");
+  const modSubCatInput = document.querySelector(".mod-subcategory-input");
+
   if (modCategoryBtn && Array.from(modCategoryBtn).length) {
     modCategoryBtn.forEach((btn) =>
       btn.addEventListener("click", () => {
         console.log("modCategoryBtn clicked");
+        // 모달 제출버튼 event
+        submitModalBtn.addEventListener("click", async () => {
+          const patchCatData = {
+            changeCategoryName: modCatInput.value,
+            changeSubcategoryName: modSubCatInput.value,
+            subcategoryId: btn.id,
+          };
+          // console.log(patchCatData);
+          // console.log("cateID:", btn.parentElement.id);
+          await apiUtil.patch(
+            "/api/admin/categories",
+            btn.parentElement.id,
+            patchCatData
+          );
+          location.reload();
+        });
       })
     );
   }
