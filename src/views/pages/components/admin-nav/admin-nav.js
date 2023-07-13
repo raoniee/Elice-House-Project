@@ -6,23 +6,25 @@ const makeAdminNav = () => {
   });
   // admin navbar 생성
   const navContainer = document.querySelector("#nav-container");
-  let adminNavTemplate = `<nav id="side-bar" class="nav flex-column">
-    <a id="order-btn" class="nav-link" aria-current="page" href="#"
-      >주문 관리</a
-    >
-    <a
-      id="product-btn"
-      class="nav-link"
-      href="#"
-      >상품 관리</a
-    >
-    <a
-      id="category-btn"
-      class="nav-link"
-      href="#"
-      >카테고리 관리</a
-    >
-  </nav>`;
+  let adminNavTemplate = `
+    <nav id="side-bar" class="nav flex-column">
+      <a id="order-btn" class="nav-link" aria-current="page" href="#"
+        >주문 관리</a
+      >
+      <a
+        id="product-btn"
+        class="nav-link"
+        href="#"
+        >상품 관리</a
+      >
+      <a
+        id="category-btn"
+        class="nav-link"
+        style="white-space: nowrap;"
+        href="#"
+        >카테고리 관리</a
+      >
+    </nav>`;
 
   navContainer.innerHTML = adminNavTemplate;
 };

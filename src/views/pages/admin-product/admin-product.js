@@ -63,7 +63,7 @@ const makeProductList = async () => {
         <td>
           <button id="${
             data[i]._id
-          }"type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
+          }"type="button" class="btn btn-dark btn-sm mod-product-btn mb-1" data-bs-toggle="modal" data-bs-target="#modProductModal">
           수정
           </button>
           <button id="${
