@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { error } from "console";
+import moment from "moment-timezone";
 
 class UserService {
   async addUser(userRegist) {
@@ -20,6 +21,10 @@ class UserService {
 
     const UserInfo = { name, email, password: hashedPassword };
     const addNewUser = await userModel.create(UserInfo);
+
+    // 로컬 Date 업데이트 
+    const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+    await userModel.update(addNewUser._id, {date: postDate});
 
     return addNewUser;
   }

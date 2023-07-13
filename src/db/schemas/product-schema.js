@@ -51,6 +51,11 @@ const productSchema = new Schema(
       required: true,
       default: "판매준비중",
     },
+    // 로컬 Date 저장
+    date: {
+      type: String,
+      required: false,
+    }
   },
   {
     collection: "products",

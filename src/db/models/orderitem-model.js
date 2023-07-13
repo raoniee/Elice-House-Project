@@ -33,6 +33,17 @@ class OrderitemModel {
     const deleteData = await OrderItem.deleteMany({ orderId });
     return deleteData;
   }
+
+  async update(orderItemId, toUpdate) {
+    const updateInfo = await OrderItem.findOneAndUpdate(
+      { _id: orderItemId },
+      toUpdate,
+      {
+        returnOriginal: false,
+      }
+    );
+    return updateInfo;
+  }
 }
 
 const orderitemModel = new OrderitemModel();

@@ -33,8 +33,8 @@ class ProductModel {
   }
 
   // product 정보 수정
-  async update(_id, toUpdate) {
-    const updateInfo = await Product.findOneAndUpdate({ _id }, toUpdate, {
+  async update(productId, toUpdate) {
+    const updateInfo = await Product.findOneAndUpdate({ _id: productId }, toUpdate, {
       returnOriginal: false,
     });
     return updateInfo;

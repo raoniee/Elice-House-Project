@@ -43,6 +43,11 @@ const orderSchema = new Schema(
       type: String,
       required: true,
       default: "선택 안함",
+    },
+    // 로컬 Date 저장
+    date: {
+      type: String,
+      required: false,
     }
 
   },

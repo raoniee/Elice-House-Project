@@ -11,7 +11,12 @@ const categorySchema = new Schema(
     subcategory : [{
       type : Schema.Types.ObjectId,
       ref : 'subcategories'
-     }]
+     }],
+    // 로컬 Date 저장
+    date: {
+      type: String,
+      required: false,
+    }
   },
   {
     collection: "categories",
