@@ -39,7 +39,9 @@ const OrderController = {
 
   async getUserOrder(req, res, next) {
     try {
-      const userId = req.params.userId;
+      const userId = req.body.userId;
+      console.log(userId);
+
       const userOrderInfo = await orderService.getOrder(userId);
 
       res.status(200).json(userOrderInfo);
@@ -195,6 +197,5 @@ const OrderController = {
     }
   },
 };
-
 
 export { OrderController };
