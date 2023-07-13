@@ -24,7 +24,9 @@
   </head>
   <body>
     <main>
-      <div id="admin-title">관리자 페이지</div>
+      <div id="admin-title">
+        관리자 페이지<span style="font-size: 18px"> - 상품 관리</span>
+      </div>
 
       <div id="main-container">
         <div id="nav-container">
@@ -36,7 +38,6 @@
         </div>
         <div id="modal-container">
           <!-- 상품 추가 모달 시작 -->
-
           <div
             class="modal fade"
             id="addProductModal"
@@ -50,16 +51,15 @@
                   <h1 class="modal-title fs-5" id="exampleModalLabel">
                     상품 추가
                   </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
                 </div>
                 <div class="modal-body">
                   <!-- 모달 내용 시작 -->
-                  <form id="addProductForm">
+                  <form
+                    id="addProductForm"
+                    action="/api/admin/products"
+                    method="POST"
+                    enctype="multipart/form-data"
+                  >
                     <div class="row mb-3">
                       <label for="categoryName" class="col-sm-3 col-form-label"
                         >카테고리</label
@@ -128,7 +128,7 @@
                       </div>
                     </div>
                     <div class="row mb-3">
-                      <label for="productImage" class="col-sm-3 col-form-label"
+                      <label for="imageUrl" class="col-sm-3 col-form-label"
                         >이미지</label
                       >
                       <div class="col-sm-8">
@@ -136,7 +136,7 @@
                           type="file"
                           class="form-control"
                           id="imageUrl"
-                          name="image"
+                          name="imageUrl"
                         />
                       </div>
                     </div>
@@ -172,6 +172,7 @@
                 </div>
                 <div class="modal-footer">
                   <button
+                    id="cancel-modal"
                     type="button"
                     class="btn btn-secondary btn-sm"
                     data-bs-dismiss="modal"
@@ -205,12 +206,6 @@
                   <h1 class="modal-title fs-5" id="exampleModalLabel">
                     상품 수정
                   </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
                 </div>
                 <div class="modal-body">
                   <!-- 모달 내용 시작 -->
@@ -289,7 +284,7 @@
                           type="text"
                           class="form-control"
                           id="imageUrl"
-                          name="imageUrl"
+                          name="image"
                         />
                       </div>
                     </div>

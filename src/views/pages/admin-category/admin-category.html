@@ -24,7 +24,9 @@
   </head>
   <body>
     <main>
-      <div id="admin-title">관리자 페이지</div>
+      <div id="admin-title">
+        관리자 페이지<span style="font-size: 18px"> - 카테고리 관리</span>
+      </div>
 
       <div id="main-container">
         <div id="nav-container">
@@ -48,12 +50,6 @@
                   <h1 class="modal-title fs-5" id="exampleModalLabel">
                     카테고리 추가
                   </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
                 </div>
                 <div class="modal-body">
                   <!-- 모달 내용 시작 -->
@@ -88,7 +84,7 @@
                 <div class="modal-footer">
                   <button
                     type="button"
-                    class="btn btn-secondary btn-sm"
+                    class="btn btn-secondary btn-sm cancel-btn"
                     data-bs-dismiss="modal"
                   >
                     취소
@@ -119,16 +115,10 @@
                   <h1 class="modal-title fs-5" id="exampleModalLabel">
                     카테고리 수정
                   </h1>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
                 </div>
                 <div class="modal-body">
                   <!-- 모달 내용 시작 -->
-                  <form>
+                  <form id="modCategoryForm">
                     <div class="row mb-3">
                       <label for="inputEmail3" class="col-sm-3 col-form-label"
                         >카테고리</label
@@ -159,7 +149,7 @@
                 <div class="modal-footer">
                   <button
                     type="button"
-                    class="btn btn-secondary btn-sm"
+                    class="btn btn-secondary btn-sm cancel-btn"
                     data-bs-dismiss="modal"
                   >
                     취소

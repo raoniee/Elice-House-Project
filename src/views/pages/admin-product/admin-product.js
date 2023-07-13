@@ -63,7 +63,7 @@ const makeProductList = async () => {
         <td>
           <button id="${
             data[i]._id
-          }"type="button" class="btn btn-dark btn-sm mod-product-btn" data-bs-toggle="modal" data-bs-target="#modProductModal">
+          }"type="button" class="btn btn-dark btn-sm mod-product-btn mb-1" data-bs-toggle="modal" data-bs-target="#modProductModal">
           수정
           </button>
           <button id="${
@@ -90,6 +90,7 @@ function addProduct() {
   //모달 데이터 담을 object
 
   submitBtn.addEventListener("click", async () => {
+    // const imageFile = document.querySelector("#imageUrl").files[0];
     const addForm = document.getElementById("addProductForm");
     const formData = new FormData(addForm);
     const addProductData = {};
@@ -97,10 +98,11 @@ function addProduct() {
       addProductData[key] = value;
     }
     // 모달 submit 클릭 확인
-    console.log("submit clicked");
-    console.log(formData.entries());
+    console.log(addProductData);
+    // console.log(formData);
     // 정보 post
-    // await apiUtil.post("/api/admin/products", addProductData);
+    await apiUtil.post("/api/admin/products", addProductData);
+    location.reload;
   });
 }
 
@@ -125,6 +127,7 @@ function modifyProduct() {
           }
           console.log(modProductData);
           await apiUtil.patch("/api/admin/products", btn.id, modProductData);
+          location.reload();
         });
       })
     );

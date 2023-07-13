@@ -28,7 +28,7 @@ productRouter.get("/products/detail/:productId", ProductController.getProdById);
 
 // 상품 수정
 productRouter.patch(
-  "/products/admin/products/:productId",
+  "/admin/products/:productId",
   ProductController.updateProduct
 );
 
