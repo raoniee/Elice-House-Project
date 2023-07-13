@@ -97,6 +97,7 @@ async function insertProductData() {
       };
       Products.push(newProductObj);
       saveProducts();
+      alert("장바구니에 추가되었습니다!");
       //console.log(Products);
     }
   });
@@ -105,7 +106,7 @@ async function insertProductData() {
     getProducts();
     if (Products.map((p) => p.id).includes(product._id)) {
       // 이미 로컬스토리지에 담겨있다면 바로 구매페이지로 이동
-      window.location.href = "/order/progerss";
+      window.location.href = "/order/progress";
     } else {
       // 아니라면 로컬스토리지에 담고 구매페이지로 이동
       function saveProducts() {
@@ -123,7 +124,7 @@ async function insertProductData() {
       };
       Products.push(newProductObj);
       saveProducts();
-      window.location.href = "/order/progerss";
+      window.location.href = "/order/progress";
     }
   });
 }
