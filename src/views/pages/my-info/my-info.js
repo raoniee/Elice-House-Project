@@ -25,7 +25,6 @@ const deleteInfoBtn = document.querySelector("#delete-info-btn");
 
 async function getUserData() {
   const userData = await Api.get("/api/users");
-  console.log(localStorage.getItem("token"));
 
   const { name, email } = userData;
   userData.password = "";
@@ -78,11 +77,16 @@ async function getUserData() {
     e.preventDefault();
 
     try {
-      await Api.delete("/api/users", _id);
+      await fetch("/api/users", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
-      // 삭제 성공
       alert("탈퇴되었습니다.");
-      sessionStorage.removeItem("token");
+      localStorage.removeItem("token");
       window.location.href = "/";
     } catch (err) {
       alert(`오류가 발생하였습니다: ${err}`);

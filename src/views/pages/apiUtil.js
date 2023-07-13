@@ -99,7 +99,7 @@ async function del(endpoint, params = "", data = {}) {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: bodyData,
   });
