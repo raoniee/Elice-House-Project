@@ -1,28 +1,5 @@
 //라온님
-
-// headercategory 템플릿
-// export const drawHeaderCategory1 = () => {
-//   let headerTemplate = `
-//     <nav class="py-2 bg-light border-bottom">
-//       <div class="container">
-//         <ul class="nav nav-bottom justify-content-center nav-pills" style="list-style: none;">
-//         </ul>
-//       </div>
-//     </nav>
-//     `;
-//   // .header 부분에 삽입
-//   const headerTag = document.querySelector(".header");
-//   headerTag.innerHTML = headerTemplate;
-// };
-
-// Api
-async function getHeaderCategoryData() {
-  let headercategorydata = await fetch("/api/categories").then((res) =>
-    res.json()
-  );
-
-  return headercategorydata;
-}
+import * as Api from "../../apiUtil";
 
 // 로직
 const result = document.querySelector(".nav-bottom");
@@ -31,8 +8,9 @@ const result = document.querySelector(".nav-bottom");
 
 export async function insertHeaderCategoryData() {
   //api 코드 입력
-  const CategoryData = await getHeaderCategoryData();
+  //const CategoryData = await getHeaderCategoryData();
   //console.log(CategoryData);
+  const CategoryData = await Api.get(`/api/categories`);
 
   for (let i = 0; i < CategoryData.length; i++) {
     result.insertAdjacentHTML(
@@ -59,7 +37,7 @@ export async function insertHeaderCategoryData() {
       result1.insertAdjacentHTML(
         "beforeend",
         `<li>
-      <a class="dropdown-item" href="/product/list?categoryid=${CategoryData[i].subcategory[j].subcategoryId}">
+      <a class="dropdown-item" href="/product/list?categoryId=${CategoryData[i].subcategory[j].subcategoryId}">
       ${CategoryData[i].subcategory[j].subcategoryName}
       </a>
       </li>`
