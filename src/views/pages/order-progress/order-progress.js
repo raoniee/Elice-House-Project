@@ -110,6 +110,17 @@ async function doCheckout() {
   }
 
   try {
+    // const orderDate = await Api.post("/api/orders",{
+    //   userName,
+    //   userPhoneNumber,
+    //   addrNum
+    //   roughAddr,
+    //   detailAddr,
+    //   deliReq,
+    //   productId,
+    //   quantity,
+    // };)
+
     const orderDate = {
       userName,
       userPhoneNumber,
