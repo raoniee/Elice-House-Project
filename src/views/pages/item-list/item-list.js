@@ -47,7 +47,6 @@ async function addProductItemsToContainer() {
     );
     const ItemListCard = document.querySelector(`#a${_id}`);
     ItemListCard.addEventListener("click", () => {
-      console.log("아이템클릭하기");
       location.href = `/product/detail?CategoryId=${categoryId}&&SubCategoryId=${subcategoryId}&&id=${_id}`;
     });
   });
