@@ -91,17 +91,15 @@ function addProduct() {
   submitBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     // input value 변수 정의
-    const categoryName = document.querySelector("#categoryName").value;
-    const subcategoryName = document.querySelector("#subcategoryName").value;
-    const productName = document.querySelector("#productName").value;
-    const brandName = document.querySelector("#brand").value;
-    const price = document.querySelector("#price").value;
-    const imageFile = document.querySelector("#imageUrl").files[0];
-    const saleStatus = document.querySelector("#saleStatus").value;
-    const description = document.querySelector("#description").value;
+    const categoryName = document.querySelector("#addCategoryName").value;
+    const subcategoryName = document.querySelector("#addSubcategoryName").value;
+    const productName = document.querySelector("#addProductName").value;
+    const brandName = document.querySelector("#addBrand").value;
+    const price = document.querySelector("#addPrice").value;
+    const imageFile = document.querySelector("#addImageUrl").files[0];
+    const description = document.querySelector("#addDescription").value;
 
     //FormData 생성
-    const addForm = document.getElementById("addProductForm");
     const formData = new FormData();
 
     //modal input data를 formData에 추가
@@ -111,7 +109,6 @@ function addProduct() {
     formData.append("brand", brandName);
     formData.append("price", price);
     formData.append("image", imageFile);
-    formData.append("saleStatus", saleStatus);
     formData.append("description", description);
 
     // 모달 formData 확인
@@ -119,37 +116,37 @@ function addProduct() {
     // 정보 post
     const result = await apiUtil.post("/api/admin/products", formData, true);
     console.log(result);
-    // location.reload();
+    // 새로고침
     location.reload();
   });
 }
 
 // 상품 수정 함수
 function modifyProduct() {
-  const modProductBtn = document.querySelectorAll(".mod-product-btn");
+  const modProductBtns = document.querySelectorAll(".mod-product-btn");
   const submitModalBtn = document.querySelector("#submit-mod-product-btn");
 
   // 상품 수정 list 존재 확인
-  if (modProductBtn && Array.from(modProductBtn).length) {
-    modProductBtn.forEach((btn) =>
+  if (modProductBtns && Array.from(modProductBtns).length) {
+    modProductBtns.forEach((btn) =>
       btn.addEventListener("click", () => {
         console.log("modProductBtn clicked");
         // 모달 제출버튼 event
         submitModalBtn.addEventListener("click", async (e) => {
           e.preventDefault();
           // input value 변수 정의
-          const categoryName = document.querySelector("#categoryName").value;
-          const subcategoryName =
-            document.querySelector("#subcategoryName").value;
-          const productName = document.querySelector("#productName").value;
-          const brandName = document.querySelector("#brand").value;
-          const price = document.querySelector("#price").value;
-          const imageFile = document.querySelector("#imageUrl").files[0];
-          const saleStatus = document.querySelector("#saleStatus").value;
-          const description = document.querySelector("#description").value;
+          const categoryName = document.querySelector("#modCategoryName").value;
+          const subcategoryName = document.querySelector(
+            "#modSubcategoryName"
+          ).value;
+          const productName = document.querySelector("#modProductName").value;
+          const brandName = document.querySelector("#modBrand").value;
+          const price = document.querySelector("#modPrice").value;
+          const imageFile = document.querySelector("#modImageUrl").files[0];
+          const saleStatus = document.querySelector("#modSaleStatus").value;
+          const description = document.querySelector("#modDescription").value;
 
           //FormData 생성
-          const addForm = document.getElementById("addProductForm");
           const formData = new FormData();
 
           //modal input data를 formData에 추가
@@ -167,11 +164,11 @@ function modifyProduct() {
           // 정보 post
           const result = await apiUtil.patch(
             "/api/admin/products",
+            btn.id,
             formData,
             true
           );
           console.log(result);
-          // location.reload();
           // location.reload();
         });
       })
