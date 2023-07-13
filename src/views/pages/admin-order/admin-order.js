@@ -107,7 +107,11 @@ function changeDeliverState() {
       select.addEventListener("change", async () => {
         const patchOrderData = { state: select.value };
         console.log(select.id, patchOrderData);
-        await apiUtil.patch("/api/admin/orders", select.id, patchOrderData);
+        await apiUtil.adminPatch(
+          "/api/admin/orders",
+          select.id,
+          patchOrderData
+        );
         location.reload();
       })
     );
