@@ -7,9 +7,9 @@ class OrderService {
   async addOrder(newOrder, newOrderitem) {
     const createOrder = await orderModel.create(newOrder);
 
-    // 로컬 Date 업데이트 
-    const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
-    await orderModel.update(createOrder._id, {date: postDate});
+    // 로컬 Date 업데이트
+    const postDateOrder = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
+    await orderModel.update(createOrder._id, { date: postDateOrder });
 
     let createOrderitems = [];
     let result = [];
@@ -41,9 +41,9 @@ class OrderService {
         createOrderitems[cnt].quantity = quantity;
         const addOrderIfo = await orderitemModel.create(createOrderitems[cnt]);
 
-        // 로컬 Date 업데이트 
+        // 로컬 Date 업데이트
         const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
-        await orderitemModel.update(addOrderIfo._id, {date: postDate});
+        await orderitemModel.update(addOrderIfo._id, { date: postDate });
 
         if (addOrderIfo) {
           result.push(addOrderIfo);
@@ -63,16 +63,15 @@ class OrderService {
     const orders = await orderModel.getOrder(userId);
     // console.log("orders :", orders);
     const results = [];
-  
 
     for (const ord of orders) {
       const ordId = ord._id;
       let result = {};
-      console.log("ordId : ", ordId)
+      console.log("ordId : ", ordId);
 
       result.orderId = ordId;
       result.userPhoneNumber = ord.userPhoneNumber;
-      result.orderDate = String(ord.createdAt).slice(0, 15);
+      result.orderDate = String(ord.date).slice(0, 10);
       result.state = ord.state;
       result.addrNum = ord.addrNum;
       result.roughAddr = ord.roughAddr;
@@ -112,11 +111,11 @@ class OrderService {
 
     for (const ord of orders) {
       const result = {};
-      const createdAt = ord.createdAt.toString();
+      const date = ord.date.toString();
       const ordId = ord._id;
       result.createdAt = ord.createdAt;
-      result.orderDate = String(ord.createdAt).slice(0, 15);
-      result.orderTime = String(ord.createdAt).slice(16, 21);
+      result.orderDate = String(ord.date).slice(0, 10);
+      result.orderTime = String(ord.date).slice(11, 16);
       result.orderId = ord._id;
       result.state = ord.state;
       result.userName = ord.userName;
@@ -133,7 +132,6 @@ class OrderService {
         const productImgs = [];
         const quantitys = [];
         const prices = [];
-
 
         for (const ordItem of ordItems) {
           productIds.push(ordItem.productId);
