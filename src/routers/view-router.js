@@ -19,7 +19,7 @@ viewsRouter.use("/admin/category", serveStatic("admin-category"));
 viewsRouter.use("/mypage/order", serveStatic("my-order"));
 viewsRouter.use("/mypage/info", serveStatic("my-info"));
 viewsRouter.use("/order/cart", serveStatic("order-cart"));
-viewsRouter.use("/order/progerss", serveStatic("order-progress"));
+viewsRouter.use("/order/progress", serveStatic("order-progress"));
 viewsRouter.use("/order/complete", serveStatic("order-complete"));
 viewsRouter.use("/apiUtil", serveStatic("apiUtil.js"));
 
