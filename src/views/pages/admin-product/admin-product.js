@@ -87,22 +87,40 @@ const makeProductList = async () => {
 // 상품 추가 함수
 function addProduct() {
   const submitBtn = document.querySelector("#submitBtn");
-  //모달 데이터 담을 object
 
-  submitBtn.addEventListener("click", async () => {
-    // const imageFile = document.querySelector("#imageUrl").files[0];
+  submitBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    // input value 변수 정의
+    const categoryName = document.querySelector("#categoryName").value;
+    const subcategoryName = document.querySelector("#subcategoryName").value;
+    const productName = document.querySelector("#productName").value;
+    const brandName = document.querySelector("#brand").value;
+    const price = document.querySelector("#price").value;
+    const imageFile = document.querySelector("#imageUrl").files[0];
+    const saleStatus = document.querySelector("#saleStatus").value;
+    const description = document.querySelector("#description").value;
+
+    //FormData 생성
     const addForm = document.getElementById("addProductForm");
-    const formData = new FormData(addForm);
-    const addProductData = {};
-    for (let [key, value] of formData.entries()) {
-      addProductData[key] = value;
-    }
-    // 모달 submit 클릭 확인
-    console.log(addProductData);
-    // console.log(formData);
+    const formData = new FormData();
+
+    //modal input data를 formData에 추가
+    formData.append("categoryName", categoryName);
+    formData.append("subcategoryName", subcategoryName);
+    formData.append("productName", productName);
+    formData.append("brand", brandName);
+    formData.append("price", price);
+    formData.append("image", imageFile);
+    formData.append("saleStatus", saleStatus);
+    formData.append("description", description);
+
+    // 모달 formData 확인
+    console.log(Array.from(formData.values()));
     // 정보 post
-    await apiUtil.post("/api/admin/products", addProductData);
-    location.reload;
+    const result = await apiUtil.post("/api/admin/products", formData, true);
+    console.log(result);
+    // location.reload();
+    location.reload();
   });
 }
 
@@ -117,17 +135,44 @@ function modifyProduct() {
       btn.addEventListener("click", () => {
         console.log("modProductBtn clicked");
         // 모달 제출버튼 event
-        submitModalBtn.addEventListener("click", async () => {
-          // 상품 수정 모달의 input value 추출
-          const modForm = document.getElementById("modProductForm");
-          const formData = new FormData(modForm);
-          const modProductData = {};
-          for (let [key, value] of formData.entries()) {
-            modProductData[key] = value;
-          }
-          console.log(modProductData);
-          await apiUtil.patch("/api/admin/products", btn.id, modProductData);
-          location.reload();
+        submitModalBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          // input value 변수 정의
+          const categoryName = document.querySelector("#categoryName").value;
+          const subcategoryName =
+            document.querySelector("#subcategoryName").value;
+          const productName = document.querySelector("#productName").value;
+          const brandName = document.querySelector("#brand").value;
+          const price = document.querySelector("#price").value;
+          const imageFile = document.querySelector("#imageUrl").files[0];
+          const saleStatus = document.querySelector("#saleStatus").value;
+          const description = document.querySelector("#description").value;
+
+          //FormData 생성
+          const addForm = document.getElementById("addProductForm");
+          const formData = new FormData();
+
+          //modal input data를 formData에 추가
+          formData.append("categoryName", categoryName);
+          formData.append("subcategoryName", subcategoryName);
+          formData.append("productName", productName);
+          formData.append("brand", brandName);
+          formData.append("price", price);
+          formData.append("image", imageFile);
+          formData.append("saleStatus", saleStatus);
+          formData.append("description", description);
+
+          // 모달 formData 확인
+          console.log(Array.from(formData.values()));
+          // 정보 post
+          const result = await apiUtil.patch(
+            "/api/admin/products",
+            formData,
+            true
+          );
+          console.log(result);
+          // location.reload();
+          // location.reload();
         });
       })
     );
