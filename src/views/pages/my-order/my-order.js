@@ -23,14 +23,16 @@ const phoneNumberInput = document.querySelector("#phone-number");
 const postcodeInput = document.querySelector("#postcode");
 const roadAddressInput = document.querySelector("#roadAddress");
 const detailAddressInput = document.querySelector("#detailAddress");
-const deliveryRequestSelect = document.querySelector("#delivery-request");
 const searchAddressBtn = document.querySelector("#search-address-btn");
+const deliveryRequestSelect = document.querySelector("#delivery-request");
 
 searchAddressBtn.addEventListener("click", searchAddress);
 
-let orderIdToDelete;
 async function getOrders() {
+  //주문 데이터 가져오기
   const orders = await Api.get("/api/orders");
+
+  //주문 내역 리스트, 주문 수정 창에 기존 데이터 입력
   for (const order of orders) {
     const {
       orderDate,
@@ -79,7 +81,7 @@ async function getOrders() {
               </td>
               <td class="py-3 align-middle">
                 <div style="display:none" class="changeable-order">
-                  <button type="button" id="change-${orderId}" class="btn btn-outline-primary btn-sm change-order-btn" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
+                  <button type="button" id="change-${orderId}" class="btn btn-outline-primary btn-sm change-order-btn">주문 수정</button>
                   <button type="button" id="${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
                 </div>
                 <span style="display:none" class="unchangeable-order">변경 불가</span>
@@ -101,6 +103,7 @@ async function getOrders() {
     changeOrderBtn.addEventListener("click", changeOrder);
     function changeOrder(e) {
       e.preventDefault();
+      openModal();
 
       phoneNumberInput.value = userPhoneNumber;
       postcodeInput.value = addrNum;
@@ -108,95 +111,83 @@ async function getOrders() {
       detailAddressInput.value = detailAddr;
       deliveryRequestSelect.value = deliReq;
 
-      return saveOrderChange(this.id.slice(7));
+      let changedOrder = {
+        orderId: this.id.slice(7),
+        userPhoneNumber,
+        addrNum,
+        roughAddr,
+        detailAddr,
+        deliReq,
+      };
+
+      return saveOrderChange(changedOrder);
     }
 
-    //수정사항 체크
-    // function checkOrderChange() {
-    //   const changedData = {};
-    //   const phoneNumber = phoneNumberInput.value;
-    //   const postcode = postcodeInput.value;
-    //   const roadAddress = roadAddressInput.value;
-    //   const detailAddress = detailAddressInput.value;
-    //   const deliveryRequest = deliveryRequestSelect.value;
-
-    //   if (phoneNumber !== userPhoneNumber) {
-    //     changedData.userPhoneNumber = phoneNumber;
-    //   }
-
-    //   if (postcode !== addrNum) {
-    //     changedData.addrNum = postcode;
-    //   }
-    //   if (roadAddress !== roughAddr) {
-    //     changedData.roughAddr = roadAddress;
-    //   }
-    //   if (detailAddress !== detailAddr) {
-    //     changedData.detailAddr = detailAddress;
-    //   }
-
-    //   if (deliveryRequest !== deliReq) {
-    //     changedData.deliReq = deliveryRequest;
-    //   }
-
-    //   if (Object.keys(changedData).length === 0) {
-    //     return alert("수정된 정보가 없습니다");
-    //     window.location.reload();
-    //   }
-
-    //   return order;
-    // }
-
-    //주문 수정&삭제 실행
+    //주문 취소 실행
     cancelOrder();
-  } //////for end//////
+  }
 
-  //수정 저장
+  //주문 수정 사항 저장
   const saveOrderChangeBtn = document.querySelector("#save-order-change-btn");
-  function saveOrderChange(orderId) {
+  const cancelChangeBtn = document.querySelector("#cancel-change-btn");
+  async function saveOrderChange(changedOrder) {
+    const {
+      orderId,
+      userPhoneNumber,
+      addrNum,
+      roughAddr,
+      detailAddr,
+      deliReq,
+    } = changedOrder;
+
     saveOrderChangeBtn.addEventListener("click", async () => {
-      const orders = await Api.get("/api/orders");
-      console.log(orders);
+      const changedData = {};
+      const newPhoneNumber = phoneNumberInput.value;
+      const newPostcode = postcodeInput.value;
+      const newRoadAddress = roadAddressInput.value;
+      const newDetailAddress = detailAddressInput.value;
+      const newDeliveryRequest = deliveryRequestSelect.value;
+
+      if (!newPhoneNumber || !newDetailAddress) {
+        return alert("배송지 정보를 모두 입력해 주세요.");
+      }
+
+      if (!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(newPhoneNumber)) {
+        return alert("유효하지 않은 전화번호입니다.");
+      }
+
+      if (newPhoneNumber !== userPhoneNumber) {
+        changedData.userPhoneNumber = newPhoneNumber;
+      }
+
+      if (newPostcode !== addrNum) {
+        changedData.addrNum = newPostcode;
+      }
+      if (newRoadAddress !== roughAddr) {
+        changedData.roughAddr = newRoadAddress;
+      }
+      if (newDetailAddress !== detailAddr) {
+        changedData.detailAddr = newDetailAddress;
+      }
+
+      if (newDeliveryRequest !== deliReq) {
+        changedData.deliReq = newDeliveryRequest;
+      }
+
+      if (Object.keys(changedData).length === 0) {
+        alert("수정된 정보가 없습니다");
+        window.location.reload();
+      } else {
+        await Api.patch("/api/orders", orderId, changedData);
+        alert("수정 사항이 저장되었습니다.");
+        window.location.reload();
+      }
     });
-    // const changedData = {};
-    // const phoneNumber = phoneNumberInput.value;
-    // const postcode = postcodeInput.value;
-    // const roadAddress = roadAddressInput.value;
-    // const detailAddress = detailAddressInput.value;
-    // const deliveryRequest = deliveryRequestSelect.value;
 
-    // if (phoneNumber !== userPhoneNumber) {
-    //   changedData.userPhoneNumber = phoneNumber;
-    // }
-
-    // if (postcode !== addrNum) {
-    //   changedData.addrNum = postcode;
-    // }
-    // if (roadAddress !== roughAddr) {
-    //   changedData.roughAddr = roadAddress;
-    // }
-    // if (detailAddress !== detailAddr) {
-    //   changedData.detailAddr = detailAddress;
-    // }
-
-    // if (deliveryRequest !== deliReq) {
-    //   changedData.deliReq = deliveryRequest;
-    // }
-
-    // if (Object.keys(changedData).length === 0) {
-    //   return alert("수정된 정보가 없습니다");
-    //   window.location.reload();
-    // }
-    // console.log(`/api/orders/${orderId}`);
-
-    // // 수정 사항 업데이트
-    // try {
-    //   // console.log(`/api/orders/${orderId}`);
-    //   // await Api.patch("/api/orders", orderId, changedData);
-    //   // alert("수정 사항이 저장되었습니다.");
-    //   // window.location.reload();
-    // } catch (err) {
-    //   alert(`오류가 발생하였습니다: ${err}`);
-    // }
+    cancelChangeBtn.addEventListener("click", async () => {
+      closeModal();
+      window.location.reload();
+    });
   }
 
   //주문 취소
@@ -213,9 +204,9 @@ async function getOrders() {
             await Api.delete("/api/orders", btn.id);
             alert("주문이 취소되었습니다.");
             // 삭제 후 새로고침으로 삭제확인
-            location.reload();
+            window.location.reload();
           } else {
-            console.log("뒤로가기");
+            window.location.reload();
           }
         })
       );
@@ -223,7 +214,16 @@ async function getOrders() {
   }
 }
 
-// //주소 찾기
+function openModal() {
+  document.querySelector("#changeOrderModal").style.display = "block";
+  document.body.style.overflow = "hidden";
+}
+function closeModal() {
+  document.querySelector("#changeOrderModal").style.display = "none";
+  document.body.style.overflow = "auto";
+}
+
+//주소 찾기
 function searchAddress() {
   new daum.Postcode({
     oncomplete: function (data) {
