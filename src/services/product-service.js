@@ -153,23 +153,23 @@ class ProductService {
       const productSubCatId = await subcategoryModel.findByName(
         subcategoryName
       );
-    let isSubCategoryExist = false;
+      let isSubCategoryExist = false;
 
-    for (const childCatId of childCats) {
-      if (childCatId.toString() == productSubCatId._id.toString()) {
-        isSubCategoryExist = true;
-        break;
+      for (const childCatId of childCats) {
+        if (childCatId.toString() == productSubCatId._id.toString()) {
+          isSubCategoryExist = true;
+          break;
+        }
+      }
+
+      toUpdate.categoryId = parentCat._id;
+      toUpdate.subcategoryId = productSubCatId._id;
+
+      // 카테고리가 존재하는지 확인
+      if (!isSubCategoryExist) {
+        throw new Error(`해당 카테고리에 존재하지 않는 서브카테고리입니다.`);
       }
     }
-
-    toUpdate.categoryId = parentCat._id;
-    toUpdate.subcategoryId = productSubCatId._id;
-
-    // 카테고리가 존재하는지 확인
-    if (!isSubCategoryExist) {
-      throw new Error(`해당 카테고리에 존재하지 않는 서브카테고리입니다.`);
-    }
-  }
     const checkUpdate = await productModel.update(productId, toUpdate);
 
     return checkUpdate;

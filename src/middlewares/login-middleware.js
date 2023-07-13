@@ -14,7 +14,6 @@ function checkLogin(req, res, next) {
   const jwtInfo = jwt.verify(token, key);
 
   req.body.userId = jwtInfo.userId;
-
   next();
 }
 

@@ -31,7 +31,7 @@ class UserService {
 
   // 로그인 아이디 비밀번호 확인 및 jwt 토큰 생성
   async giveToken(userIdPass) {
-    const { email, password } = userIdPass;
+    const { email, password, isAdmin } = userIdPass;
 
     const user = await userModel.findByEmail({ email });
 
@@ -47,8 +47,10 @@ class UserService {
     }
 
     const key = process.env.KEY;
-    const token = jwt.sign({ email, userId: user._id }, key);
-    // 관리자 페이지 isAdmin: user.isAdmin
+    const token = jwt.sign(
+      { email, userId: user._id, isAdmin: user.isAdmin },
+      key
+    );
 
     return { token, isAdmin };
   }
@@ -70,10 +72,10 @@ class UserService {
   // 사용자 정보 수정
   async updateInfo(userId, toUpdate) {
     const password = toUpdate.password;
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      toUpdate.passowrd = hashedPassword;
-    }
+    delete toUpdate.password;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    toUpdate.password = hashedPassword;
 
     const checkUpdate = await userModel.update(userId, toUpdate);
 
@@ -94,7 +96,7 @@ class UserService {
   }
 
   async checkPassword(userId, passowrd) {
-    const userInfo = await userModel.findByUserId( userId );
+    const userInfo = await userModel.findByUserId(userId);
 
     const hashedPassword = userInfo.password;
     const checkPassword = await bcrypt.compare(passowrd, hashedPassword);

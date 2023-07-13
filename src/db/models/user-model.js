@@ -35,6 +35,7 @@ class UserModel {
     const updateInfo = await User.findOneAndUpdate({ _id: userId }, toUpdate, {
       returnOriginal: false,
     });
+    console.log(updateInfo);
     return updateInfo;
   }
 }

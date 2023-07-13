@@ -4,16 +4,7 @@ import { ProductController } from "../controllers/product-controller.js";
 
 const productRouter = Router();
 const upload = multer({
-  dest: "uploads/",
-});
-
-productRouter.post("/image", upload.single("image"), async (req, res, next) => {
-  try {
-    req.body.imageUrl = req.file.path;
-    next();
-  } catch (error) {
-    next(error);
-  }
+  dest: "src/db/image",
 });
 
 // 전체 상품 조회(admin)
