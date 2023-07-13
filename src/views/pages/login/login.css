@@ -12,7 +12,7 @@
 .login-container {
   display: inline-block;
   justify-content: center;
-  width: 37vh;
+  width: 32vh;
   margin-top: 22vh;
 }
 
@@ -22,6 +22,8 @@
 }
 
 #login-form {
+  display: flex;
+  justify-content: center;
   margin: 0;
 }
 
@@ -33,21 +35,29 @@
   font-size: 1.5em;
 }
 
+#btn-login-div {
+  display: flex;
+  justify-content: center;
+}
 #login-submit {
   margin-top: 30em;
 }
+
 #btn-cancel-div {
-  padding-left: 0.8em;
+  display: flex;
+  justify-content: center;
 }
 #login-cancel {
-  width: 9em;
   margin-top: 0.5em;
 }
 
 #move-to-register-container {
+  display: flex;
+  justify-content: center;
+  width: inherit;
+  margin-left: 0;
   margin-top: 3.5em;
 }
-
 #move-to-register-container > p {
   margin: 0;
   margin-bottom: 1em;
