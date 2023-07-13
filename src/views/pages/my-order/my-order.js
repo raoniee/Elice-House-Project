@@ -28,10 +28,10 @@ const searchAddressBtn = document.querySelector("#search-address-btn");
 
 searchAddressBtn.addEventListener("click", searchAddress);
 
-let orderIdToChange;
+let orderIdToDelete;
 async function getOrders() {
   const orders = await Api.get("/api/orders");
-  orders.forEach(async (order) => {
+  for (const order of orders) {
     const {
       orderDate,
       orderId,
@@ -44,247 +44,196 @@ async function getOrders() {
       productName,
       quantity,
       price,
-    } = orders;
+    } = order;
 
-    console.log(orders);
+    // 상품명
+    let productList;
+    if (productName.length === 1) {
+      productList = productName[0];
+    } else {
+      productList = `${productName[0]} 외 ${productName.length - 1}건`;
+    }
+
+    // 총 가격
+    let orderPrice = 0;
+    for (let i = 0; i < price.length; i++) {
+      orderPrice += quantity[i] * price[i];
+    }
 
     // 주문 내역 삽입
     orderContainer.insertAdjacentHTML(
       "afterbegin",
       `
-          <tr>
-            <td class="py-3 col-2 align-middle">
-              ${orderDate.slice(0, 11)}
-            </td>
-            <td class="py-3 col-4 align-middle">
-              ${productList}
-            </td>
-            <td class="py-3 align-middle">
-              ${orderPrice.toLocaleString("ko-KR")}원
-            </td>
-            <td class="py-3 align-middle">
-            ${state}
-            </td>
-            <td class="py-3 align-middle">
-              <div style="display:none" class="changeable-order">
-                <button type="button" id="change-${orderId}" class="btn btn-outline-primary btn-sm change-order-btn">주문 수정</button>
-                <button type="button" id="${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
-              </div>
-              <span style="display:none" class="unchangeable-order">변경 불가</span>
-            </td>
-          </tr>
-          `
+            <tr>
+              <td class="py-3 col-2 align-middle">
+                ${orderDate.slice(0, 11)}
+              </td>
+              <td class="py-3 col-4 align-middle">
+                ${productList}
+              </td>
+              <td class="py-3 align-middle">
+                ${orderPrice.toLocaleString("ko-KR")}원
+              </td>
+              <td class="py-3 align-middle">
+              ${state}
+              </td>
+              <td class="py-3 align-middle">
+                <div style="display:none" class="changeable-order">
+                  <button type="button" id="change-${orderId}" class="btn btn-outline-primary btn-sm change-order-btn" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
+                  <button type="button" id="${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
+                </div>
+                <span style="display:none" class="unchangeable-order">변경 불가</span>
+              </td>
+            </tr>
+            `
     );
-  });
-  // let orderIdToDelete;
-  // async function getOrders() {
-  //   const orders = await Api.get("/api/orders");
-  //   for (const order of orders) {
-  //     const {
-  //       orderDate,
-  //       orderId,
-  //       state,
-  //       userPhoneNumber,
-  //       addrNum,
-  //       roughAddr,
-  //       detailAddr,
-  //       deliReq,
-  //       productName,
-  //       quantity,
-  //       price,
-  //     } = order;
 
-  //     // 상품명
-  //     let productList;
-  //     if (productName.length === 1) {
-  //       productList = productName[0];
-  //     } else {
-  //       productList = `${productName[0]} 외 ${productName.length - 1}건`;
-  //     }
+    if (state === "배송준비중") {
+      document.querySelector(".changeable-order").style.display = "block";
+    } else {
+      document.querySelector(".unchangeable-order").style.display = "block";
+    }
 
-  //     // 총 가격
-  //     let orderPrice = 0;
-  //     for (let i = 0; i < price.length; i++) {
-  //       orderPrice += quantity[i] * price[i];
-  //     }
+    //주문 수정창 : 수정 가능 데이터 삽입
+    const changeOrderBtn = document.querySelector(`#change-${orderId}`);
+    const deliveryRequest = deliveryRequestSelect;
 
-  //     // 주문 내역 삽입
-  //     orderContainer.insertAdjacentHTML(
-  //       "afterbegin",
-  //       `
-  //           <tr>
-  //             <td class="py-3 col-2 align-middle">
-  //               ${orderDate.slice(0, 11)}
-  //             </td>
-  //             <td class="py-3 col-4 align-middle">
-  //               ${productList}
-  //             </td>
-  //             <td class="py-3 align-middle">
-  //               ${orderPrice.toLocaleString("ko-KR")}원
-  //             </td>
-  //             <td class="py-3 align-middle">
-  //             ${state}
-  //             </td>
-  //             <td class="py-3 align-middle">
-  //               <div style="display:none" class="changeable-order">
-  //                 <button type="button" id="change-${orderId}" class="btn btn-outline-primary btn-sm change-order-btn" data-bs-toggle="modal" data-bs-target="#changeOrderModal">주문 수정</button>
-  //                 <button type="button" id="${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
-  //               </div>
-  //               <span style="display:none" class="unchangeable-order">변경 불가</span>
-  //             </td>
-  //           </tr>
-  //           `
-  //     );
+    changeOrderBtn.addEventListener("click", changeOrder);
+    function changeOrder(e) {
+      e.preventDefault();
 
-  //     if (state === "배송준비중") {
-  //       document.querySelector(".changeable-order").style.display = "block";
-  //     } else {
-  //       document.querySelector(".unchangeable-order").style.display = "block";
-  //     }
+      phoneNumberInput.value = userPhoneNumber;
+      postcodeInput.value = addrNum;
+      roadAddressInput.value = roughAddr;
+      detailAddressInput.value = detailAddr;
+      deliveryRequestSelect.value = deliReq;
 
-  //     //주문 수정창 : 수정 가능 데이터 삽입
-  //     const changeOrderBtn = document.querySelector(".change-order-btn");
-  //     const deliveryRequest = deliveryRequestSelect;
+      return saveOrderChange(this.id.slice(7));
+    }
 
-  //     changeOrderBtn.addEventListener("click", changeOrder);
-  //     function changeOrder(e) {
-  //       e.preventDefault();
+    //수정사항 체크
+    // function checkOrderChange() {
+    //   const changedData = {};
+    //   const phoneNumber = phoneNumberInput.value;
+    //   const postcode = postcodeInput.value;
+    //   const roadAddress = roadAddressInput.value;
+    //   const detailAddress = detailAddressInput.value;
+    //   const deliveryRequest = deliveryRequestSelect.value;
 
-  //       //클릭이벤트 중복 방지
-  //       // if (isRun === true) {
-  //       //   return false;
-  //       // }
-  //       // isRun === true;
+    //   if (phoneNumber !== userPhoneNumber) {
+    //     changedData.userPhoneNumber = phoneNumber;
+    //   }
 
-  //       phoneNumberInput.value = userPhoneNumber;
-  //       postcodeInput.value = addrNum;
-  //       roadAddressInput.value = roughAddr;
-  //       detailAddressInput.value = detailAddr;
-  //       deliveryRequestSelect.value = deliReq;
-  //     }
+    //   if (postcode !== addrNum) {
+    //     changedData.addrNum = postcode;
+    //   }
+    //   if (roadAddress !== roughAddr) {
+    //     changedData.roughAddr = roadAddress;
+    //   }
+    //   if (detailAddress !== detailAddr) {
+    //     changedData.detailAddr = detailAddress;
+    //   }
 
-  //     //수정사항 체크
-  //     // function checkOrderChange() {
-  //     //   const changedData = {};
-  //     //   const phoneNumber = phoneNumberInput.value;
-  //     //   const postcode = postcodeInput.value;
-  //     //   const roadAddress = roadAddressInput.value;
-  //     //   const detailAddress = detailAddressInput.value;
-  //     //   const deliveryRequest = deliveryRequestSelect.value;
+    //   if (deliveryRequest !== deliReq) {
+    //     changedData.deliReq = deliveryRequest;
+    //   }
 
-  //     //   if (phoneNumber !== userPhoneNumber) {
-  //     //     changedData.userPhoneNumber = phoneNumber;
-  //     //   }
+    //   if (Object.keys(changedData).length === 0) {
+    //     return alert("수정된 정보가 없습니다");
+    //     window.location.reload();
+    //   }
 
-  //     //   if (postcode !== addrNum) {
-  //     //     changedData.addrNum = postcode;
-  //     //   }
-  //     //   if (roadAddress !== roughAddr) {
-  //     //     changedData.roughAddr = roadAddress;
-  //     //   }
-  //     //   if (detailAddress !== detailAddr) {
-  //     //     changedData.detailAddr = detailAddress;
-  //     //   }
+    //   return order;
+    // }
 
-  //     //   if (deliveryRequest !== deliReq) {
-  //     //     changedData.deliReq = deliveryRequest;
-  //     //   }
+    //주문 수정&삭제 실행
+    cancelOrder();
+  } //////for end//////
 
-  //     //   if (Object.keys(changedData).length === 0) {
-  //     //     return alert("수정된 정보가 없습니다");
-  //     //     window.location.reload();
-  //     //   }
+  //수정 저장
+  const saveOrderChangeBtn = document.querySelector("#save-order-change-btn");
+  function saveOrderChange(orderId) {
+    saveOrderChangeBtn.addEventListener("click", async () => {
+      const orders = await Api.get("/api/orders");
+      console.log(orders);
+    });
+    // const changedData = {};
+    // const phoneNumber = phoneNumberInput.value;
+    // const postcode = postcodeInput.value;
+    // const roadAddress = roadAddressInput.value;
+    // const detailAddress = detailAddressInput.value;
+    // const deliveryRequest = deliveryRequestSelect.value;
 
-  //     //   return order;
-  //     // }
+    // if (phoneNumber !== userPhoneNumber) {
+    //   changedData.userPhoneNumber = phoneNumber;
+    // }
 
-  //     //주문 수정&삭제 실행
-  //     saveOrderChange();
-  //     cancelOrder();
-  //   } //////for end//////
+    // if (postcode !== addrNum) {
+    //   changedData.addrNum = postcode;
+    // }
+    // if (roadAddress !== roughAddr) {
+    //   changedData.roughAddr = roadAddress;
+    // }
+    // if (detailAddress !== detailAddr) {
+    //   changedData.detailAddr = detailAddress;
+    // }
 
-  //   //수정 저장
-  //   const saveOrderChangeBtn = document.querySelector("#save-order-change-btn");
-  //   saveOrderChangeBtn.addEventListener("click", saveOrderChange);
-  //   function saveOrderChange() {
-  //     const changedData = {};
-  //     const phoneNumber = phoneNumberInput.value;
-  //     const postcode = postcodeInput.value;
-  //     const roadAddress = roadAddressInput.value;
-  //     const detailAddress = detailAddressInput.value;
-  //     const deliveryRequest = deliveryRequestSelect.value;
+    // if (deliveryRequest !== deliReq) {
+    //   changedData.deliReq = deliveryRequest;
+    // }
 
-  //     if (phoneNumber !== userPhoneNumber) {
-  //       changedData.userPhoneNumber = phoneNumber;
-  //     }
+    // if (Object.keys(changedData).length === 0) {
+    //   return alert("수정된 정보가 없습니다");
+    //   window.location.reload();
+    // }
+    // console.log(`/api/orders/${orderId}`);
 
-  //     if (postcode !== addrNum) {
-  //       changedData.addrNum = postcode;
-  //     }
-  //     if (roadAddress !== roughAddr) {
-  //       changedData.roughAddr = roadAddress;
-  //     }
-  //     if (detailAddress !== detailAddr) {
-  //       changedData.detailAddr = detailAddress;
-  //     }
+    // // 수정 사항 업데이트
+    // try {
+    //   // console.log(`/api/orders/${orderId}`);
+    //   // await Api.patch("/api/orders", orderId, changedData);
+    //   // alert("수정 사항이 저장되었습니다.");
+    //   // window.location.reload();
+    // } catch (err) {
+    //   alert(`오류가 발생하였습니다: ${err}`);
+    // }
+  }
 
-  //     if (deliveryRequest !== deliReq) {
-  //       changedData.deliReq = deliveryRequest;
-  //     }
+  //주문 취소
+  function cancelOrder() {
+    // 버튼을 누르면 데이터 삭제
+    const deleteOrderBtns = document.querySelectorAll(".del-order-btn");
+    if (deleteOrderBtns && Array.from(deleteOrderBtns).length) {
+      deleteOrderBtns.forEach((btn) =>
+        btn.addEventListener("click", async () => {
+          const confirmRes = confirm("정말로 취소하시겠습니까?");
+          // confirm 응답이 true인 경우 삭제 api 실행
+          if (confirmRes === true) {
+            // 삭제 함수 실행
+            await Api.delete("/api/orders", btn.id);
+            alert("주문이 취소되었습니다.");
+            // 삭제 후 새로고침으로 삭제확인
+            location.reload();
+          } else {
+            console.log("뒤로가기");
+          }
+        })
+      );
+    }
+  }
+}
 
-  //     if (Object.keys(changedData).length === 0) {
-  //       return alert("수정된 정보가 없습니다");
-  //       window.location.reload();
-  //     }
-  //     console.log(`/api/orders/${orderId}`);
+// //주소 찾기
+function searchAddress() {
+  new daum.Postcode({
+    oncomplete: function (data) {
+      // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+      const { roadAddress: roadAddr } = data; // 도로명 주소 변수
 
-  //     // 수정 사항 업데이트
-  //     try {
-  //       // console.log(`/api/orders/${orderId}`);
-  //       // await Api.patch("/api/orders", orderId, changedData);
-  //       // alert("수정 사항이 저장되었습니다.");
-  //       // window.location.reload();
-  //     } catch (err) {
-  //       alert(`오류가 발생하였습니다: ${err}`);
-  //     }
-  //   }
-
-  //   //주문 취소
-  //   function cancelOrder() {
-  //     // 버튼을 누르면 데이터 삭제
-  //     const deleteOrderBtns = document.querySelectorAll(".del-order-btn");
-  //     if (deleteOrderBtns && Array.from(deleteOrderBtns).length) {
-  //       deleteOrderBtns.forEach((btn) =>
-  //         btn.addEventListener("click", async () => {
-  //           const confirmRes = confirm("정말로 취소하시겠습니까?");
-  //           // confirm 응답이 true인 경우 삭제 api 실행
-  //           if (confirmRes === true) {
-  //             // 삭제 함수 실행
-  //             await Api.delete("/api/orders", btn.id);
-  //             alert("주문이 취소되었습니다.");
-  //             // 삭제 후 새로고침으로 삭제확인
-  //             location.reload();
-  //           } else {
-  //             console.log("뒤로가기");
-  //           }
-  //         })
-  //       );
-  //     }
-  //   }
-  // }
-
-  // //주소 찾기
-  // function searchAddress() {
-  //   new daum.Postcode({
-  //     oncomplete: function (data) {
-  //       // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
-  //       const { roadAddress: roadAddr } = data; // 도로명 주소 변수
-
-  //       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-  //       document.getElementById("postcode").value = data.zonecode;
-  //       document.getElementById("roadAddress").value = roadAddr;
-  //       document.getElementById("detailAddress").value = "";
-  //     },
-  //   }).open();
-  // }
+      // 우편번호와 주소 정보를 해당 필드에 넣는다.
+      document.getElementById("postcode").value = data.zonecode;
+      document.getElementById("roadAddress").value = roadAddr;
+      document.getElementById("detailAddress").value = "";
+    },
+  }).open();
 }
