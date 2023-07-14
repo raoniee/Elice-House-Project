@@ -40,7 +40,6 @@ const ProductController = {
         imageUrl,
         brand,
         description,
-        saleStatus,
       });
 
       res.status(201).json(newProduct);
