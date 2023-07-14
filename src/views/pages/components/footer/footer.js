@@ -37,7 +37,7 @@ export const drawFooter = (img) => {
         <div class="col mb-3">
           <ul class="nav flex-column">
             <li class="nav-item mb-2">사업자등록번호 : 123-45-67890</li>
-            <li class="nav-item mb-2">통신판매업 신고:2023-서울중구</li>
+            <li class="nav-item mb-2">통신판매업 신고 : 2023-서울중구</li>
             <li class="nav-item mb-2">개인정보보호책임자 : 김엘리스</li>
             <li class="nav-item mb-2">사업자 정보확인</li>
           </ul>
