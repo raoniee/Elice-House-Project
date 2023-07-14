@@ -60,6 +60,7 @@ const logOut = () => {
 
     // 로그아웃 처리 로직
     localStorage.removeItem("admin");
+    localStorage.removeItem("isLoggedIn");
 
     // 로그아웃 후 메인 페이지로 이동
     window.location.href = "/";
@@ -68,6 +69,7 @@ const logOut = () => {
 
 function checkAdmin() {
   const isAdmin = localStorage.getItem("admin");
+  // const isLoggedIn = localStorage.getItem("admin");
   if (!isAdmin) {
     location.href = "/";
   }

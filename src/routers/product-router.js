@@ -4,7 +4,7 @@ import { ProductController } from "../controllers/product-controller.js";
 
 const productRouter = Router();
 const upload = multer({
-  dest: "src/db/image",
+  dest: "src/views/pages/image",
 });
 
 // 전체 상품 조회(admin)
