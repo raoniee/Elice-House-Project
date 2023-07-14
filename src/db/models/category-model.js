@@ -48,26 +48,25 @@ class CategoryModel {
   }
 
   // 서브카테고리에 의한 카테고리 업데이트 및 삭제
-  async updateSubCat(_id, subcategoryId) {
-    const catInfo = await Category.findById({ _id });
+  async updateSubCat(categoryId, subcategoryId) {
+    const catInfo = await Category.findById({ _id: categoryId });
     const subIdsInCat = catInfo.subcategory;
     const newSubIdsInCat = [];
 
     for (const subId of subIdsInCat) {
-      if (subcategoryId !== subId) {
+      if (subcategoryId != subId) {
+        
         newSubIdsInCat.push(subId);
       }
     }
 
     if (newSubIdsInCat.length === 0) {
-      await Category.deleteOne({ _id });
+      await Category.deleteOne({ _id: categoryId });
     }
 
-    console.log("newSubIdsInCat : ", newSubIdsInCat);
-
     const updateSubId = await Category.findOneAndUpdate(
-      { _id },
-      { $push: { subcategory: newSubIdsInCat } },
+      { _id: categoryId },
+      { subcategory: newSubIdsInCat },
       {
         returnOriginal: false,
       }
