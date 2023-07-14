@@ -28,19 +28,19 @@ async function makeOrderBox() {
     const orderInfo = document.createElement("div");
     orderInfo.className = "order-info";
     orderInfo.innerHTML = `
-  <p><b>주문 일자</b>: ${data[i].orderDate}</p>
-  <p><b>주문 시간</b>: ${data[i].orderTime}</p>
-  <p><b>주문 번호</b>: ${data[i].orderId}</p>
-  <p><b>요청 사항</b>: ${data[i].deliReq}</p>`;
+  <p><b>주문 일자</b> : ${data[i].orderDate}</p>
+  <p><b>주문 시간</b> : ${data[i].orderTime}</p>
+  <p><b>주문 번호</b> : ${data[i].orderId}</p>
+  <p><b>요청 사항</b> : ${data[i].deliReq}</p>`;
 
     // 주문 고객 정보 (이름, 전화번호, 이메일, 주소)
     const orderUserInfo = document.createElement("div");
     orderUserInfo.className = "order-user-info";
     orderUserInfo.innerHTML = `
-  <p><b>성명</b>: ${data[i].userName}</p>
-  <p><b>Email</b>: ${data[i].email}</p>
-  <p><b>전화번호</b>: ${data[i].userPhoneNumber}</p>
-  <p><b>주소</b>: ${data[i].roughAddr} ${data[i].detailAddr}</p>`;
+  <p><b>성명</b> : ${data[i].userName}</p>
+  <p><b>사용자식별번호</b> : ${data[i].userId}</p>
+  <p><b>전화번호</b> : ${data[i].userPhoneNumber}</p>
+  <p><b>주소</b> : ${data[i].roughAddr} ${data[i].detailAddr}</p>`;
 
     // 주문 상품 정보 (상품명, 상품개수, 총 가격)
     const orderProductInfo = document.createElement("div");
@@ -65,16 +65,16 @@ async function makeOrderBox() {
     }
 
     orderProductInfo.innerHTML = `
-  <p><b>상품명</b>: ${devidedProductName}</p>
-  <p><b>상품개수</b>: ${devidedProductQuantity}</p>
-  <p><b>총 가격</b>: ${totalPrice}</p>
+  <p><b>상품명</b> : ${devidedProductName}</p>
+  <p><b>상품개수</b> : ${devidedProductQuantity}</p>
+  <p><b>총 가격</b> : ${totalPrice}</p>
   `;
 
     // 배송 상태 변경 및 주문삭제
     const orderStateModify = document.createElement("div");
     orderStateModify.className = "order-state";
     orderStateModify.innerHTML = `
-  <div><b>배송 상태</b>: ${data[i].state}</div>
+  <div><b>배송 상태</b> : ${data[i].state}</div>
   <label><b>배송상태변경</b></label>
   <select id="${data[i].orderId}"class="deliver-state-select">
   <option>---------------------</option>
