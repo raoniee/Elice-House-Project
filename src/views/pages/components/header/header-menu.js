@@ -1,6 +1,6 @@
 //유진님
 
-export const drawHeaderMenu = () => {
+export const drawHeaderMenu = async () => {
   // let headermenuTemplate = `
   //   <div class="py-3 border-bottom">
   //     <div class="container d-flex flex-wrap justify-content-center">
@@ -38,6 +38,7 @@ export const drawHeaderMenu = () => {
 
   // 로그인 상태에 따라 로그인/로그아웃 버튼 텍스트 변경
   const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const isAdmin = localStorage.getItem("isAdmin");
 
   // // class: "header-nav-icon" 아이콘 mouseover시, alt 보이기
   // // 로그인 상태일 때는 '로그아웃', '마이페이지', '장바구니' alt 안 보임
@@ -59,7 +60,9 @@ export const drawHeaderMenu = () => {
     // LOGIN.innerHTML = `<a href="" class="nav-link link-dark px-2"><img class="header-nav-icon" src="../public/assets/imgs/logout.png" alt="Logout" style="height: 2vh"/></a>`;
     // SIGNUP.innerHTML = `<a href="" class="nav-link link-dark px-2"><img class="header-nav-icon" src="../public/assets/imgs/myPage.png" alt="My Page" style="height: 2vh" /></a>`;
     LOGIN.innerHTML = `<a href="" class="nav-link link-dark px-2">Logout</a>`;
-    SIGNUP.innerHTML = `<a href="" class="nav-link link-dark px-2">My Page</a>`;
+    SIGNUP.innerHTML = isAdmin
+      ? `<a href="" class="nav-link link-dark px-2">Admin Page</a>`
+      : `<a href="" class="nav-link link-dark px-2">My Page</a>`;
 
     // Logout 버튼 클릭 -> 로그아웃 처리
     LOGIN.addEventListener("click", (event) => {
@@ -68,6 +71,9 @@ export const drawHeaderMenu = () => {
       // 로그아웃 처리 로직
       localStorage.removeItem("token");
       localStorage.removeItem("isLoggedIn");
+      if (localStorage.getItem("isAdmin")) {
+        localStorage.removeItem("isAdmin");
+      }
 
       // 로그아웃 후 메인 페이지로 이동
       window.location.href = "/";
@@ -75,7 +81,11 @@ export const drawHeaderMenu = () => {
     // My page 버튼 클릭 -> 마이 페이지로 이동
     SIGNUP.addEventListener("click", (event) => {
       event.preventDefault();
-      window.location.href = "/mypage/order";
+      if (localStorage.getItem("isAdmin")) {
+        window.location.href = "/admin/main";
+      } else {
+        window.location.href = "/mypage/order";
+      }
     });
   } else {
     // login 버튼 클릭 -> 로그인 페이지로 이동

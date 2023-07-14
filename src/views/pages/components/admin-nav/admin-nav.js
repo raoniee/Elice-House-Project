@@ -24,6 +24,7 @@ const makeAdminNav = () => {
         href="#"
         >카테고리 관리</a
       >
+      <button id="goMainPage" type="button" class="btn btn-outline-primary btn-sm mt-3 ms-3 w-75">메인 페이지</button>
       <button id="logout" type="button" class="btn btn-outline-primary btn-sm mt-3 ms-3 w-75">로그아웃</button>
     </nav>`;
 
@@ -34,6 +35,7 @@ const clickNavbar = () => {
   const orderBtn = document.querySelector("#order-btn");
   const productBtn = document.querySelector("#product-btn");
   const categoryBtn = document.querySelector("#category-btn");
+  const goMainBtn = document.querySelector("#goMainPage");
 
   orderBtn.addEventListener("click", function () {
     location.href = "/admin/order";
@@ -47,19 +49,23 @@ const clickNavbar = () => {
     location.href = "/admin/category";
   });
 
+  goMainBtn.addEventListener("click", function () {
+    location.href = "/";
+  });
+
   // 로그아웃 함수 실행
-  logOut();
+  adminLogOut();
 };
 
 //admin 로그아웃 함수
-const logOut = () => {
+const adminLogOut = () => {
   const logOutBtn = document.querySelector("#logout");
 
   logOutBtn.addEventListener("click", (e) => {
     e.preventDefault();
 
     // 로그아웃 처리 로직
-    localStorage.removeItem("admin");
+    localStorage.removeItem("token");
     localStorage.removeItem("isLoggedIn");
 
     // 로그아웃 후 메인 페이지로 이동
@@ -68,7 +74,7 @@ const logOut = () => {
 };
 
 function checkAdmin() {
-  const isAdmin = localStorage.getItem("admin");
+  const isAdmin = localStorage.getItem("token");
   // const isLoggedIn = localStorage.getItem("admin");
   if (!isAdmin) {
     location.href = "/";
