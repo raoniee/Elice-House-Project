@@ -111,9 +111,7 @@ class CategoryService {
       res.categoryId = catInfo._id;
 
       for (const subCatId of subCatIds) {
-        console.log("subCatId : ", subCatId);
         const subcatInCat = await subcategoryModel.findById(subCatId);
-        console.log("subcatInCat : ", subcatInCat);
         if (subcatInCat) {
           const subRes = {};
           const subcategoryName = subcatInCat.subcategoryName;
