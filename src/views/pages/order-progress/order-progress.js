@@ -36,7 +36,11 @@ addAllEvents();
 
 function checkLogin() {
   const token = localStorage.getItem("token");
-  if (!token) {
+  if (localStorage.getItem("admin")) {
+    alert("관리자 계정으로 상품을 구매할 수 없습니다.");
+    localStorage.removeItem("admin");
+    window.location.href = `/`;
+  } else if (!token) {
     const pathname = window.location.pathname;
     const search = window.location.search;
 

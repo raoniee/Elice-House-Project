@@ -22,9 +22,9 @@ class UserService {
     const UserInfo = { name, email, password: hashedPassword };
     const addNewUser = await userModel.create(UserInfo);
 
-    // 로컬 Date 업데이트 
+    // 로컬 Date 업데이트
     const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
-    await userModel.update(addNewUser._id, {date: postDate});
+    await userModel.update(addNewUser._id, { date: postDate });
 
     return addNewUser;
   }
@@ -51,8 +51,9 @@ class UserService {
       { email, userId: user._id, isAdmin: user.isAdmin },
       key
     );
+    const isAdminValue = user.isAdmin;
 
-    return { token, isAdmin };
+    return { token, isAdminValue };
   }
 
   // UserId를 통해 DB에서 user객체를 찾고 삭제

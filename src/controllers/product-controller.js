@@ -26,9 +26,6 @@ const ProductController = {
         description,
       } = req.body;
 
-      // console.log(req.image);
-      // const imageUrl = req.image.filename;
-
       const imageUrl = req.file.path.substr(15);
       console.log(imageUrl);
 
@@ -40,7 +37,6 @@ const ProductController = {
         imageUrl,
         brand,
         description,
-        saleStatus,
       });
 
       res.status(201).json(newProduct);
