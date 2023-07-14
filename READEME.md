@@ -38,15 +38,15 @@
 
 #### 🛠 기술 스택
 
-[![Elice House 기술스택 이미지]("./Elilce-House_techStack.png")]
+<img src="./Elilce-House_techStack.png" alt="Elice House 기술스택 이미지">
 
 <br>
 
 #### ⚙️ 각 기능 간단 소개
 
-[![Elice House 페이지 구성 1]("./Elilce-House_p1.jpg")]
-[![Elice House 페이지 구성 2]("./Elilce-House_p2.jpg")]
-[![Elice House 페이지 구성 3]("./Elilce-House_p3.jpg")]
+<img src="./Elilce-House_p1.jpg" alt="Elice House 페이지 구성 1">
+<img src="./Elilce-House_p2.jpg" alt="Elice House 페이지 구성 2">
+<img src="./Elilce-House_p3.jpg" alt="Elice House 페이지 구성 3">
 
 ## <br>
 
