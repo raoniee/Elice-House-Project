@@ -67,6 +67,7 @@ const adminLogOut = () => {
     // 로그아웃 처리 로직
     localStorage.removeItem("token");
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("isAdmin");
 
     // 로그아웃 후 메인 페이지로 이동
     window.location.href = "/";
@@ -74,7 +75,7 @@ const adminLogOut = () => {
 };
 
 function checkAdmin() {
-  const isAdmin = localStorage.getItem("token");
+  const isAdmin = localStorage.getItem("isAdmin");
   // const isLoggedIn = localStorage.getItem("admin");
   if (!isAdmin) {
     location.href = "/";
