@@ -2,12 +2,14 @@
 import {
   makeAdminNav,
   clickNavbar,
+  checkAdmin,
 } from "../../components/admin-nav/admin-nav.js";
 import * as apiUtil from "../../apiUtil.js";
 
 //admin navbar 생성
 makeAdminNav();
 clickNavbar();
+checkAdmin();
 
 const listContainer = document.querySelector("#list-container");
 
@@ -75,12 +77,17 @@ function addCategory() {
   const addSubCatInput = document.querySelector(".add-subcategory-input");
 
   addCatBtn.addEventListener("click", async () => {
-    const addCatData = {
-      categoryName: addCatInput.value,
-      subcategoryName: addSubCatInput.value,
-    };
-    await apiUtil.post("/api/admin/categories", addCatData);
-    location.reload();
+    //빈칸 확인 if문(모든 input이 입력되어야 post 작동)
+    if (addCatInput.value && addSubCatInput.value) {
+      const addCatData = {
+        categoryName: addCatInput.value,
+        subcategoryName: addSubCatInput.value,
+      };
+      await apiUtil.post("/api/admin/categories", addCatData);
+      location.reload();
+    } else {
+      alert("모든 칸을 입력해주세요.");
+    }
   });
 }
 
@@ -116,19 +123,22 @@ function modifyCategory() {
         console.log("modCategoryBtn clicked");
         // 모달 제출버튼 event
         submitModalBtn.addEventListener("click", async () => {
-          const patchCatData = {
-            changeCategoryName: modCatInput.value,
-            changeSubcategoryName: modSubCatInput.value,
-            subcategoryId: btn.id,
-          };
-          // console.log(patchCatData);
-          // console.log("cateID:", btn.parentElement.id);
-          await apiUtil.patch(
-            "/api/admin/categories",
-            btn.parentElement.id,
-            patchCatData
-          );
-          location.reload();
+          //빈칸 확인 if문(모든 칸이 입력되어야 patch 작동)
+          if (modCatInput.value && modSubCatInput.value) {
+            const patchCatData = {
+              changeCategoryName: modCatInput.value,
+              changeSubcategoryName: modSubCatInput.value,
+              subcategoryId: btn.id,
+            };
+            await apiUtil.patch(
+              "/api/admin/categories",
+              btn.parentElement.id,
+              patchCatData
+            );
+            location.reload();
+          } else {
+            alert("모든 칸을 입력해주세요.");
+          }
         });
       })
     );
