@@ -57,7 +57,9 @@ const makeProductList = async () => {
         <td>${data[i].productName}</td>
         <td>${data[i].brand}</td>
         <td>${data[i].price.toLocaleString("en")}원</td>
-        <td>${data[i].imageUrl}</td>
+        <td><img src="${
+          data[i].imageUrl
+        }" style="width:100px; height:100px;"/></td>
         <td>${createDate}</td>
         <td>${data[i].soldQuantity}</td>
         <td>${data[i].saleStatus}</td>
@@ -125,14 +127,14 @@ function addProduct() {
       // 모달 formData 확인
       console.log(Array.from(formData.values()));
       // 정보 post
-      // const result = await apiUtil.adminPost(
-      //   "/api/admin/products",
-      //   formData,
-      //   true
-      // );
-      // console.log(result);
+      const result = await apiUtil.adminPost(
+        "/api/admin/products",
+        formData,
+        true
+      );
+      console.log(result);
       // 새로고침
-      // location.reload();
+      location.reload();
     } else {
       alert("모든 정보를 입력해주세요.");
     }

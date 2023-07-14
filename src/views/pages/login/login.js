@@ -64,6 +64,7 @@ LOGIN_FORM.addEventListener("submit", async (event) => {
     // 관리자(admin)인 경우, 로컬스토리지에 기록
     if (isAdminValue) {
       localStorage.setItem("admin", "admin");
+      localStorage.setItem("isLoggedIn", "true");
       alert("관리자 계정으로 로그인 되었습니다!");
       window.location.href = "/admin/main";
     } else {

@@ -26,7 +26,7 @@ const ProductController = {
         description,
       } = req.body;
 
-      const imageUrl = "/" + req.file.path;
+      const imageUrl = req.file.path.substr(15);
       console.log(imageUrl);
 
       const newProduct = await productService.addProduct({
@@ -100,7 +100,7 @@ const ProductController = {
       saleStatus,
     } = req.body;
 
-    const imageUrl = "/" + req.file.path;
+    const imageUrl = req.file.path.substr(15);
     console.log(imageUrl);
 
     const toUpdate = {
