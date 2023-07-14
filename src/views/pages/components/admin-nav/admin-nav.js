@@ -9,20 +9,20 @@ const makeAdminNav = () => {
   let adminNavTemplate = `
     <nav id="side-bar" class="nav flex-column">
       <a id="order-btn" class="nav-link" aria-current="page" href="#"
-        >주문 관리</a
+        ><b>주문 관리</b></a
       >
       <a
         id="product-btn"
         class="nav-link"
         href="#"
-        >상품 관리</a
+        ><b>상품 관리</b></a
       >
       <a
         id="category-btn"
         class="nav-link"
         style="white-space: nowrap;"
         href="#"
-        >카테고리 관리</a
+        ><b>카테고리 관리</b></a
       >
       <button id="goMainPage" type="button" class="btn btn-outline-primary btn-sm mt-3 ms-3 w-75">메인 페이지</button>
       <button id="logout" type="button" class="btn btn-outline-primary btn-sm mt-3 ms-3 w-75">로그아웃</button>

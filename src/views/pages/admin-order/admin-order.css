@@ -58,18 +58,32 @@ main {
   border-radius: 5px;
 }
 
+.order-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25%;
+}
+
 .order-user-info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 40%;
+  width: 30%;
+}
+
+.order-product-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30%;
 }
 
 .order-state {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 20%;
+  width: 15%;
 }
 
 /* .deliver-state-select {

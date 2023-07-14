@@ -27,7 +27,6 @@ async function makeOrderBox() {
     // 주문 정보 (주문 날짜, 주문 시간, 주문번호)
     const orderInfo = document.createElement("div");
     orderInfo.className = "order-info";
-
     orderInfo.innerHTML = `
   <p><b>주문 일자</b>: ${data[i].orderDate}</p>
   <p><b>주문 시간</b>: ${data[i].orderTime}</p>
@@ -43,6 +42,34 @@ async function makeOrderBox() {
   <p><b>전화번호</b>: ${data[i].userPhoneNumber}</p>
   <p><b>주소</b>: ${data[i].roughAddr} ${data[i].detailAddr}</p>`;
 
+    // 주문 상품 정보 (상품명, 상품개수, 총 가격)
+    const orderProductInfo = document.createElement("div");
+    orderProductInfo.className = "order-product-info";
+    const productPrice = data[i].price;
+    const productQuantity = data[i].quantity;
+    const productName = data[i].productName;
+    //total 가격 산출 및 구분자 표시
+    let itemLen = data[i].price.length;
+    let totalPrice = 0;
+    let devidedProductName = "";
+    let devidedProductQuantity = "";
+    for (let j = 0; j < itemLen; j++) {
+      totalPrice += productPrice[j] * productQuantity[j];
+      if (j > 0) {
+        devidedProductName += " / " + productName[j];
+        devidedProductQuantity += " / " + productQuantity[j];
+      } else {
+        devidedProductName += productName[0];
+        devidedProductQuantity += productQuantity[0];
+      }
+    }
+
+    orderProductInfo.innerHTML = `
+  <p><b>상품명</b>: ${devidedProductName}</p>
+  <p><b>상품개수</b>: ${devidedProductQuantity}</p>
+  <p><b>총 가격</b>: ${totalPrice}</p>
+  `;
+
     // 배송 상태 변경 및 주문삭제
     const orderStateModify = document.createElement("div");
     orderStateModify.className = "order-state";
@@ -50,6 +77,7 @@ async function makeOrderBox() {
   <div><b>배송 상태</b>: ${data[i].state}</div>
   <label><b>배송상태변경</b></label>
   <select id="${data[i].orderId}"class="deliver-state-select">
+  <option>---------------------</option>
   <option>배송준비중</option>
   <option>배송중</option>
   <option>배송완료</option>
@@ -57,20 +85,11 @@ async function makeOrderBox() {
   <button id="${data[i].orderId}"type="button" class="btn btn-dark btn-sm del-order-btn">주문삭제</button>
   `;
 
-    const orderProductInfo = document.createElement("div");
-
-    orderProductInfo.innerHTML = `
-  <p><b>상품명</b></p>
-  <p><b>상품개수<b></p>
-  <p><b>총 가격<b></p>
-  `;
-    // del-order-btn 클래스 >>> 추후 삭제 eventlistner 적용
-
     // 정보 병합
     // orderBox = orderInfo + orderUserInfo + orderStateModify
     orderBox.appendChild(orderInfo);
     orderBox.appendChild(orderUserInfo);
-    // orderBox.appendChild(orderProductInfo);
+    orderBox.appendChild(orderProductInfo);
     orderBox.appendChild(orderStateModify);
     listContainer.appendChild(orderBox);
   }
@@ -85,6 +104,7 @@ async function makeOrderBox() {
 function deleteOrder() {
   // 버튼을 누르면 데이터 삭제 >> orderBox 사라짐
   const deleteOrderBtns = document.querySelectorAll(".del-order-btn");
+  // 버튼 존재 확인
   if (deleteOrderBtns && Array.from(deleteOrderBtns).length) {
     deleteOrderBtns.forEach((btn) =>
       btn.addEventListener("click", async () => {
@@ -93,7 +113,7 @@ function deleteOrder() {
         if (confirmRes === true) {
           // 삭제 함수 실행
           await apiUtil.delete("/api/admin/orders", btn.id);
-          // 삭제 후 새로고침으로 삭제확인
+          // 삭제 후 새로고침으로 삭제 확인
           location.reload();
         }
       })
@@ -106,14 +126,11 @@ function changeDeliverState() {
   const orderStateSelects = document.querySelectorAll(".deliver-state-select");
   if (orderStateSelects && Array.from(orderStateSelects).length) {
     orderStateSelects.forEach((select) =>
+      // 상태 변경시 Patch 실행
       select.addEventListener("change", async () => {
         const patchOrderData = { state: select.value };
-        console.log(select.id, patchOrderData);
-        await apiUtil.adminPatch(
-          "/api/admin/orders",
-          select.id,
-          patchOrderData
-        );
+        await apiUtil.patch("/api/admin/orders", select.id, patchOrderData);
+        // 수정 후 새로고침으로 수정 확인
         location.reload();
       })
     );
