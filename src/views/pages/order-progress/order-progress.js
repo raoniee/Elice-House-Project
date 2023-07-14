@@ -113,6 +113,12 @@ async function doCheckout() {
     return receiverPhoneNumberInput.focus();
   }
 
+  if (localStorage.getItem("admin")) {
+    alert("관리자 계정으로 상품을 구매할 수 없습니다.");
+    localStorage.removeItem("admin");
+    window.location.href = `/`;
+  }
+
   try {
     const orderDate = await Api.post("/api/orders", {
       userName,
