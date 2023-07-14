@@ -1,6 +1,7 @@
 import { productModel } from "../db/models/product-model.js";
 import { orderitemModel } from "../db/models/orderitem-model.js";
 import { orderModel } from "../db/models/order-model.js";
+import { userModel } from "../db/models/user-model.js";
 import moment from "moment-timezone";
 
 class OrderService {
@@ -110,6 +111,7 @@ class OrderService {
     const results = [];
 
     for (const ord of orders) {
+      const user = await userModel.findByUserId(ord.userId);
       const result = {};
       const date = ord.date.toString();
       const ordId = ord._id;
@@ -124,6 +126,7 @@ class OrderService {
       result.roughAddr = ord.roughAddr;
       result.detailAddr = ord.detailAddr;
       result.deliReq = ord.deliReq;
+      // result.userEmail = user.email;
 
       if (ordId) {
         const ordItems = await orderitemModel.getOrderId(ordId);

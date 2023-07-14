@@ -145,16 +145,16 @@ function modifyCategory() {
   }
 }
 
-//Modal 취소 버튼 >>> input값 초기화
-function clickCancelBtn() {
-  const formObject = document.querySelector("#modCategoryForm");
-  const cancelBtns = document.querySelectorAll(".cancel-btn");
-  cancelBtns.forEach((btn) =>
-    btn.addEventListener("click", () => () => {
-      //추후 보충 예정
-      console.log("cancel btn clicked");
-    })
-  );
-}
+// //Modal 취소 버튼 >>> input값 초기화 // 추후 완성 예정
+// function clickCancelBtn() {
+//   const formObject = document.querySelector("#modCategoryForm");
+//   const cancelBtns = document.querySelectorAll(".cancel-btn");
+//   cancelBtns.forEach((btn) =>
+//     btn.addEventListener("click", () => () => {
+//       //추후 보충 예정
+//       console.log("cancel btn clicked");
+//     })
+//   );
+// }
 
 window.onload = makeCategoryList();
