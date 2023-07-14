@@ -36,7 +36,11 @@ addAllEvents();
 
 function checkLogin() {
   const token = localStorage.getItem("token");
-  if (!token) {
+  if (localStorage.getItem("admin")) {
+    alert("관리자 계정으로 상품을 구매할 수 없습니다.");
+    localStorage.removeItem("admin");
+    window.location.href = `/`;
+  } else if (!token) {
     const pathname = window.location.pathname;
     const search = window.location.search;
 
@@ -111,12 +115,6 @@ async function doCheckout() {
   if (!/^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/.test(userPhoneNumber)) {
     alert("유효하지 않는 전화번호입니다.");
     return receiverPhoneNumberInput.focus();
-  }
-
-  if (localStorage.getItem("admin")) {
-    alert("관리자 계정으로 상품을 구매할 수 없습니다.");
-    localStorage.removeItem("admin");
-    window.location.href = `/`;
   }
 
   try {
