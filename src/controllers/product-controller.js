@@ -3,7 +3,6 @@ import { productService } from "../services/product-service.js";
 const ProductController = {
   // 전체 상품 조회 (admin)
   async getAllProducts(req, res, next) {
-    // response: productName, brand, price, subcategoryId, imageUrl, description, soldQuantity
     try {
       const AllProductInfo = await productService.getAllProductInfo();
 
@@ -27,7 +26,6 @@ const ProductController = {
       } = req.body;
 
       const imageUrl = req.file.path.substr(15);
-      console.log(imageUrl);
 
       const newProduct = await productService.addProduct({
         categoryName,
@@ -103,7 +101,6 @@ const ProductController = {
     let imageUrl;
     if (req.file) {
       imageUrl = req.file.path.substr(15);
-      console.log(imageUrl);
     }
 
     const toUpdate = {

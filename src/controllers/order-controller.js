@@ -41,7 +41,6 @@ const OrderController = {
     try {
       const userId = req.body.userId;
       const userOrderInfo = await orderService.getOrder(userId);
-      // console.log("userOrderInfo : ", userOrderInfo);
 
       res.status(200).json(userOrderInfo);
     } catch (error) {
@@ -154,7 +153,6 @@ const OrderController = {
         throw new Error("이미 배송시작되었습니다.");
       }
 
-      console.log(isBeforeShipping);
 
       // orderId로 order 삭제
       const checkDeleteOrder = await orderService.deleteOrder(orderId);
