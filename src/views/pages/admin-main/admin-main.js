@@ -8,3 +8,12 @@ makeAdminNav();
 
 // navbar 클릭 함수 실행
 clickNavbar();
+
+function checkAdmin() {
+  const isAdmin = localStorage.getItem("isAdmin");
+  if (!isAdmin) {
+    location.href = "/";
+  }
+}
+
+checkAdmin();

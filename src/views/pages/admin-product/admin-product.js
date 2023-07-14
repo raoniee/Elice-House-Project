@@ -101,27 +101,39 @@ function addProduct() {
 
     //FormData 생성
     const formData = new FormData();
+    // 빈칸 확인 if문(모든 input이 입력되어야 post 작동)
+    if (
+      categoryName &&
+      subcategoryName &&
+      productName &&
+      brandName &&
+      price &&
+      imageFile &&
+      description
+    ) {
+      //modal input data를 formData에 추가
+      formData.append("categoryName", categoryName);
+      formData.append("subcategoryName", subcategoryName);
+      formData.append("productName", productName);
+      formData.append("brand", brandName);
+      formData.append("price", price);
+      formData.append("image", imageFile);
+      formData.append("description", description);
 
-    //modal input data를 formData에 추가
-    formData.append("categoryName", categoryName);
-    formData.append("subcategoryName", subcategoryName);
-    formData.append("productName", productName);
-    formData.append("brand", brandName);
-    formData.append("price", price);
-    formData.append("image", imageFile);
-    formData.append("description", description);
-
-    // 모달 formData 확인
-    console.log(Array.from(formData.values()));
-    // 정보 post
-    const result = await apiUtil.adminPost(
-      "/api/admin/products",
-      formData,
-      true
-    );
-    console.log(result);
-    // 새로고침
-    location.reload();
+      // 모달 formData 확인
+      console.log(Array.from(formData.values()));
+      // 정보 post
+      // const result = await apiUtil.adminPost(
+      //   "/api/admin/products",
+      //   formData,
+      //   true
+      // );
+      // console.log(result);
+      // 새로고침
+      // location.reload();
+    } else {
+      alert("모든 정보를 입력해주세요.");
+    }
   });
 }
 

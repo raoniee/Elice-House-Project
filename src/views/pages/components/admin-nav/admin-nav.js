@@ -24,6 +24,7 @@ const makeAdminNav = () => {
         href="#"
         >카테고리 관리</a
       >
+      <button id="logout">로그아웃</button>
     </nav>`;
 
   navContainer.innerHTML = adminNavTemplate;
@@ -44,6 +45,25 @@ const clickNavbar = () => {
 
   categoryBtn.addEventListener("click", function () {
     location.href = "/admin/category";
+  });
+
+  // 로그아웃 함수 실행
+  logOut();
+};
+
+//admin 로그아웃 함수
+const logOut = () => {
+  const logOutBtn = document.querySelector("#logout");
+
+  logOutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    // 로그아웃 처리 로직
+    localStorage.removeItem("token");
+    localStorage.removeItem("isLoggedIn");
+
+    // 로그아웃 후 메인 페이지로 이동
+    window.location.href = "/";
   });
 };
 
