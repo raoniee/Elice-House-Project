@@ -100,8 +100,11 @@ const ProductController = {
       saleStatus,
     } = req.body;
 
-    const imageUrl = req.file.path.substr(15);
-    console.log(imageUrl);
+    let imageUrl;
+    if (req.file) {
+      imageUrl = req.file.path.substr(15);
+      console.log(imageUrl);
+    }
 
     const toUpdate = {
       ...(categoryName && { categoryName }),
