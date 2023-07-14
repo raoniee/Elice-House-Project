@@ -44,9 +44,9 @@
 
 #### ⚙️ 각 기능 간단 소개
 
-<img src="./Elilce-House_p1.jpg" alt="Elice House 페이지 구성 1">
-<img src="./Elilce-House_p2.jpg" alt="Elice House 페이지 구성 2">
-<img src="./Elilce-House_p3.jpg" alt="Elice House 페이지 구성 3">
+<img src="./Elilce-House_p1.png" alt="Elice House 페이지 구성 1">
+<img src="./Elilce-House_p2.png" alt="Elice House 페이지 구성 2">
+<img src="./Elilce-House_p3.png" alt="Elice House 페이지 구성 3">
 
 ## <br>
 
