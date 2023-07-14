@@ -82,7 +82,7 @@ async function getOrders() {
               <td class="py-3 align-middle">
                 <div style="display:none" class="changeable-order">
                   <button type="button" id="change-${orderId}" class="btn btn-outline-primary btn-sm change-order-btn">주문 수정</button>
-                  <button type="button" id="${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
+                  <button type="button" id="delete-${orderId}" class="btn btn-outline-primary btn-sm del-order-btn">주문 취소</button>
                 </div>
                 <span style="display:none" class="unchangeable-order">변경 불가</span>
               </td>
@@ -123,8 +123,14 @@ async function getOrders() {
       return saveOrderChange(changedOrder);
     }
 
-    //주문 취소 실행
-    cancelOrder();
+    //주문 취소
+    const deleteOrderBtn = document.querySelector(`#delete-${orderId}`);
+    deleteOrderBtn.addEventListener("click", deleteOrder);
+    function deleteOrder(e) {
+      let deletedOrder = this.id.slice(7);
+
+      return confirmDeleteOrder(deletedOrder);
+    }
   }
 
   //주문 수정 사항 저장
@@ -191,25 +197,17 @@ async function getOrders() {
   }
 
   //주문 취소
-  function cancelOrder() {
-    // 버튼을 누르면 데이터 삭제
-    const deleteOrderBtns = document.querySelectorAll(".del-order-btn");
-    if (deleteOrderBtns && Array.from(deleteOrderBtns).length) {
-      deleteOrderBtns.forEach((btn) =>
-        btn.addEventListener("click", async () => {
-          const confirmRes = confirm("정말로 취소하시겠습니까?");
-          // confirm 응답이 true인 경우 삭제 api 실행
-          if (confirmRes === true) {
-            // 삭제 함수 실행
-            await Api.delete("/api/orders", btn.id);
-            alert("주문이 취소되었습니다.");
-            // 삭제 후 새로고침으로 삭제확인
-            window.location.reload();
-          } else {
-            window.location.reload();
-          }
-        })
-      );
+  async function confirmDeleteOrder(deletedOrder) {
+    const confirmRes = confirm("정말로 취소하시겠습니까?");
+    //confirm 응답이 true인 경우 삭제 api 실행
+    if (confirmRes === true) {
+      // 삭제 함수 실행
+      await Api.delete("/api/orders", deletedOrder, {});
+      alert("주문이 취소되었습니다.");
+      // 삭제 후 새로고침으로 삭제확인
+      window.location.reload();
+    } else {
+      window.location.reload();
     }
   }
 }

@@ -92,6 +92,7 @@ async function getUserData() {
 
       alert("탈퇴되었습니다.");
       localStorage.removeItem("token");
+      localStorage.removeItem("isLoggedIn");
       window.location.href = "/";
     } catch (err) {
       alert(`오류가 발생하였습니다: ${err}`);
