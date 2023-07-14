@@ -1,4 +1,6 @@
 import { userModel } from "../db/models/user-model.js";
+import { orderModel } from "../db/models/order-model.js"
+import { orderitemModel } from "../db/models/orderitem-model.js"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
@@ -60,8 +62,14 @@ class UserService {
   async deleteById(userId) {
     const deleteData = await userModel.deleteByUserId(userId);
 
-    console.log(userId);
+    const orders = await orderModel.findByUserId(userId);
+    const deleteOrder = await orderModel.deleteByOrderIdMany(userId);
 
+    for (const order of orders) {
+      const ordId = order._id;
+      const deleteOrderItem = await orderitemModel.deleteByOrderId(ordId);
+    }
+    
     const deleteCount = deleteData.deletedCount;
     if (deleteCount === 0) {
       throw new Error("userId에 해당하는 User정보가 없습니다.");

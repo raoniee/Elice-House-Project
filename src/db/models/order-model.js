@@ -37,6 +37,16 @@ class OrderModel {
     const deleteOrder = await Order.deleteOne({ _id: orderId });
     return deleteOrder;
   }
+  async deleteByOrderIdMany(userId) {
+    const deleteOrder = await Order.deleteMany({ userId: userId });
+    return deleteOrder;
+  }
+
+
+  async deleteByUserId(userId) {
+    const deleteUserId = await Order.deleteOne({ userId: userId });
+    return deleteUserId
+  }
 }
 
 const orderModel = new OrderModel();
