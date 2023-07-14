@@ -2,12 +2,14 @@
 import {
   makeAdminNav,
   clickNavbar,
+  checkAdmin,
 } from "../../components/admin-nav/admin-nav.js";
 import * as apiUtil from "../../apiUtil.js";
 
 //admin navbar 생성
 makeAdminNav();
 clickNavbar();
+checkAdmin();
 
 const listContainer = document.querySelector("#list-container");
 
