@@ -3,7 +3,7 @@ import { insertHeaderCategoryData } from "../components/header/header-category.j
 import { drawFooter } from "../components/footer/footer.js";
 // import { get } from "../apiUtil";
 
-// Header 삽입
+// Header 삽입.
 drawHeaderMenu();
 insertHeaderCategoryData();
 

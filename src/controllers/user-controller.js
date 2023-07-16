@@ -25,7 +25,7 @@ const UserController = {
 
       console.log(email, password);
 
-      // 이메일 패스워드 일치 여부 확인 및 JWT 토큰 생성
+      // 이메일 패스워드 일치 여부 확인 및 JWT 토큰 생성.
       const checkUser = await userService.giveToken({ email, password });
 
       console.log(checkUser);

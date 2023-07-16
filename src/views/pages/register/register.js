@@ -3,7 +3,7 @@ import * as API from "../apiUtil.js";
 const REGISTER_CANCEL = document.getElementById("register-cancel");
 const REGISTER_FORM = document.getElementById("register-form");
 
-// 회원가입 페이지의 '취소' 버튼 클릭 -> 메인 페이지로 이동
+// 회원가입 페이지의 '취소' 버튼 클릭 -> 메인 페이지로 이동.
 REGISTER_CANCEL.addEventListener("click", () => {
   window.location.href = "/";
 });

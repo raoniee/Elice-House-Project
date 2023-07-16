@@ -13,7 +13,7 @@ orderRouter.post(
   OrderController.createOrder
 );
 
-// 전체 주문 조회
+// 전체 주문 조회.
 orderRouter.get("/orders/", checkLogin, OrderController.getUserOrder);
 
 //관리자 모드

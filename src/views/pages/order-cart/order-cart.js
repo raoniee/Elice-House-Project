@@ -6,7 +6,7 @@ import { drawFooter } from "../../components/footer/footer.js";
 drawHeaderMenu();
 insertHeaderCategoryData();
 
-//Footer 삽입
+//Footer 삽입.
 drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 const cartContainer = document.querySelector(".cartContainer");

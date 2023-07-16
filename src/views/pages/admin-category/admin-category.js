@@ -1,4 +1,4 @@
-// import * as catMockData from "./category-mockdata.js";
+// import * as catMockData from "./category-mockdata.js".;
 import {
   makeAdminNav,
   clickNavbar,

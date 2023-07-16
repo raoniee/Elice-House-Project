@@ -20,7 +20,7 @@ class ProductModel {
     const deleteProduct = await Product.deleteOne({ _id: productId });
     return deleteProduct;
   }
-  // subcategoryId에 해당하는 모든 상품 찾기
+  // subcategoryId에 해당하는 모든 상품 찾기.
   async getSubcatProds(subcategoryId) {
     const getProds = await Product.find({ subcategoryId });
     return getProds;
@@ -34,19 +34,22 @@ class ProductModel {
 
   // product 정보 수정
   async update(productId, toUpdate) {
-    const updateInfo = await Product.findOneAndUpdate({ _id: productId }, toUpdate, {
-      returnOriginal: false,
-    });
+    const updateInfo = await Product.findOneAndUpdate(
+      { _id: productId },
+      toUpdate,
+      {
+        returnOriginal: false,
+      }
+    );
     return updateInfo;
   }
 
   // 서브카테고리Id에 의한 상품 삭제
-  async deleteBySubCat (subcategoryId) {
-    const deleteBySubId = await Product.deleteMany({ subcategoryId })
+  async deleteBySubCat(subcategoryId) {
+    const deleteBySubId = await Product.deleteMany({ subcategoryId });
 
     return deleteBySubId;
   }
-
 }
 
 const productModel = new ProductModel();

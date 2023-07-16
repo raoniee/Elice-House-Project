@@ -14,7 +14,7 @@ class UserModel {
     const createUser = await User.create(userInfo);
     return createUser;
   }
-  //userID로 유저 찾기
+  //userID로 유저 찾기.
   async findByUserId(userId) {
     const user = await User.findById(userId);
     return user;

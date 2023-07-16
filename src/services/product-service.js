@@ -7,8 +7,6 @@ import { error } from "console";
 import { userModel } from "../db/models/user-model.js";
 import moment from "moment-timezone";
 
-
-
 class ProductService {
   // 각 상품에 카테고리 이름, 서브카테고리 이름 추가
   async getAllProductInfo() {
@@ -86,7 +84,7 @@ class ProductService {
     ProductInfo.categoryId = parentCat._id;
 
     const childCatIds = parentCat.subcategory;
-    // 부모 카테고리 내에 있는 자식 카테고리 id로 가져온 서브카테고리 이름에 해당하는 id 찾기
+    // 부모 카테고리 내에 있는 자식 카테고리 id로 가져온 서브카테고리 이름에 해당하는 id 찾기.
     for (const childCatId of childCatIds) {
       const childCat = await subcategoryModel.findById(childCatId);
       // 같은 카테고리가 있다면
@@ -100,9 +98,9 @@ class ProductService {
     }
 
     const addNewProduct = await productModel.create(ProductInfo);
-    // 로컬 Date 업데이트 
+    // 로컬 Date 업데이트
     const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
-    await productModel.update(addNewProduct._id, {date: postDate});
+    await productModel.update(addNewProduct._id, { date: postDate });
 
     // 누적 상품 판매 수 체크
     if (addNewProduct) {

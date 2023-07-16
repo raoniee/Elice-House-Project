@@ -1,5 +1,5 @@
 const makeAdminNav = () => {
-  // 메인 페이지 이동
+  // 메인 페이지 이동.
   const adminTitle = document.querySelector("#admin-title");
   adminTitle.addEventListener("click", function () {
     location.href = "/admin/main";

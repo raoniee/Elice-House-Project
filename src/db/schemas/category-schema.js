@@ -7,16 +7,18 @@ const categorySchema = new Schema(
       type: String,
       required: true,
     },
-    // 자식 카테고리 참조 
-    subcategory : [{
-      type : Schema.Types.ObjectId,
-      ref : 'subcategories'
-     }],
-    // 로컬 Date 저장
+    // 자식 카테고리 참조
+    subcategory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "subcategories",
+      },
+    ],
+    // 로컬 Date 저장.
     date: {
       type: String,
       required: false,
-    }
+    },
   },
   {
     collection: "categories",

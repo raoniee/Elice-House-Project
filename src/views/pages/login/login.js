@@ -7,7 +7,7 @@ const LOGIN_CANCEL = document.getElementById("login-cancel");
 const REGISTER_BTN = document.getElementById("move-register");
 
 // 주소창 url의 params를 객체로 만드는 함수
-// user/:userId -- ?userId 방식으로 다시 생각해보기
+// user/:userId -- ?userId 방식으로 다시 생각해보기.
 const getUrlParams = () => {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);

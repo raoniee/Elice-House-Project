@@ -11,7 +11,7 @@ insertHeaderCategoryData();
 // Menubar 삽입
 drawMenubar();
 
-//Footer 삽입
+//Footer 삽입.
 drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
 const productItemContainer = document.querySelector(".item_list");

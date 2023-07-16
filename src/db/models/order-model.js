@@ -20,13 +20,17 @@ class OrderModel {
   }
 
   async update(orderId, toUpdate) {
-    const updateInfo = await Order.findOneAndUpdate({ _id: orderId }, toUpdate, {
-      returnOriginal: false,
-    });
+    const updateInfo = await Order.findOneAndUpdate(
+      { _id: orderId },
+      toUpdate,
+      {
+        returnOriginal: false,
+      }
+    );
     return updateInfo;
   }
 
-  //orderID로 유저 찾기
+  //orderID로 유저 찾기.
   async findByUserId(orderId) {
     const order = await Order.findById(orderId);
     return order;
@@ -42,10 +46,9 @@ class OrderModel {
     return deleteOrder;
   }
 
-
   async deleteByUserId(userId) {
     const deleteUserId = await Order.deleteOne({ userId: userId });
-    return deleteUserId
+    return deleteUserId;
   }
 }
 

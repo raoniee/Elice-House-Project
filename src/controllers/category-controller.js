@@ -1,7 +1,7 @@
 import { categoryService } from "../services/category-service.js";
 
 const CategoryController = {
-  // 모든 카테고리 조회 관리자
+  // 모든 카테고리 조회 관리자.
   async getAllCatAdmin(req, res, next) {
     try {
       const getAllCat = await categoryService.getAllCatService();

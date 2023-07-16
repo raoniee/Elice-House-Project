@@ -4,7 +4,7 @@ import { drawFooter } from "../../components/footer/footer.js";
 import * as Api from "../../apiUtil";
 import { drawMyNav } from "../../components/my-nav/my-nav.js";
 
-// Header 삽입
+// Header 삽입.
 drawHeaderMenu();
 insertHeaderCategoryData();
 

@@ -1,7 +1,7 @@
 import { productService } from "../services/product-service.js";
 
 const ProductController = {
-  // 전체 상품 조회 (admin)
+  // 전체 상품 조회 (admin).
   async getAllProducts(req, res, next) {
     try {
       const AllProductInfo = await productService.getAllProductInfo();

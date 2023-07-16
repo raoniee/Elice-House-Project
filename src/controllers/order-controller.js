@@ -126,7 +126,7 @@ const OrderController = {
 
       // res.status(200).json(checkDelete);
 
-      // orderItem 삭제
+      // orderItem 삭제.
       // const checkDeleteOrderItems = await orderService.deleteOrderItem(orderId);
       res.status(200).json(checkUpdate);
     } catch (error) {
@@ -152,7 +152,6 @@ const OrderController = {
       if (!isBeforeShipping) {
         throw new Error("이미 배송시작되었습니다.");
       }
-
 
       // orderId로 order 삭제
       const checkDeleteOrder = await orderService.deleteOrder(orderId);

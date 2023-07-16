@@ -14,7 +14,7 @@ drawMenubar();
 //Footer 삽입
 drawFooter("../../public/assets/imgs/EliceHouse_logo.png");
 
-//Menubar 템플릿 삽입
+//Menubar 템플릿 삽입.
 drawMenubar();
 
 const ItemImg = document.querySelector(".item_detail_img");

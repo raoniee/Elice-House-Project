@@ -1,4 +1,3 @@
-//라온님
 import * as Api from "../../apiUtil";
 
 // 로직

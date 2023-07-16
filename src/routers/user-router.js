@@ -4,7 +4,7 @@ import { ifAdminAllow } from "../middlewares/admin-middleware.js";
 import { checkLogin } from "../middlewares/login-middleware.js";
 const userRouter = Router();
 
-// 회원가입
+// 회원가입.
 userRouter.post("/register", UserController.createUser);
 // 로그인
 userRouter.post("/login", UserController.login);

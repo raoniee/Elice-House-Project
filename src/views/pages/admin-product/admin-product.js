@@ -1,4 +1,4 @@
-// import * as productMockData from "./product-mockdata.js";
+// import * as productMockData from "./product-mockdata.js".;
 import {
   makeAdminNav,
   clickNavbar,

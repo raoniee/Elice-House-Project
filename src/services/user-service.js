@@ -1,6 +1,6 @@
 import { userModel } from "../db/models/user-model.js";
-import { orderModel } from "../db/models/order-model.js"
-import { orderitemModel } from "../db/models/orderitem-model.js"
+import { orderModel } from "../db/models/order-model.js";
+import { orderitemModel } from "../db/models/orderitem-model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
@@ -58,7 +58,7 @@ class UserService {
     return { token, isAdminValue };
   }
 
-  // UserId를 통해 DB에서 user객체를 찾고 삭제
+  // UserId를 통해 DB에서 user객체를 찾고 삭제.
   async deleteById(userId) {
     const deleteData = await userModel.deleteByUserId(userId);
 
@@ -69,7 +69,7 @@ class UserService {
       const ordId = order._id;
       const deleteOrderItem = await orderitemModel.deleteByOrderId(ordId);
     }
-    
+
     const deleteCount = deleteData.deletedCount;
     if (deleteCount === 0) {
       throw new Error("userId에 해당하는 User정보가 없습니다.");

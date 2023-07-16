@@ -13,11 +13,11 @@ const subcategorySchema = new Schema(
       required: true,
       default: 0,
     },
-    // 로컬 Date 저장
+    // 로컬 Date 저장.
     date: {
       type: String,
       required: false,
-    }
+    },
   },
   {
     collection: "subcategories",
