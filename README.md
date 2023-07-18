@@ -5,7 +5,7 @@
 | 팀원명 | 역할     | 담당부분                                                                                                                                                                                         |
 | ------ | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | 양유진 | 팀장, FE | - 와이어프레임, 스토리보드 제작<br>- 데일리 스크럼 작성<br>- 페이지: register, login<br>- 컴포넌트: header-menu<br>- README 작성                                                                 |
-| 김라온 | FE       | - 와이어프레임 피그마<br>- 컴포넌트: footer, header-category, item-card, menu-bar<br>- 페이지: main, order-cart, order-complete, order-complete                                                  |
+| 김라온 | FE       | - 와이어프레임 피그마<br>- 컴포넌트: footer, header-category, item-card, menu-bar<br>- 페이지: main, order-cart, order-complete, order-complete<br>- 최종발표                                                 |
 | 김래희 | FE       | - 컴포넌트: my-nav<br>- 페이지: my-order, my-info                                                                                                                                                |
 | 안성빈 | FE       | - 컴포넌트: admin-nav<br>- 페이지: admin-main, admin-order, admin-category, admin-product                                                                                                        |
 | 강성관 | BE       | - 카테고리 스키마 및 모델 구현, rest API 설계 및 CRUD 기능 구현<br>- '상품' 제외한 조회(GET) 및 생성(POST) 구현<br>- VM 서버 활용 배포<br>- MongoDB 한국시간대 추가                              |
