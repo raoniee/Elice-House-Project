@@ -18,11 +18,11 @@
 ### 📡 VM <배포용 IP주소> \_\_ (링크, 테스트 계정 생성 필수)
 
 - 배포용 IP 주소
-  kdt-sw-5-team13.elicecoding.com
+  [kdt-sw-5-team13.elicecoding.com](http://kdt-sw-5-team13.elicecoding.com/)
 
-- 테스트 계정
-  - ID:
-  - PW:
+- admin 계정
+  - ID: admin01@admin01.com
+  - PW: 1234
 
 ## <br>
 
