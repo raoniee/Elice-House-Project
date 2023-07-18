@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 
 const orderSchema = new Schema(
   {
-    // 유저 아이디 or 비회원 아이디
+    // 유저 아이디 or 비회원 아이디.
     userId: {
       type: String,
       required: true,

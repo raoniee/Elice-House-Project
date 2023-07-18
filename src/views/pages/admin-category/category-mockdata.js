@@ -1,4 +1,3 @@
-// 백엔드 팀원들과 상의 후 수정예정
 export const data = [
   {
     categoryName: "침실가구",

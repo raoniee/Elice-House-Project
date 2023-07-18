@@ -52,7 +52,7 @@ export const drawFooter = (img) => {
     </div>
     
         </div>`;
-  // .footer 부분에 삽입
+  // .footer 부분에 삽입.
   const footerTag = document.querySelector(".footer");
   footerTag.innerHTML = footerTemplate;
 };

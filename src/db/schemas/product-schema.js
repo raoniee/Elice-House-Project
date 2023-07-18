@@ -22,7 +22,7 @@ const productSchema = new Schema(
       ref: "categories",
       required: true,
     },
-    // 상품이 포함된 자식 카테고리id
+    // 상품이 포함된 자식 카테고리 id
     subcategoryId: {
       type: Schema.Types.ObjectId,
       ref: "subcategories",
@@ -55,7 +55,7 @@ const productSchema = new Schema(
     date: {
       type: String,
       required: false,
-    }
+    },
   },
   {
     collection: "products",

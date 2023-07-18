@@ -4,7 +4,7 @@ import { productModel } from "../db/models/product-model.js";
 import moment from "moment-timezone";
 
 class CategoryService {
-  // 카테고리 생성
+  // 카테고리 생성.
   async addCat(newCat) {
     const categoryName = newCat.categoryName;
     const subcategoryName = newCat.subcategoryName;
@@ -27,9 +27,9 @@ class CategoryService {
 
       const addSubcat = await subcategoryModel.create(subcategoryName);
 
-      // 로컬 Date 업데이트 
+      // 로컬 Date 업데이트
       const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
-      await subcategoryModel.update(addSubcat._id, {date: postDate});
+      await subcategoryModel.update(addSubcat._id, { date: postDate });
 
       console.log("add -> ", addSubcat);
       if (!addSubcat) {
@@ -47,19 +47,19 @@ class CategoryService {
 
       return subcatRefcat;
     } else {
-      // 부모 카테고리 생성 
+      // 부모 카테고리 생성
       const createCat = await categoryModel.create(categoryName);
       const addSubcat = await subcategoryModel.create(subcategoryName);
 
-      // 로컬 Date 업데이트 
+      // 로컬 Date 업데이트
       const postDate = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
-      await subcategoryModel.update(addSubcat._id, {date: postDate});
-      await categoryModel.update(createCat._id, {date: postDate});
+      await subcategoryModel.update(addSubcat._id, { date: postDate });
+      await categoryModel.update(createCat._id, { date: postDate });
 
       const newCatId = createCat._id;
       const newSubcatId = addSubcat._id;
 
-      // 부모 카테고리에 서브 카테고리 참조 
+      // 부모 카테고리에 서브 카테고리 참조
       const subcatRefcat = await categoryModel.refSubcat(newCatId, newSubcatId);
 
       return subcatRefcat;

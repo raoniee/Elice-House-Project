@@ -17,16 +17,16 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    // admin 확인 
+    // admin 확인
     isAdmin: {
       type: Boolean,
       default: false,
     },
-    // 로컬 Date 저장
+    // 로컬 Date 저장.
     date: {
       type: String,
       required: false,
-    }
+    },
   },
   {
     collection: "users",

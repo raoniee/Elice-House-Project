@@ -21,8 +21,12 @@
   kdt-sw-5-team13.elicecoding.com
 
 - 테스트 계정
-  - ID:
-  - PW:
+  - 일반 유저 계정
+    - ID: k123@elice.com
+    - PW: 1234
+  - 관리자 계정
+    - ID: admin01@admin.com
+    - PW: 1234
 
 ## <br>
 

@@ -8,7 +8,7 @@ class OrderService {
   async addOrder(newOrder, newOrderitem) {
     const createOrder = await orderModel.create(newOrder);
 
-    // 로컬 Date 업데이트
+    // 로컬 Date 업데이트.
     const postDateOrder = moment.tz("Asia/Seoul").format("YYYY-MM-DDTHH:mm:ss");
     await orderModel.update(createOrder._id, { date: postDateOrder });
 

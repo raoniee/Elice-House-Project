@@ -6,7 +6,7 @@ const __dirname = path.dirname(__filename);
 
 const viewsRouter = express.Router();
 
-// 페이지별로 html, css, js 파일들 라우팅
+// 페이지별로 html, css, js 파일들 라우팅.
 viewsRouter.use("/", serveStatic("main"));
 viewsRouter.use("/product/list", serveStatic("item-list"));
 viewsRouter.use("/product/detail", serveStatic("item-detail"));

@@ -10,7 +10,7 @@ class CategoryModel {
 
     return createCat;
   }
-  // 모든 카테고리 정보 가져오기
+  // 모든 카테고리 정보 가져오기.
   async findAll() {
     const allCat = await Category.find({});
 
@@ -55,7 +55,6 @@ class CategoryModel {
 
     for (const subId of subIdsInCat) {
       if (subcategoryId != subId) {
-        
         newSubIdsInCat.push(subId);
       }
     }

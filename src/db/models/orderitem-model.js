@@ -28,7 +28,7 @@ class OrderitemModel {
     return orderOneInfo;
   }
 
-  // orderId를 가지고 orderItem들 삭제
+  // orderId를 가지고 orderItem들 삭제.
   async deleteByOrderId(orderId) {
     const deleteData = await OrderItem.deleteMany({ orderId });
     return deleteData;

@@ -17,7 +17,7 @@ export async function drawMenubar() {
   let menubarTemplate = `<p class="menu-depth1 h5">${parentMenu}</p>
       <p class="arrow h5 text-black-50" style="font-size: 19px">></p>
       <p class="menu-depth2 h5">${childMenu}</p>`;
-  // .menu_bar 부분에 삽입
+  // .menu_bar 부분에 삽입.
   const menu_barTag = document.querySelector(".menu_bar");
   menu_barTag.innerHTML = menubarTemplate;
 }

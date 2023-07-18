@@ -1,4 +1,4 @@
-// import * as orderMockdata from "./order-mockdata.js";
+// import * as orderMockdata from "./order-mockdata.js";.
 import {
   makeAdminNav,
   clickNavbar,

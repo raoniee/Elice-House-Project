@@ -1,6 +1,6 @@
-//유진님
-
 export const drawHeaderMenu = async () => {
+  // 주석처리한 3~31라인 지우고 깃에 올리는 경우 계속 충돌나고, rebase 뜨면서 정상적으로 올라가지 않아
+  // 내용 지우지 않고 그냥 주석으로 두고 작업했습니다.
   // let headermenuTemplate = `
   //   <div class="py-3 border-bottom">
   //     <div class="container d-flex flex-wrap justify-content-center">
