@@ -51,29 +51,8 @@
 <summary>사용자 관련 CRUD</summary>
 <div markdown="1">
 
-안녕
+![](https://velog.velcdn.com/images/raoni/post/ccc425ad-10a2-4c46-9d71-82c28cbef84f/image.gif)
 
-</div>
-</details>
-
-<br>
-
-<details>
-<summary>카테고리 추가 및 반영</summary>
-<div markdown="1">
-
-안녕
-
-</div>
-</details>
-
-<br>
-
-<details>
-<summary>제품 추가 및 반영</summary>
-<div markdown="1">
-
-안녕
 
 </div>
 </details>
@@ -84,7 +63,8 @@
 <summary>장바구니 기능</summary>
 <div markdown="1">
 
-안녕
+![](https://velog.velcdn.com/images/raoni/post/9539f85c-8c4b-4ae8-a415-0ce9d1904c11/image.gif)
+
 
 </div>
 </details>
@@ -92,10 +72,11 @@
 <br>
 
 <details>
-<summary>주문 기능</summary>
+<summary>제품 주문 기능</summary>
 <div markdown="1">
 
-안녕
+![](https://velog.velcdn.com/images/raoni/post/69fc5c35-209a-4eec-8263-a4643ce1ca9b/image.gif)
+
 
 </div>
 </details>
@@ -106,12 +87,48 @@
 <summary>관리자 페이지</summary>
 <div markdown="1">
 
-안녕
+![](https://velog.velcdn.com/images/raoni/post/e0cf17c5-29eb-42f8-8eb6-411fdf8a7e44/image.gif)
+
+
+</div>
+</details>
+<br>
+<details>
+<summary>주문 관리 및 반영</summary>
+<div markdown="1">
+
+![](https://velog.velcdn.com/images/raoni/post/72518b9e-68d9-4315-8dde-5c97515e5a87/image.gif)
+
 
 </div>
 </details>
 
 <br>
+
+<details>
+<summary>제품 추가 및 반영</summary>
+<div markdown="1">
+
+![](https://velog.velcdn.com/images/raoni/post/95bf0d17-c856-42a4-9bfe-7d521e05a920/image.gif)
+
+
+
+</div>
+</details>
+
+<br>
+
+
+<details>
+<summary>카테고리 추가 및 반영</summary>
+<div markdown="1">
+
+![](https://velog.velcdn.com/images/raoni/post/4091d90e-1c2d-4bed-b36b-76bf328e8998/image.gif)
+
+
+
+</div>
+</details>
 
 #### ⚙️ 페이지 별 화면
 
