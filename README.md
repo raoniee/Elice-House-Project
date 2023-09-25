@@ -11,7 +11,6 @@
 | 강성관 | BE       | - 카테고리 스키마 및 모델 구현, rest API 설계 및 CRUD 기능 구현<br>- '상품' 제외한 조회(GET) 및 생성(POST) 구현<br>- VM 서버 활용 배포<br>- MongoDB 한국시간대 추가                              |
 | 곽수경 | BE       | - 상품 스키마 및 모델 구현, 상품 rest API 설계 및 CRUD 기능 구현<br>- '카테고리' 제외한 업데이트(PATCH) 기능 구현<br>- middleware 구현<br>- jwt 토큰 활용 로그인 인증 구현<br>- multer 기능 구현 |
 
-## <br>
 
 <br>
 
@@ -27,7 +26,6 @@
   - ID: test00@test00.com
   - PW: 1234
 
-## <br>
 
 <br>
 
